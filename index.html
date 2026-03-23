@@ -1942,12 +1942,11 @@ function uploadVisionImg(n, input) {
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    setVisionImg(n, e.target.result);
-    visionSave(n, e.target.result);
-    // 원본 보관 후 크롭 에디터 열기
-    loadCropSrc(e.target.result, false);
+    const src = e.target.result;
+    setVisionImg(n, src);
+    visionSave(n, src);
     activeCropTarget = n;
-    openCropModal();
+    loadCropSrc(src, true); // true = 로드 후 크롭 에디터 자동 열기
   };
   reader.readAsDataURL(file);
   input.value = '';
@@ -1983,12 +1982,10 @@ function visionLoad() {
 }
 
 function openVisionCrop(n) {
-  if (!document.getElementById('vision-img-' + n).src) return;
+  const img = document.getElementById('vision-img-' + n);
+  if (!img || !img.src || img.style.display === 'none') return;
   activeCropTarget = n;
-  // 현재 보이는 이미지를 원본으로 로드
-  const src = document.getElementById('vision-img-' + n).src;
-  loadCropSrc(src, false);
-  setTimeout(() => openCropModal(), 100);
+  loadCropSrc(img.src, true); // 원본 로드 후 에디터 열기
 }
 
 // applyCrop 오버라이드 — 비전 패널에 적용
@@ -2018,9 +2015,26 @@ function applyCrop() {
   closeCropModal();
 }
 
-// 드래그앤드롭 — 오버레이 body에도 적용
+// 드래그앤드롭 + 클릭해서 닫기 — 오버레이 body에 적용
 function setupVisionDrop(n) {
   const body = document.getElementById('vision-body-' + n);
+
+  // 이미지/빈 영역 클릭 → 닫기 (버튼 클릭은 제외)
+  body.addEventListener('click', e => {
+    if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+    if (e.target.classList.contains('vision-empty') || e.target.closest('.vision-empty')) return;
+    toggleVision(n);
+  });
+
+  // 빈 영역 클릭 → 업로드
+  const empty = body.querySelector('.vision-empty');
+  if (empty) {
+    empty.addEventListener('click', e => {
+      e.stopPropagation();
+      document.getElementById('img-input-' + n)?.click();
+    });
+  }
+
   body.addEventListener('dragover', e => e.preventDefault());
   body.addEventListener('drop', e => {
     e.preventDefault();
@@ -2049,6 +2063,16 @@ function imgDrop() {}
 
 // ── CROP EDITOR ──
 // 원본은 절대 덮어쓰지 않음 - cropSrcImg은 업로드 원본만
+
+function loadCropSrc(src, openAfter) {
+  const img = new Image();
+  img.onload = () => {
+    cropSrcImg = img;
+    if (openAfter) openCropModal();
+  };
+  img.src = src;
+}
+
 function openCropModal() {
   if (!cropSrcImg) return;
   // 편집 열 때마다 컨트롤 리셋
@@ -2822,8 +2846,8 @@ window.addEventListener('DOMContentLoaded', () => {
         <button class="vision-overlay-close" onclick="toggleVision(1)">닫기</button>
       </div>
     </div>
-    <div class="vision-overlay-body" id="vision-body-1" onclick="toggleVision(1)" style="cursor:pointer" title="클릭하면 닫힘">
-      <div class="vision-empty" onclick="event.stopPropagation();document.getElementById('img-input-1').click()">
+    <div class="vision-overlay-body" id="vision-body-1" style="cursor:pointer" title="클릭하면 닫힘">
+      <div class="vision-empty" id="vempty-1">
         <span style="font-size:2rem;opacity:0.3">🖼</span>
         <span>클릭해서 이미지 업로드</span>
       </div>
@@ -2845,8 +2869,8 @@ window.addEventListener('DOMContentLoaded', () => {
         <button class="vision-overlay-close" onclick="toggleVision(2)">닫기</button>
       </div>
     </div>
-    <div class="vision-overlay-body" id="vision-body-2" onclick="toggleVision(2)" style="cursor:pointer" title="클릭하면 닫힘">
-      <div class="vision-empty" onclick="document.getElementById('img-input-2').click()">
+    <div class="vision-overlay-body" id="vision-body-2" style="cursor:pointer" title="클릭하면 닫힘">
+      <div class="vision-empty" id="vempty-2">
         <span style="font-size:2rem;opacity:0.3">🖼</span>
         <span>클릭해서 이미지 업로드</span>
       </div>
@@ -2902,15 +2926,11 @@ window.addEventListener('DOMContentLoaded', () => {
 <input type="file" id="img-input-1" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(1,this)">
 <input type="file" id="img-input-2" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(2,this)">
 <script>
-// 첫 방문(저장 데이터 없을 때)만 기본값으로 초기화
-// saveAll / loadData 는 원본 그대로 — 저장/불러오기 정상 작동
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
     var existing = null;
     try { existing = localStorage.getItem('lifemap_template_v2'); } catch(e) {}
-    if (existing) return; // 저장된 데이터 있으면 loadData()가 이미 복원함
-
-    // 첫 방문: Q2 하드코딩 데이터만 비우기
+    if (existing) return;
     document.querySelectorAll('.task-list').forEach(l => l.innerHTML = '');
     var clears = {
       'apr-heading':'4월','apr-desc':'','may-heading':'5월','may-desc':'',
