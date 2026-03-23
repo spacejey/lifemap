@@ -780,11 +780,12 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
   left: 0; right: 0;
   z-index: 150;
   background: rgba(10,10,20,0.97);
-  height: var(--sticky-h, 160px);
+  height: max(var(--sticky-h, 160px), 200px);
   flex-direction: column;
   box-shadow: 0 4px 24px rgba(0,0,0,0.5);
   animation: visionIn 0.2s ease;
   overflow: hidden;
+  transition: height 0.35s cubic-bezier(0.4,0,0.2,1);
 }
 .vision-overlay.show { display: flex; }
 @keyframes visionIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
@@ -1051,10 +1052,12 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
       </div>
       <!-- 헤더 전체 접기 버튼 -->
       <button id="stickyCollapseBtn" onclick="toggleStickyMain()" title="헤더 접기/펼치기" style="
-        margin-left:0.5rem;flex-shrink:0;width:28px;height:28px;
-        border-radius:99px;border:1.5px solid var(--border2);
-        background:var(--surface2);color:var(--text3);cursor:pointer;
-        font-size:0.7rem;transition:all 0.18s;display:flex;align-items:center;justify-content:center;
+        margin-left:0.5rem;flex-shrink:0;width:30px;height:30px;
+        border-radius:99px;border:2px solid var(--accent);
+        background:var(--accent);color:#fff;cursor:pointer;
+        font-size:0.75rem;font-weight:700;transition:all 0.2s;
+        display:flex;align-items:center;justify-content:center;
+        box-shadow:0 2px 8px rgba(99,102,241,0.35);
       ">▴</button>
     </div>
 
@@ -1933,12 +1936,20 @@ function toggleStickyMain() {
   if (stickyCollapsed) {
     main.style.maxHeight = '0';
     main.style.opacity = '0';
+    main.style.pointerEvents = 'none';
     btn.textContent = '▾';
+    btn.style.background = 'var(--surface2)';
+    btn.style.color = 'var(--accent)';
+    btn.style.border = '2px solid var(--accent)';
     btn.title = currentLang === 'en' ? 'Expand header' : '헤더 펼치기';
   } else {
     main.style.maxHeight = '400px';
     main.style.opacity = '1';
+    main.style.pointerEvents = '';
     btn.textContent = '▴';
+    btn.style.background = 'var(--accent)';
+    btn.style.color = '#fff';
+    btn.style.border = '2px solid var(--accent)';
     btn.title = currentLang === 'en' ? 'Collapse header' : '헤더 접기';
   }
   setTimeout(updateStickyHeight, 370);
