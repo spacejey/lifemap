@@ -1,0 +1,2891 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>나의 인생 로드맵 🌍</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f4ff;
+  --surface: #ffffff;
+  --surface2: #f5f7ff;
+  --border: #e2e8f8;
+  --border2: #c7d2f0;
+  --text: #1e2340;
+  --text2: #4a5270;
+  --text3: #8891b0;
+  --text4: #b8bdd4;
+  --accent: #6366f1;
+  --accent-bg: #eef2ff;
+  --sticky-h: 0px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.7; }
+
+/* ── STICKY TOP ── */
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 16px rgba(99,102,241,0.07);
+}
+.sticky-inner { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+/* SITE TITLE ROW */
+.site-title-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.9rem 0 0.7rem;
+  border-bottom: 1px solid var(--border);
+}
+.site-logo { font-size: 1.3rem; line-height: 1; flex-shrink: 0; }
+.site-title-main {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  outline: none;
+  border-bottom: 2px dashed transparent;
+  transition: border-color 0.2s;
+}
+.site-title-main:hover, .site-title-main:focus { border-bottom-color: var(--border2); }
+.site-year-badge {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 99px;
+  background: var(--accent-bg); color: var(--accent);
+  border: 1.5px solid var(--accent); letter-spacing: 0.06em;
+  margin-left: auto; flex-shrink: 0;
+}
+
+/* GOALS ROWS */
+.goals-section { padding: 0.7rem 0; }
+.goal-row {
+  display: flex; align-items: baseline; gap: 0.6rem;
+  padding: 0.22rem 0;
+}
+.goal-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text4); flex-shrink: 0; min-width: 90px;
+}
+.goal-text {
+  font-size: 0.82rem; color: var(--text2);
+  outline: none; border-bottom: 1px dashed transparent;
+  transition: border-color 0.2s; flex: 1;
+}
+.goal-text:hover, .goal-text:focus { border-bottom-color: var(--border2); }
+.goal-text:empty:before { content: attr(data-placeholder); color: var(--text4); }
+
+/* ── MAIN CONTENT ── */
+.main-content { max-width: 860px; margin: 0 auto; padding: 1.5rem 2rem 6rem; }
+
+/* ── QUARTER BLOCK ── */
+.quarter-block { margin-bottom: 1rem; }
+.quarter-btn {
+  width: 100%;
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+.quarter-btn:hover { border-color: var(--border2); box-shadow: 0 2px 12px rgba(99,102,241,0.07); }
+.quarter-btn.open { border-radius: 14px 14px 0 0; border-bottom: none; background: var(--surface2); }
+.quarter-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.quarter-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text4); min-width: 24px;
+}
+.quarter-title {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--text); flex: 1;
+  outline: none; pointer-events: none;
+  border-bottom: 2px dashed transparent; transition: border-color 0.2s;
+}
+.quarter-btn.open .quarter-title,
+.quarter-title:focus { pointer-events: auto; border-bottom-color: var(--border2); cursor: text; }
+.quarter-date {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem; font-weight: 500; color: var(--text4); flex-shrink: 0;
+}
+.quarter-progress-wrap { display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
+.quarter-progress-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.72rem; font-weight: 700; color: var(--text3);
+  min-width: 32px; text-align: right;
+}
+.quarter-progress-track {
+  width: 60px; height: 5px; background: var(--border);
+  border-radius: 99px; overflow: hidden; flex-shrink: 0;
+}
+.quarter-progress-fill {
+  height: 100%; border-radius: 99px; background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.quarter-chevron {
+  font-size: 0.75rem; color: var(--text4); flex-shrink: 0;
+  transition: transform 0.25s; user-select: none;
+}
+.quarter-btn.open .quarter-chevron { transform: rotate(180deg); }
+
+/* QUARTER PANEL */
+.quarter-panel {
+  display: none;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 14px 14px;
+  padding: 0;
+  overflow: hidden;
+}
+.quarter-panel.open { display: block; animation: panelIn 0.22s ease; }
+@keyframes panelIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+/* MONTH NAV inside panel */
+.month-nav {
+  display: flex; gap: 6px;
+  padding: 1rem 1.25rem 0;
+  flex-wrap: wrap;
+}
+.mnav-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.82rem; font-weight: 500;
+  padding: 0.45rem 1.1rem;
+  border: 1.5px solid var(--border); border-radius: 99px;
+  background: var(--surface2); color: var(--text3);
+  cursor: pointer; transition: all 0.15s;
+}
+.mnav-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.mnav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* MONTH VIEW */
+.quarter-months { padding: 1rem 1.25rem 1.25rem; }
+.month-view { display: none; }
+.month-view.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
+
+.month-intro {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1rem 1.25rem;
+}
+.month-heading {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.2rem; font-weight: 700; color: var(--text);
+  outline: none; border-bottom: 2px dashed transparent; transition: border-color 0.2s;
+}
+.month-heading:hover, .month-heading:focus { border-bottom-color: var(--border2); }
+.month-desc {
+  font-size: 0.82rem; color: var(--text3); margin-top: 0.25rem;
+  outline: none; border-bottom: 2px dashed transparent; transition: border-color 0.2s; max-width: 380px;
+}
+.month-desc:hover, .month-desc:focus { border-bottom-color: var(--border2); }
+.progress-area { text-align: right; min-width: 110px; }
+.progress-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.7rem; font-weight: 700; line-height: 1; color: var(--accent);
+}
+.progress-num span { font-size: 0.85rem; color: var(--text4); font-weight: 400; }
+.progress-track {
+  width: 110px; height: 6px; background: var(--border);
+  border-radius: 99px; margin-top: 7px; margin-left: auto; overflow: hidden;
+}
+.progress-fill { height: 100%; border-radius: 99px; background: var(--accent); transition: width 0.4s cubic-bezier(0.4,0,0.2,1); }
+
+/* WEEK BLOCK */
+.week-block {
+  margin-bottom: 0.75rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.week-block:hover { border-color: var(--border2); box-shadow: 0 2px 10px rgba(99,102,241,0.06); }
+.week-block.has-checked { border-color: #a5b4fc; }
+
+.week-header {
+  display: flex; align-items: center; gap: 0.65rem;
+  cursor: pointer; padding: 0.75rem 1rem;
+  background: var(--surface2); border-bottom: 1px solid var(--border);
+}
+.week-num {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--accent); text-transform: uppercase;
+  background: var(--accent-bg); padding: 2px 7px; border-radius: 6px; flex-shrink: 0;
+}
+.week-title-edit {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.88rem; font-weight: 700; color: var(--text);
+  cursor: pointer; outline: none; border-bottom: 2px dashed transparent;
+  transition: border-color 0.2s; flex: 1; pointer-events: none;
+}
+.week-title-edit:focus { border-bottom-color: var(--border2); pointer-events: auto; cursor: text; }
+.week-dates { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.65rem; font-weight: 500; color: var(--text4); }
+.week-focus-badge {
+  font-size: 0.65rem; font-weight: 600; padding: 2px 9px;
+  border: 1.5px solid var(--border2); color: var(--text2);
+  border-radius: 99px; background: var(--surface); white-space: nowrap;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.week-task-count {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 600; padding: 2px 8px;
+  border-radius: 99px; background: var(--border); color: var(--text3); white-space: nowrap; flex-shrink: 0;
+}
+.week-task-count.all-done { background: #d1fae5; color: #059669; }
+.week-toggle {
+  font-size: 1rem; color: var(--text3); cursor: pointer; user-select: none;
+  transition: color 0.2s, transform 0.2s;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; flex-shrink: 0;
+}
+.week-toggle:hover { color: var(--text); background: var(--border); }
+.week-toggle.collapsed { transform: rotate(-90deg); }
+
+.week-body { padding: 0.65rem 1rem 0.85rem; }
+.week-body.collapsed { display: none; }
+
+/* TASK */
+.task-list { margin-bottom: 0.4rem; }
+.task-item {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  padding: 0.35rem 0.45rem; border-radius: 8px; transition: background 0.12s;
+}
+.task-item:hover { background: var(--surface2); }
+.drag-handle {
+  opacity: 0; cursor: grab; color: var(--text4);
+  font-size: 0.85rem; padding: 0 2px; align-self: center;
+  flex-shrink: 0; line-height: 1; transition: opacity 0.15s; user-select: none;
+}
+.task-item:hover .drag-handle { opacity: 1; }
+.drag-handle:active { cursor: grabbing; }
+.task-item.dragging { opacity: 0.4; background: var(--accent-bg); }
+.task-item.drag-over { border-top: 2px solid var(--accent); }
+
+.task-cb {
+  width: 15px; height: 15px; border: 2px solid var(--border2);
+  border-radius: 4px; flex-shrink: 0; margin-top: 3px;
+  cursor: pointer; appearance: none; position: relative;
+  transition: background 0.15s, border-color 0.15s;
+}
+.task-cb:checked { background: var(--accent); border-color: var(--accent); }
+.task-cb:checked::after {
+  content: ''; position: absolute; left: 2px; top: 4px;
+  width: 8px; height: 5px;
+  border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translateY(-2px);
+}
+.task-text-wrap { flex: 1; display: flex; align-items: flex-start; gap: 0.4rem; flex-wrap: wrap; }
+.tag {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.03em;
+  padding: 2px 7px; border-radius: 99px; flex-shrink: 0; margin-top: 2px;
+}
+.tag-store   { background: #6366f1; color: #fff; }
+.tag-sns     { background: #ec4899; color: #fff; }
+.tag-product { background: #f97316; color: #fff; }
+.tag-money   { background: #ef4444; color: #fff; }
+.tag-health  { background: #10b981; color: #fff; }
+.tag-book    { background: #0ea5e9; color: #fff; }
+.tag-drawing { background: #a855f7; color: #fff; }
+.tag-retro   { background: #14b8a6; color: #fff; }
+.tag-ledger  { background: #f59e0b; color: #fff; }
+
+.task-tag { cursor: pointer; transition: opacity 0.15s; }
+.task-tag:hover { opacity: 0.8; }
+
+.task-text-edit {
+  font-size: 0.86rem; font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text); outline: none; cursor: text; line-height: 1.5;
+  border-bottom: 2px dashed transparent; transition: border-color 0.2s, color 0.2s; min-width: 40px;
+}
+.task-text-edit:hover, .task-text-edit:focus { border-bottom-color: var(--border2); }
+.task-text-edit.done { text-decoration: line-through; color: var(--text4); }
+
+.task-due {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 500; color: var(--text4);
+  margin-left: auto; flex-shrink: 0; align-self: center;
+  cursor: text; outline: none; background: var(--border);
+  padding: 1px 7px; border-radius: 99px; transition: background 0.2s;
+}
+.task-due:hover, .task-due:focus { background: var(--border2); outline: none; }
+
+.pin-btn {
+  opacity: 0; font-size: 0.7rem; cursor: pointer;
+  padding: 2px 4px; border-radius: 4px; border: none; background: none;
+  color: var(--text4); align-self: center; flex-shrink: 0;
+  transition: opacity 0.15s, color 0.15s, background 0.15s; line-height: 1;
+}
+.task-item:hover .pin-btn { opacity: 1; }
+.pin-btn:hover { color: #f59e0b; background: #fffbeb; }
+.pin-btn.pinned { opacity: 1 !important; color: #f59e0b; }
+.task-item.pinned-task { background: #fffdf0; border-left: 3px solid #f59e0b; border-radius: 0 8px 8px 0; }
+.task-item.pinned-task:hover { background: #fff9e0; }
+
+.task-del {
+  opacity: 0; font-size: 0.62rem; color: var(--text4);
+  cursor: pointer; padding: 2px 5px; border-radius: 4px;
+  transition: opacity 0.15s, color 0.15s, background 0.15s;
+  align-self: center; flex-shrink: 0; background: none; border: none;
+}
+.task-item:hover .task-del { opacity: 1; }
+.task-del:hover { color: #dc2626; background: #fef2f2; }
+
+.add-task-btn {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.76rem; font-weight: 500; color: var(--accent);
+  border: 1.5px dashed #c7d2f8; background: var(--accent-bg);
+  border-radius: 8px; padding: 5px 12px; cursor: pointer;
+  transition: all 0.2s; display: block; width: 100%; text-align: left; margin-top: 5px;
+}
+.add-task-btn:hover { background: #e0e7ff; border-color: var(--accent); }
+
+/* NOTE */
+.note-section { margin-top: 0.65rem; }
+.note-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--text4); text-transform: uppercase; margin-bottom: 0.35rem;
+}
+.note-edit {
+  width: 100%; font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.8rem; color: var(--text2); background: var(--surface2);
+  border: 1.5px solid var(--border); border-radius: 9px;
+  padding: 0.5rem 0.8rem; outline: none; resize: none; line-height: 1.6;
+  transition: border-color 0.2s, background 0.2s; min-height: 52px; field-sizing: content;
+}
+.note-edit:focus { border-color: var(--accent); background: var(--surface); }
+.note-edit::placeholder { color: var(--text4); }
+
+.month-note-section {
+  margin-top: 1.25rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.1rem;
+}
+.month-note-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--text3); text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.month-note-edit {
+  width: 100%; font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.88rem; color: var(--text); background: transparent;
+  border: none; padding: 0; outline: none; resize: none;
+  line-height: 1.75; field-sizing: content; min-height: 60px;
+}
+.month-note-edit::placeholder { color: var(--text4); }
+
+.add-week-btn {
+  font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem; font-weight: 500;
+  color: var(--text3); border: 1.5px dashed var(--border2); background: var(--surface);
+  border-radius: 10px; padding: 8px 16px; cursor: pointer;
+  transition: all 0.2s; margin-top: 0.4rem; display: block; width: 100%; text-align: center;
+}
+.add-week-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-bg); }
+
+/* TAG PICKER */
+#tag-picker {
+  position: absolute; z-index: 9999; background: #fff;
+  border: 1.5px solid var(--border2); border-radius: 12px; padding: 6px;
+  box-shadow: 0 8px 24px rgba(99,102,241,0.12);
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; min-width: 240px;
+}
+.tp-option { padding: 5px 7px; border-radius: 7px; cursor: pointer; transition: background 0.1s; display: flex; align-items: center; }
+.tp-option:hover { background: var(--surface2); }
+
+/* SAVE STATUS */
+.save-status {
+  position: fixed; bottom: 1.5rem; right: 2rem;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.06em; color: #059669; background: #ecfdf5;
+  padding: 5px 14px; border-radius: 99px; border: 1px solid #6ee7b7;
+  transition: opacity 0.5s; pointer-events: none; opacity: 0;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+[contenteditable]:focus-visible { outline: none; }
+
+/* ── IMAGE BANNER ── */
+#img-banner {
+  position: relative; width: 100%;
+  overflow: hidden;
+}
+#img-banner-img {
+  width: 100%; max-height: 220px;
+  object-fit: cover; display: none;
+}
+.img-banner-drop {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 0.6rem 1rem;
+  cursor: pointer; transition: background 0.15s;
+  border-bottom: 1px dashed var(--border2);
+}
+.img-banner-drop:hover { background: var(--accent-bg); }
+.img-banner-drop.dragover { background: var(--accent-bg); border-color: var(--accent); }
+.img-drop-icon { font-size: 1rem; opacity: 0.4; flex-shrink: 0; }
+.img-drop-hint {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 500;
+  color: var(--text4); letter-spacing: 0.03em;
+}
+.img-drop-hint span { color: var(--accent); font-weight: 700; }
+.img-banner-controls {
+  position: absolute; top: 8px; right: 10px;
+  display: flex; gap: 5px;
+  opacity: 0; transition: opacity 0.2s;
+}
+#img-banner:hover .img-banner-controls { opacity: 1; }
+.img-ctrl-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.62rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.5); color: rgba(255,255,255,0.85);
+  cursor: pointer; transition: all 0.15s;
+}
+.img-ctrl-btn:hover { background: rgba(0,0,0,0.7); color: #fff; }
+#img-file-input { display: none; }
+
+/* ── CROP EDITOR MODAL ── */
+#crop-modal {
+  display: none; position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.75);
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 0;
+}
+#crop-modal.show { display: flex; }
+.crop-box {
+  background: #1a1a2a; border-radius: 16px;
+  width: min(860px, 96vw); max-height: 90vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+}
+.crop-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+.crop-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 700; color: #fff;
+  letter-spacing: 0.02em;
+}
+.crop-header-actions { display: flex; gap: 6px; }
+.crop-header-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  padding: 5px 14px; border-radius: 99px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.2); transition: all 0.15s;
+  letter-spacing: 0.04em;
+}
+.crop-cancel { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.6); }
+.crop-cancel:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.crop-apply { background: var(--accent); color: #fff; border-color: var(--accent); }
+.crop-apply:hover { opacity: 0.88; }
+
+.crop-canvas-wrap {
+  flex: 1; overflow: hidden; position: relative;
+  background: repeating-conic-gradient(#2a2a3a 0% 25%, #1a1a2a 0% 50%) 0 0/20px 20px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: crosshair; user-select: none;
+  min-height: 300px;
+}
+#crop-canvas { display: block; max-width: 100%; max-height: 100%; }
+
+.crop-controls {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex; gap: 1.25rem; align-items: center; flex-wrap: wrap;
+  flex-shrink: 0;
+}
+.crop-ctrl-group {
+  display: flex; align-items: center; gap: 8px; flex: 1; min-width: 140px;
+}
+.crop-ctrl-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap;
+}
+.crop-ctrl-group input[type=range] {
+  flex: 1; accent-color: var(--accent); cursor: pointer;
+}
+.crop-ctrl-val {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.7rem; font-weight: 700; color: rgba(255,255,255,0.7);
+  min-width: 32px; text-align: right;
+}
+.crop-aspect-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+.crop-aspect-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.62rem; font-weight: 700;
+  padding: 3px 9px; border-radius: 6px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.55);
+  transition: all 0.12s; letter-spacing: 0.04em;
+}
+.crop-aspect-btn:hover, .crop-aspect-btn.active {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+
+/* ── CATEGORY DASHBOARD ── */
+.cat-dashboard {
+  border-top: 1px solid var(--border);
+  padding: 0.65rem 0 0.55rem;
+}
+.cat-dashboard-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.cat-dashboard-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text4);
+}
+.cat-dashboard-actions { display: flex; gap: 6px; align-items: center; }
+.cat-add-btn, .cat-toggle-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.62rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 99px; cursor: pointer;
+  transition: all 0.15s; letter-spacing: 0.04em; border: 1.5px solid var(--border2);
+  background: var(--surface2); color: var(--text3);
+}
+.cat-add-btn:hover, .cat-toggle-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+
+.cat-bars { display: flex; flex-direction: column; gap: 5px; }
+.cat-row {
+  display: flex; align-items: center; gap: 8px;
+}
+.cat-label-wrap {
+  display: flex; align-items: center; gap: 5px;
+  min-width: 96px; flex-shrink: 0;
+}
+.cat-color-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; cursor: pointer;
+  transition: transform 0.15s; border: 1.5px solid transparent;
+}
+.cat-color-dot:hover { transform: scale(1.3); }
+.cat-name {
+  font-size: 0.72rem; font-weight: 600; color: var(--text2);
+  outline: none; border-bottom: 1px dashed transparent;
+  transition: border-color 0.2s; min-width: 20px; max-width: 80px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cat-name:hover, .cat-name:focus { border-bottom-color: var(--border2); }
+.cat-bar-track {
+  flex: 1; height: 7px; background: var(--border);
+  border-radius: 99px; overflow: hidden; position: relative;
+}
+.cat-bar-fill {
+  height: 100%; border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  min-width: 0;
+}
+.cat-pct {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 700; color: var(--text3);
+  min-width: 32px; text-align: right; flex-shrink: 0;
+}
+.cat-count {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.6rem; color: var(--text4); min-width: 28px; flex-shrink: 0;
+}
+.cat-del-btn {
+  opacity: 0; font-size: 0.6rem; color: var(--text4);
+  cursor: pointer; background: none; border: none; padding: 1px 3px;
+  border-radius: 4px; transition: all 0.15s; flex-shrink: 0;
+}
+.cat-row:hover .cat-del-btn { opacity: 1; }
+.cat-del-btn:hover { color: #dc2626; background: #fef2f2; }
+
+/* Color picker popup */
+.cat-color-picker {
+  position: absolute; z-index: 9999;
+  background: var(--surface); border: 1.5px solid var(--border2);
+  border-radius: 10px; padding: 8px; display: flex; flex-wrap: wrap;
+  gap: 5px; width: 148px;
+  box-shadow: 0 6px 20px rgba(99,102,241,0.12);
+}
+.cat-color-swatch {
+  width: 22px; height: 22px; border-radius: 50%; cursor: pointer;
+  border: 2px solid transparent; transition: transform 0.12s, border-color 0.12s;
+}
+.cat-color-swatch:hover { transform: scale(1.15); }
+.cat-color-swatch.selected { border-color: var(--text); }
+
+/* Category setup panel (in main area, shown if no categories) */
+.cat-empty-hint {
+  font-size: 0.75rem; color: var(--text4); text-align: center;
+  padding: 4px 0 2px; font-style: italic;
+}
+
+/* ── YEAR NAV ── */
+.year-nav {
+  position: sticky;
+  top: var(--sticky-h, 0px);
+  z-index: 90;
+  background: var(--surface);
+  border-bottom: 1.5px solid var(--border);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 0.55rem 2rem;
+  box-shadow: 0 2px 8px rgba(99,102,241,0.05);
+  flex-wrap: wrap;
+}
+#extraYearBtns { display: contents; }
+.year-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem; font-weight: 700;
+  padding: 5px 18px; border-radius: 99px;
+  border: 1.5px solid var(--border2);
+  background: var(--surface2); color: var(--text3);
+  cursor: pointer; transition: all 0.18s; letter-spacing: 0.02em;
+  display: flex; align-items: center; gap: 0; position: relative;
+  overflow: hidden;
+}
+.year-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.year-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.year-btn-del {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 0; height: 16px; overflow: hidden;
+  font-size: 0.6rem; opacity: 0;
+  margin-left: 0;
+  border-radius: 99px;
+  background: rgba(0,0,0,0.12);
+  transition:
+    width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 0.25s ease,
+    margin-left 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.year-btn:hover .year-btn-del {
+  width: 16px;
+  opacity: 1;
+  margin-left: 6px;
+}
+.year-btn.active .year-btn-del {
+  background: rgba(255,255,255,0.25);
+}
+.year-btn.active:hover .year-btn-del {
+  background: rgba(255,255,255,0.35);
+}
+.year-add-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem; font-weight: 700; line-height: 1;
+  width: 28px; height: 28px; border-radius: 99px;
+  border: 1.5px dashed var(--border2);
+  background: none; color: var(--text4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex; align-items: center; justify-content: center;
+}
+.year-add-btn:hover {
+  border-color: var(--accent); color: var(--accent); background: var(--accent-bg);
+  transform: scale(1.18);
+}
+.year-add-btn:active {
+  transform: scale(0.9);
+}
+.year-add-btn.hidden { display: none; }
+
+/* 연도 버튼 추가 시 물방울 등장 애니메이션 */
+@keyframes dropIn {
+  0%   { transform: scale(0) translateY(-8px); opacity: 0; }
+  60%  { transform: scale(1.12) translateY(2px); opacity: 1; }
+  80%  { transform: scale(0.95) translateY(0); }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.year-btn.drop-in {
+  animation: dropIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ── YEAR PANELS ── */
+.year-panel { display: none; }
+.year-panel.active { display: block; animation: fadeIn 0.25s ease; }
+
+/* ── LANGUAGE TOGGLE ── */
+.lang-toggle {
+  display: flex; align-items: center; gap: 0;
+  border: 1.5px solid var(--border2); border-radius: 99px;
+  overflow: hidden; flex-shrink: 0;
+}
+.lang-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 3px 9px; border: none; background: none;
+  color: var(--text4); cursor: pointer;
+  transition: all 0.15s; letter-spacing: 0.04em;
+}
+.lang-btn.active { background: var(--accent); color: #fff; }
+.lang-btn:not(.active):hover { background: var(--accent-bg); color: var(--accent); }
+.vision-toggle-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 99px;
+  border: 1.5px solid var(--border2);
+  background: var(--surface2); color: var(--text3);
+  cursor: pointer; transition: all 0.18s; white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+.vision-toggle-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg); }
+.vision-toggle-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ── VISION OVERLAY ── */
+.vision-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0; right: 0;
+  z-index: 150;
+  background: rgba(10,10,20,0.97);
+  height: var(--sticky-h, 160px);
+  flex-direction: column;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  animation: visionIn 0.2s ease;
+  overflow: hidden;
+}
+.vision-overlay.show { display: flex; }
+@keyframes visionIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
+
+.vision-overlay-inner {
+  display: flex; flex-direction: column;
+  width: 100%; height: 100%;
+}
+.vision-overlay-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.75rem 1.25rem; flex-shrink: 0;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.vision-overlay-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.9);
+}
+.vision-overlay-actions { display: flex; gap: 6px; align-items: center; }
+.vision-overlay-btn {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 4px 11px; border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.7);
+  cursor: pointer; transition: all 0.15s;
+}
+.vision-overlay-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+.vision-overlay-close {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 4px 14px; border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
+  cursor: pointer; transition: all 0.15s; margin-left: 4px;
+}
+.vision-overlay-close:hover { background: rgba(255,255,255,0.22); color: #fff; }
+
+.vision-overlay-body {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.vision-overlay-body img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.vision-empty {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.6rem; cursor: pointer; color: rgba(255,255,255,0.35);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 500; letter-spacing: 0.04em;
+  padding: 2rem 3rem; border: 2px dashed rgba(255,255,255,0.15);
+  border-radius: 16px; transition: all 0.2s;
+}
+.vision-empty:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
+  .sticky-inner, .main-content { padding-left: 1rem; padding-right: 1rem; }
+  .goal-label { min-width: 70px; }
+  .quarter-btn { padding: 0.85rem 1rem; }
+  .month-intro { flex-direction: column; gap: 1rem; }
+  .progress-area { text-align: left; }
+  .progress-track { margin-left: 0; }
+  .cat-label-wrap { min-width: 76px; }
+}
+
+/* ══════════════════════════
+   모바일 최적화 (640px 이하)
+══════════════════════════ */
+@media (max-width: 640px) {
+
+  /* 기본 폰트/패딩 */
+  html { font-size: 14px; }
+  .sticky-inner { padding: 0 0.85rem; }
+  .main-content { padding: 0.75rem 0.85rem 5rem; }
+
+  /* ── 헤더 축소 ── */
+  .site-title-row {
+    padding: 0.6rem 0 0.5rem;
+    gap: 0.5rem; flex-wrap: nowrap;
+  }
+  .site-title-main { font-size: 0.92rem; }
+  .site-logo { font-size: 1.1rem; }
+
+  /* 비전 버튼 작게 */
+  .vision-toggle-btn { font-size: 0.62rem; padding: 3px 8px; }
+
+  /* 날짜/시간 한 줄 압축 */
+  #datetime-badge { line-height: 1.2; }
+  #time-display { font-size: 0.78rem !important; }
+  #date-display { font-size: 0.58rem !important; }
+  #moon-display { font-size: 0.95rem !important; }
+
+  /* 목표 섹션 */
+  .goals-section { padding: 0.45rem 0; }
+  .goal-row { padding: 0.15rem 0; gap: 0.4rem; }
+  .goal-label {
+    font-size: 0.58rem; min-width: 68px;
+    letter-spacing: 0.04em;
+  }
+  .goal-text { font-size: 0.78rem; }
+
+  /* 카테고리 대시보드 */
+  .cat-dashboard { padding: 0.5rem 0 0.4rem; }
+  .cat-dashboard-title { font-size: 0.58rem; }
+  .cat-add-btn, .cat-toggle-btn { font-size: 0.58rem; padding: 2px 8px; }
+  .cat-name { font-size: 0.65rem; }
+  .cat-pct { font-size: 0.6rem; min-width: 26px; }
+  .cat-count { font-size: 0.55rem; min-width: 22px; }
+  .cat-label-wrap { min-width: 72px; }
+
+  /* 연도 네비 */
+  .year-nav { padding: 0.4rem 0.85rem; gap: 5px; }
+  .year-btn { font-size: 0.75rem; padding: 4px 14px; }
+  .year-add-btn { width: 26px; height: 26px; font-size: 0.9rem; }
+
+  /* 분기 버튼 */
+  .quarter-btn {
+    padding: 0.75rem 0.9rem;
+    gap: 0.5rem; flex-wrap: wrap;
+  }
+  .quarter-label { font-size: 0.65rem; min-width: 20px; }
+  .quarter-title { font-size: 0.85rem; width: 100%; order: 1; flex-basis: 100%; }
+  .quarter-date { font-size: 0.62rem; }
+  .quarter-progress-wrap { margin-left: auto; }
+  .quarter-progress-track { width: 48px; }
+  .quarter-progress-num { font-size: 0.65rem; }
+  .quarter-chevron { font-size: 0.7rem; }
+
+  /* 월 탭 */
+  .month-nav { padding: 0.75rem 0.85rem 0; gap: 5px; }
+  .mnav-btn { font-size: 0.75rem; padding: 0.38rem 0.85rem; }
+  .quarter-months { padding: 0.75rem 0.85rem 0.85rem; }
+
+  /* 월 소개 */
+  .month-intro {
+    flex-direction: column; gap: 0.75rem;
+    padding: 0.85rem; border-radius: 10px;
+    margin-bottom: 0.85rem;
+  }
+  .month-heading { font-size: 1rem; }
+  .month-desc { font-size: 0.75rem; }
+  .progress-num { font-size: 1.4rem; }
+  .progress-track { width: 90px; margin-left: 0; }
+
+  /* 주차 블록 */
+  .week-block { border-radius: 10px; margin-bottom: 0.65rem; }
+  .week-header { padding: 0.65rem 0.85rem; gap: 0.5rem; }
+  .week-num { font-size: 0.6rem; padding: 2px 6px; }
+  .week-title-edit { font-size: 0.82rem; }
+  .week-dates { font-size: 0.6rem; display: none; } /* 모바일에선 날짜 숨김 */
+  .week-focus-badge { font-size: 0.6rem; padding: 2px 7px; }
+  .week-task-count { font-size: 0.6rem; padding: 2px 7px; }
+  .week-toggle { width: 26px; height: 26px; font-size: 0.9rem; }
+  .week-body { padding: 0.5rem 0.85rem 0.75rem; }
+
+  /* 할일 */
+  .task-item { padding: 0.45rem 0.4rem; gap: 0.5rem; }
+  .task-cb { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; }
+  .task-cb:checked::after { left: 2px; top: 5px; width: 11px; height: 6px; }
+  .task-text-edit { font-size: 0.85rem; line-height: 1.5; }
+  .tag { font-size: 0.6rem; padding: 2px 7px; }
+  .task-due {
+    font-size: 0.6rem; padding: 2px 7px;
+    display: none; /* 모바일 화면 좁아서 숨김 */
+  }
+  .task-item:active .task-due { display: inline-block; }
+  .pin-btn { opacity: 1; font-size: 0.75rem; padding: 3px 5px; }
+  .task-del { opacity: 1; font-size: 0.7rem; padding: 3px 5px; }
+  .drag-handle { opacity: 0.4; font-size: 1rem; padding: 0 4px; }
+
+  /* 할일 추가 버튼 */
+  .add-task-btn { font-size: 0.8rem; padding: 8px 12px; }
+  .add-week-btn { font-size: 0.78rem; padding: 9px 14px; }
+
+  /* 메모 */
+  .note-label { font-size: 0.6rem; }
+  .note-edit { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
+  .month-note-section { padding: 0.85rem 1rem; border-radius: 10px; }
+  .month-note-title { font-size: 0.65rem; }
+  .month-note-edit { font-size: 0.85rem; }
+
+  /* 태그 피커 */
+  #tag-picker {
+    grid-template-columns: 1fr 1fr;
+    min-width: 200px;
+    left: 50% !important;
+    transform: translateX(-50%);
+  }
+
+  /* 비전 오버레이 헤더 */
+  .vision-overlay-header { padding: 0.6rem 0.85rem; }
+  .vision-overlay-title { font-size: 0.75rem; }
+  .vision-overlay-btn { font-size: 0.6rem; padding: 3px 8px; }
+  .vision-overlay-close { font-size: 0.6rem; padding: 3px 10px; }
+
+  /* 크롭 모달 */
+  .crop-header { padding: 0.65rem 1rem; }
+  .crop-title { font-size: 0.8rem; }
+  .crop-header-btn { font-size: 0.65rem; padding: 5px 12px; }
+  .crop-controls {
+    padding: 0.6rem 0.85rem;
+    gap: 0.75rem;
+  }
+  .crop-ctrl-label { font-size: 0.6rem; }
+  .crop-ctrl-val { font-size: 0.65rem; min-width: 28px; }
+  .crop-aspect-btn { font-size: 0.6rem; padding: 3px 7px; }
+
+  /* 저장 상태 */
+  .save-status { bottom: 1rem; right: 1rem; font-size: 0.62rem; padding: 4px 12px; }
+
+  /* 카테고리 컬러 피커 */
+  .cat-color-picker { width: 132px; }
+  .cat-color-swatch { width: 18px; height: 18px; }
+}
+
+/* 아주 작은 화면 (375px 이하 - 아이폰 SE 등) */
+@media (max-width: 375px) {
+  html { font-size: 13px; }
+  .site-title-main { font-size: 0.85rem; }
+  .vision-toggle-btn { padding: 3px 6px; font-size: 0.58rem; }
+  .year-btn { font-size: 0.7rem; padding: 4px 11px; }
+  .quarter-title { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     STICKY TOP — 항상 고정
+══════════════════════════════════════ -->
+<div class="sticky-top">
+  <div class="sticky-inner">
+
+    <!-- 타이틀 -->
+    <div class="site-title-row">
+      <span class="site-logo">🌍</span>
+      <span class="site-title-main" contenteditable="true" id="siteTitle" spellcheck="false" data-save="siteTitle">나의 인생 로드맵</span>
+      <!-- 비전 토글 버튼 -->
+      <div style="display:flex;gap:5px;margin-left:0.75rem;flex-shrink:0">
+        <button class="vision-toggle-btn" id="vbtn1" onclick="toggleVision(1)" title="내 인생 시각화">🌏 인생</button>
+        <button class="vision-toggle-btn" id="vbtn2" onclick="toggleVision(2)" title="2026 말 이룬 나">✨ 2026</button>
+      </div>
+      <!-- 언어 토글 -->
+      <div class="lang-toggle" style="margin-left:0.5rem">
+        <button class="lang-btn active" id="langKor" onclick="setLang('ko')">KOR</button>
+        <button class="lang-btn" id="langEng" onclick="setLang('en')">ENG</button>
+      </div>
+      <div id="datetime-badge" style="margin-left:auto;flex-shrink:0;text-align:right;line-height:1.3">
+        <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
+          <span id="moon-display" style="font-size:1.1rem;line-height:1"></span>
+          <span id="time-display" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:0.02em"></span>
+        </div>
+        <div id="date-display" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.62rem;font-weight:500;color:var(--text3);letter-spacing:0.04em;margin-top:1px"></div>
+      </div>
+    </div>
+
+    <!-- 인생 목표 -->
+    <div class="goals-section">
+      <div class="goal-row">
+        <span class="goal-label">인생 목표</span>
+        <span class="goal-text" contenteditable="true" spellcheck="false" data-save="goal-life" id="goal-life-input" data-placeholder="나의 인생 목표를 입력하세요..."></span>
+      </div>
+      <div class="goal-row">
+        <span class="goal-label">5년 후 (2030)</span>
+        <span class="goal-text" contenteditable="true" spellcheck="false" data-save="goal-30-35" data-placeholder="2030년엔 어떤 사람이 되어있을까..."></span>
+      </div>
+      <div class="goal-row">
+        <span class="goal-label">10년 후 (2035)</span>
+        <span class="goal-text" contenteditable="true" spellcheck="false" data-save="goal-35-40" data-placeholder="2035년엔 어떤 삶을 살고 있을까..."></span>
+      </div>
+      <div class="goal-row">
+        <span class="goal-label">2026년 목표</span>
+        <span class="goal-text" contenteditable="true" spellcheck="false" data-save="goal-2026" data-placeholder="올해 이루고 싶은 것..."></span>
+      </div>
+    </div>
+
+    <!-- 카테고리별 연간 진척 대시보드 -->
+    <div class="cat-dashboard" id="catDashboard">
+      <div class="cat-dashboard-header">
+        <span class="cat-dashboard-title">📊 연간 카테고리 진척</span>
+        <div class="cat-dashboard-actions">
+          <button class="cat-add-btn" onclick="addCategory()">+ 카테고리</button>
+          <button class="cat-toggle-btn" id="dashToggleBtn" onclick="toggleDashboard()">접기</button>
+        </div>
+      </div>
+      <div id="catBars" class="cat-bars">
+        <div class="cat-empty-hint" id="catEmptyHint">+ 카테고리를 추가하고 할 일 태그와 연결하세요</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ══════════════════════════════════════
+     YEAR NAV
+══════════════════════════════════════ -->
+<div class="year-nav" id="yearNav">
+  <button class="year-btn active" id="ybtn-2026" onclick="switchYear('2026', this)">2026</button>
+  <div id="extraYearBtns"></div>
+  <button class="year-add-btn" id="yearAddBtn" onclick="promptAddYear()" title="연도 추가">＋</button>
+</div>
+
+<!-- ══════════════════════════════════════
+     MAIN — 분기별 토글
+══════════════════════════════════════ -->
+<div class="main-content">
+
+<!-- ── 2026 ── -->
+<div class="year-panel active" id="year-2026">
+  <div class="quarter-block" id="qblock-q1">
+    <button class="quarter-btn" onclick="toggleQuarter('q1',this)">
+      <div class="quarter-dot" style="background:#94a3b8"></div>
+      <span class="quarter-label">Q1</span>
+      <span class="quarter-title" contenteditable="true" spellcheck="false" data-save="q1-title">1분기 큰 목표를 입력하세요</span>
+      <span class="quarter-date">1월 – 3월</span>
+      <div class="quarter-progress-wrap">
+        <span class="quarter-progress-num" id="q1-qnum">0/0</span>
+        <div class="quarter-progress-track"><div class="quarter-progress-fill" id="q1-qfill" style="width:0%"></div></div>
+      </div>
+      <span class="quarter-chevron">▾</span>
+    </button>
+    <div class="quarter-panel" id="qpanel-q1">
+      <div class="month-nav">
+        <button class="mnav-btn active" onclick="showMonth('q1','jan',this)">1월</button>
+        <button class="mnav-btn" onclick="showMonth('q1','feb',this)">2월</button>
+        <button class="mnav-btn" onclick="showMonth('q1','mar',this)">3월</button>
+      </div>
+      <div class="quarter-months" id="q1-months">
+        <div class="month-view active" id="q1-m-jan">
+          <div class="month-intro">
+            <div>
+              <div class="month-heading" contenteditable="true" spellcheck="false" data-save="q1-jan-heading">1월</div>
+              <div class="month-desc" contenteditable="true" spellcheck="false" data-save="q1-jan-desc">이 달의 방향을 입력하세요</div>
+            </div>
+            <div class="progress-area">
+              <div class="progress-num" id="q1-jan-num">0<span>/0</span></div>
+              <div class="progress-track"><div class="progress-fill" id="q1-jan-fill"></div></div>
+            </div>
+          </div>
+          <div id="q1-jan-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q1-jan')">+ 주차 추가</button>
+          <div class="month-note-section">
+            <div class="month-note-title">1월 메모 / 회고</div>
+            <textarea class="month-note-edit" data-save="q1-jan-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea>
+          </div>
+        </div>
+        <div class="month-view" id="q1-m-feb">
+          <div class="month-intro">
+            <div>
+              <div class="month-heading" contenteditable="true" spellcheck="false" data-save="q1-feb-heading">2월</div>
+              <div class="month-desc" contenteditable="true" spellcheck="false" data-save="q1-feb-desc">이 달의 방향을 입력하세요</div>
+            </div>
+            <div class="progress-area">
+              <div class="progress-num" id="q1-feb-num">0<span>/0</span></div>
+              <div class="progress-track"><div class="progress-fill" id="q1-feb-fill"></div></div>
+            </div>
+          </div>
+          <div id="q1-feb-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q1-feb')">+ 주차 추가</button>
+          <div class="month-note-section">
+            <div class="month-note-title">2월 메모 / 회고</div>
+            <textarea class="month-note-edit" data-save="q1-feb-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea>
+          </div>
+        </div>
+        <div class="month-view" id="q1-m-mar">
+          <div class="month-intro">
+            <div>
+              <div class="month-heading" contenteditable="true" spellcheck="false" data-save="q1-mar-heading">3월</div>
+              <div class="month-desc" contenteditable="true" spellcheck="false" data-save="q1-mar-desc">이 달의 방향을 입력하세요</div>
+            </div>
+            <div class="progress-area">
+              <div class="progress-num" id="q1-mar-num">0<span>/0</span></div>
+              <div class="progress-track"><div class="progress-fill" id="q1-mar-fill"></div></div>
+            </div>
+          </div>
+          <div id="q1-mar-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q1-mar')">+ 주차 추가</button>
+          <div class="month-note-section">
+            <div class="month-note-title">3월 메모 / 회고</div>
+            <textarea class="month-note-edit" data-save="q1-mar-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q2 ── -->
+  <div class="quarter-block" id="qblock-q2">
+    <button class="quarter-btn open" onclick="toggleQuarter('q2',this)">
+      <div class="quarter-dot" style="background:#6366f1"></div>
+      <span class="quarter-label">Q2</span>
+      <span class="quarter-title" contenteditable="true" spellcheck="false" data-save="q2-title">런칭하고, 뿌리내리기</span>
+      <span class="quarter-date">4월 – 6월</span>
+      <div class="quarter-progress-wrap">
+        <span class="quarter-progress-num" id="q2-qnum">0/0</span>
+        <div class="quarter-progress-track"><div class="quarter-progress-fill" id="q2-qfill" style="width:0%;background:#6366f1"></div></div>
+      </div>
+      <span class="quarter-chevron">▾</span>
+    </button>
+    <div class="quarter-panel open" id="qpanel-q2">
+      <div class="month-nav">
+        <button class="mnav-btn active" onclick="showMonth('q2','apr',this)">4월 — 런칭</button>
+        <button class="mnav-btn" onclick="showMonth('q2','may',this)">5월 — 유지</button>
+        <button class="mnav-btn" onclick="showMonth('q2','jun',this)">6월 — 준비</button>
+      </div>
+      <div class="quarter-months" id="q2-months">
+
+        <!-- Q2 4월 -->
+        <div class="month-view active" id="q2-m-apr">
+    <div class="month-intro">
+      <div>
+        <div class="month-heading" contenteditable="true" spellcheck="false" data-save="apr-heading">4월 — 런칭</div>
+        <div class="month-desc" contenteditable="true" spellcheck="false" data-save="apr-desc">이 달이 전체 분기의 엔진. 스토어 오픈 하나가 목표.</div>
+      </div>
+      <div class="progress-area">
+        <div class="progress-num" id="apr-num">0<span>/0</span></div>
+        <div class="progress-track"><div class="progress-fill" id="apr-fill"></div></div>
+      </div>
+    </div>
+    <div id="apr-weeks">
+    <!-- W1 -->
+    <div class="week-block" id="apr-w1">
+      <div class="week-header" onclick="toggleWeek('apr-w1-body')">
+        <span class="week-num">W1</span>
+        <span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="apr-w1-title">촬영 준비</span>
+        <span class="week-dates">4/1 – 4/6</span>
+        <span class="week-focus-badge">촬영 준비</span>
+        <span class="week-task-count" id="apr-w1-count">0/0</span>
+        <span class="week-toggle">▾</span>
+      </div>
+      <div class="week-body" id="apr-w1-body">
+        <div class="task-list" id="apr-w1-tasks">
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">제품 최종 선정 — 완성된 것 1~2개만, 기준 타협 없이</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/1주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">촬영 컨셉/무드보드 확정 (배경, 소품, 분위기)</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/1주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">촬영 날짜 + 장소 확정</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/1주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">귀금속</span><span class="task-text-edit" contenteditable="true" spellcheck="false">실기 수업 등록 완료</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/1주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-health task-tag" onclick="openTagPicker(this)">건강</span><span class="task-text-edit" contenteditable="true" spellcheck="false">수영 첫 등록 또는 첫 방문</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/1주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+        </div>
+        <button class="add-task-btn" onclick="addTask('apr-w1-tasks','apr')">+ 할 일 추가</button>
+        <div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="apr-w1-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div>
+      </div>
+    </div>
+    <!-- W2 -->
+    <div class="week-block" id="apr-w2">
+      <div class="week-header" onclick="toggleWeek('apr-w2-body')">
+        <span class="week-num">W2</span>
+        <span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="apr-w2-title">촬영 완료</span>
+        <span class="week-dates">4/7 – 4/13</span>
+        <span class="week-focus-badge">촬영 실행</span>
+        <span class="week-task-count" id="apr-w2-count">0/0</span>
+        <span class="week-toggle">▾</span>
+      </div>
+      <div class="week-body" id="apr-w2-body">
+        <div class="task-list" id="apr-w2-tasks">
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">제품 촬영 실행 — 이 주를 넘기면 안 됨</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/13</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">사진 1차 선별 + 보정 시작</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">패키지 시안 1개 이상 확정 (언박싱 흐름까지)</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/15</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">가계부</span><span class="task-text-edit" contenteditable="true" spellcheck="false">가계부 첫 주 기록 (일요일 5분)</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-health task-tag" onclick="openTagPicker(this)">건강</span><span class="task-text-edit" contenteditable="true" spellcheck="false">수영 2회 달성</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+        </div>
+        <button class="add-task-btn" onclick="addTask('apr-w2-tasks','apr')">+ 할 일 추가</button>
+        <div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="apr-w2-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div>
+      </div>
+    </div>
+    <!-- W3 -->
+    <div class="week-block" id="apr-w3">
+      <div class="week-header" onclick="toggleWeek('apr-w3-body')">
+        <span class="week-num">W3</span>
+        <span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="apr-w3-title">등록 + SNS 준비</span>
+        <span class="week-dates">4/14 – 4/20</span>
+        <span class="week-focus-badge">스토어 등록</span>
+        <span class="week-task-count" id="apr-w3-count">0/0</span>
+        <span class="week-toggle">▾</span>
+      </div>
+      <div class="week-body" id="apr-w3-body">
+        <div class="task-list" id="apr-w3-tasks">
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">사진 보정 완료 + 패키지 최종 확정</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/15</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">플랫폼 상품 등록 + 상세페이지 작성</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/20</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">결제·배송 테스트 (직접 주문해보기)</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/20</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-sns task-tag" onclick="openTagPicker(this)">SNS</span><span class="task-text-edit" contenteditable="true" spellcheck="false">브랜드 계정 오픈 + 첫 포스팅 5개 예약 완료</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/25</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-product task-tag" onclick="openTagPicker(this)">제품개발</span><span class="task-text-edit" contenteditable="true" spellcheck="false">4월 영상 구성안 확정 (대본 없이)</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/3주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+        </div>
+        <button class="add-task-btn" onclick="addTask('apr-w3-tasks','apr')">+ 할 일 추가</button>
+        <div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="apr-w3-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div>
+      </div>
+    </div>
+    <!-- W4 -->
+    <div class="week-block" id="apr-w4">
+      <div class="week-header" onclick="toggleWeek('apr-w4-body')">
+        <span class="week-num">W4</span>
+        <span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="apr-w4-title">오픈</span>
+        <span class="week-dates">4/21 – 4/30</span>
+        <span class="week-focus-badge" style="border-color:#6366f1;color:#6366f1">🚀 오픈</span>
+        <span class="week-task-count" id="apr-w4-count">0/0</span>
+        <span class="week-toggle">▾</span>
+      </div>
+      <div class="week-body" id="apr-w4-body">
+        <div class="task-list" id="apr-w4-tasks">
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">최종 점검 — 링크, 가격, 배송비 전부 확인</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/27</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">공식 오픈 🚀</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/28~30</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-product task-tag" onclick="openTagPicker(this)">제품개발</span><span class="task-text-edit" contenteditable="true" spellcheck="false">4월 영상 업로드</span></div><span class="task-due" contenteditable="true" spellcheck="false">4월 말</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">가계부</span><span class="task-text-edit" contenteditable="true" spellcheck="false">4월 가계부 마감 + 5월 예산 세팅</span></div><span class="task-due" contenteditable="true" spellcheck="false">4/30</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+          <div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-money task-tag" onclick="openTagPicker(this)">금전</span><span class="task-text-edit" contenteditable="true" spellcheck="false">친구 주 1회 규칙 재시작 확인</span></div><span class="task-due" contenteditable="true" spellcheck="false">매주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div>
+        </div>
+        <button class="add-task-btn" onclick="addTask('apr-w4-tasks','apr')">+ 할 일 추가</button>
+        <div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="apr-w4-note" placeholder="오픈하면 일단 끝. 완벽하지 않아도 돼." oninput="saveAll()"></textarea></div>
+      </div>
+    </div>
+    </div>
+    <button class="add-week-btn" onclick="addWeek('apr')">+ 주차 추가</button>
+    <div class="month-note-section"><div class="month-note-title">4월 전체 메모 / 회고</div><textarea class="month-note-edit" data-save="apr-month-note" placeholder="이 달 전체에 대한 생각, 회고, 계획 변경 사항..." oninput="saveAll()"></textarea></div>
+        </div>
+
+        <!-- Q2 5월 -->
+        <div class="month-view" id="q2-m-may">
+    <div class="month-intro">
+      <div>
+        <div class="month-heading" contenteditable="true" spellcheck="false" data-save="may-heading">5월 — 유지 · 확장</div>
+        <div class="month-desc" contenteditable="true" spellcheck="false" data-save="may-desc">스토어가 돌아가는 달. 귀금속 시험(05/30)이 유일한 하드 데드라인.</div>
+      </div>
+      <div class="progress-area">
+        <div class="progress-num" id="may-num">0<span>/0</span></div>
+        <div class="progress-track"><div class="progress-fill" id="may-fill"></div></div>
+      </div>
+    </div>
+    <div id="may-weeks">
+    <div class="week-block" id="may-w1"><div class="week-header" onclick="toggleWeek('may-w1-body')"><span class="week-num">W1</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="may-w1-title">오픈 직후 회고</span><span class="week-dates">5/1 – 5/5</span><span class="week-focus-badge">회고</span><span class="week-task-count" id="may-w1-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="may-w1-body"><div class="task-list" id="may-w1-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-store task-tag" onclick="openTagPicker(this)">스토어</span><span class="task-text-edit" contenteditable="true" spellcheck="false">오픈 첫 2주 데이터 간단 정리 (방문, 문의, 판매)</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/1주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-sns task-tag" onclick="openTagPicker(this)">SNS</span><span class="task-text-edit" contenteditable="true" spellcheck="false">SNS 반응 확인 — 어떤 포스팅에 반응 왔는지 메모</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/1주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">귀금속</span><span class="task-text-edit" contenteditable="true" spellcheck="false">실기 수업 주 1회 (빠지지 않기)</span></div><span class="task-due" contenteditable="true" spellcheck="false">매주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('may-w1-tasks','may')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="may-w1-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div></div></div>
+    <div class="week-block" id="may-w2"><div class="week-header" onclick="toggleWeek('may-w2-body')"><span class="week-num">W2</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="may-w2-title">시험 준비 집중</span><span class="week-dates">5/6 – 5/12</span><span class="week-focus-badge">실기 준비</span><span class="week-task-count" id="may-w2-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="may-w2-body"><div class="task-list" id="may-w2-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">귀금속</span><span class="task-text-edit" contenteditable="true" spellcheck="false">실기 수업 + 자습 시간 확보</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-product task-tag" onclick="openTagPicker(this)">제품개발</span><span class="task-text-edit" contenteditable="true" spellcheck="false">신제품 아이디어 노트 시작 — 부담 없이, 메모만</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-health task-tag" onclick="openTagPicker(this)">건강</span><span class="task-text-edit" contenteditable="true" spellcheck="false">수영 주 2회 유지</span></div><span class="task-due" contenteditable="true" spellcheck="false">매주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('may-w2-tasks','may')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="may-w2-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div></div></div>
+    <div class="week-block" id="may-w3"><div class="week-header" onclick="toggleWeek('may-w3-body')"><span class="week-num">W3</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="may-w3-title">시험 전 마무리</span><span class="week-dates">5/13 – 5/19</span><span class="week-focus-badge">리허설</span><span class="week-task-count" id="may-w3-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="may-w3-body"><div class="task-list" id="may-w3-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">귀금속</span><span class="task-text-edit" contenteditable="true" spellcheck="false">실기 최종 리허설 / 약점 보완</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/3주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-drawing task-tag" onclick="openTagPicker(this)">드로잉</span><span class="task-text-edit" contenteditable="true" spellcheck="false">달력용 그림 1장 완성</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/3주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">가계부</span><span class="task-text-edit" contenteditable="true" spellcheck="false">가계부 주간 기록</span></div><span class="task-due" contenteditable="true" spellcheck="false">일요일</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('may-w3-tasks','may')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="may-w3-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div></div></div>
+    <div class="week-block" id="may-w4"><div class="week-header" onclick="toggleWeek('may-w4-body')"><span class="week-num">W4</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="may-w4-title">시험 응시</span><span class="week-dates">5/20 – 5/31</span><span class="week-focus-badge" style="border-color:#10b981;color:#10b981">💍 05/30 시험</span><span class="week-task-count" id="may-w4-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="may-w4-body"><div class="task-list" id="may-w4-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">귀금속</span><span class="task-text-edit" contenteditable="true" spellcheck="false">실기 시험 응시 (05/30)</span></div><span class="task-due" contenteditable="true" spellcheck="false">05/30</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-drawing task-tag" onclick="openTagPicker(this)">드로잉</span><span class="task-text-edit" contenteditable="true" spellcheck="false">달력용 그림 2번째 완성</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/31</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-product task-tag" onclick="openTagPicker(this)">제품개발</span><span class="task-text-edit" contenteditable="true" spellcheck="false">신제품 방향 1개 이상 정리 (시험 끝나고)</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/31</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-money task-tag" onclick="openTagPicker(this)">금전</span><span class="task-text-edit" contenteditable="true" spellcheck="false">스토어 5월 수익 기록 (금액 무관)</span></div><span class="task-due" contenteditable="true" spellcheck="false">5/31</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('may-w4-tasks','may')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="may-w4-note" placeholder="시험 끝나면 그게 5월 최대 성과야." oninput="saveAll()"></textarea></div></div></div>
+    </div>
+    <button class="add-week-btn" onclick="addWeek('may')">+ 주차 추가</button>
+    <div class="month-note-section"><div class="month-note-title">5월 전체 메모 / 회고</div><textarea class="month-note-edit" data-save="may-month-note" placeholder="이 달 전체에 대한 생각, 회고, 계획 변경 사항..." oninput="saveAll()"></textarea></div>
+        </div>
+
+        <!-- Q2 6월 -->
+        <div class="month-view" id="q2-m-jun">
+    <div class="month-intro">
+      <div>
+        <div class="month-heading" contenteditable="true" spellcheck="false" data-save="jun-heading">6월 — 다음 준비</div>
+        <div class="month-desc" contenteditable="true" spellcheck="false" data-save="jun-desc">하드 데드라인 없는 달. 창작 리차지하고, 하반기 방향 잡고, 여행.</div>
+      </div>
+      <div class="progress-area">
+        <div class="progress-num" id="jun-num">0<span>/0</span></div>
+        <div class="progress-track"><div class="progress-fill" id="jun-fill"></div></div>
+      </div>
+    </div>
+    <div id="jun-weeks">
+    <div class="week-block" id="jun-w1"><div class="week-header" onclick="toggleWeek('jun-w1-body')"><span class="week-num">W1</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="jun-w1-title">자격증 판단</span><span class="week-dates">6/1 – 6/8</span><span class="week-focus-badge">결정</span><span class="week-task-count" id="jun-w1-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="jun-w1-body"><div class="task-list" id="jun-w1-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-ledger task-tag" onclick="openTagPicker(this)">시각디자인</span><span class="task-text-edit" contenteditable="true" spellcheck="false">원서 접수 여부 결정 — 스토어 안정됐으면 Yes</span></div><span class="task-due" contenteditable="true" spellcheck="false">6월 초</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-drawing task-tag" onclick="openTagPicker(this)">드로잉</span><span class="task-text-edit" contenteditable="true" spellcheck="false">하반기 아트피스 방향 초안 — 종이에 쓰거나 그리거나</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-health task-tag" onclick="openTagPicker(this)">건강</span><span class="task-text-edit" contenteditable="true" spellcheck="false">수영 주 2회 유지</span></div><span class="task-due" contenteditable="true" spellcheck="false">매주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('jun-w1-tasks','jun')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="jun-w1-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div></div></div>
+    <div class="week-block" id="jun-w2"><div class="week-header" onclick="toggleWeek('jun-w2-body')"><span class="week-num">W2</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="jun-w2-title">고립 여행</span><span class="week-dates">6/9 – 6/15</span><span class="week-focus-badge" style="border-color:#f59e0b;color:#f59e0b">✈️ 여행</span><span class="week-task-count" id="jun-w2-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="jun-w2-body"><div class="task-list" id="jun-w2-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-retro task-tag" onclick="openTagPicker(this)">회고</span><span class="task-text-edit" contenteditable="true" spellcheck="false">고립 여행 실행 — 짧아도 됨, 혼자, 창작 목적</span></div><span class="task-due" contenteditable="true" spellcheck="false">6월 중</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-drawing task-tag" onclick="openTagPicker(this)">드로잉</span><span class="task-text-edit" contenteditable="true" spellcheck="false">달력용 그림 1장</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-product task-tag" onclick="openTagPicker(this)">제품개발</span><span class="task-text-edit" contenteditable="true" spellcheck="false">모니터 구입 여부 결정</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/2주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('jun-w2-tasks','jun')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="jun-w2-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div></div></div>
+    <div class="week-block" id="jun-w3"><div class="week-header" onclick="toggleWeek('jun-w3-body')"><span class="week-num">W3</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="jun-w3-title">영상 + 드로잉</span><span class="week-dates">6/16 – 6/22</span><span class="week-focus-badge">콘텐츠</span><span class="week-task-count" id="jun-w3-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="jun-w3-body"><div class="task-list" id="jun-w3-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-product task-tag" onclick="openTagPicker(this)">제품개발</span><span class="task-text-edit" contenteditable="true" spellcheck="false">6월 영상 촬영 + 편집 (4월 반응 기반으로 방향 결정)</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/3주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-drawing task-tag" onclick="openTagPicker(this)">드로잉</span><span class="task-text-edit" contenteditable="true" spellcheck="false">달력용 그림 2번째</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/3주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-health task-tag" onclick="openTagPicker(this)">건강</span><span class="task-text-edit" contenteditable="true" spellcheck="false">아침 요가 루틴 정착 여부 솔직하게 체크</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/3주</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('jun-w3-tasks','jun')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="jun-w3-note" placeholder="이 주에 대한 메모..." oninput="saveAll()"></textarea></div></div></div>
+    <div class="week-block" id="jun-w4"><div class="week-header" onclick="toggleWeek('jun-w4-body')"><span class="week-num">W4</span><span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="jun-w4-title">2분기 회고</span><span class="week-dates">6/23 – 6/30</span><span class="week-focus-badge" style="border-color:#1e2340;color:#1e2340">🔍 회고</span><span class="week-task-count" id="jun-w4-count">0/0</span><span class="week-toggle">▾</span></div><div class="week-body" id="jun-w4-body"><div class="task-list" id="jun-w4-tasks"><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-product task-tag" onclick="openTagPicker(this)">제품개발</span><span class="task-text-edit" contenteditable="true" spellcheck="false">6월 영상 업로드</span></div><span class="task-due" contenteditable="true" spellcheck="false">6월 말</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-health task-tag" onclick="openTagPicker(this)">건강</span><span class="task-text-edit" contenteditable="true" spellcheck="false">다리찢기 6월 말 체크 (4월 시작 대비 비교)</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/30</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-money task-tag" onclick="openTagPicker(this)">금전</span><span class="task-text-edit" contenteditable="true" spellcheck="false">2분기 총 지출 + 스토어 수익 정리</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/30</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-retro task-tag" onclick="openTagPicker(this)">회고</span><span class="task-text-edit" contenteditable="true" spellcheck="false">스토어 됐나 / 시험 봤나 / 드로잉 유지했나 — 셋 다 Yes면 성공</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/30</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div><div class="task-item"><input type="checkbox" class="task-cb" onchange="syncDone(this)"><div class="task-text-wrap"><span class="tag tag-retro task-tag" onclick="openTagPicker(this)">회고</span><span class="task-text-edit" contenteditable="true" spellcheck="false">3분기 방향 한 줄로 써보기</span></div><span class="task-due" contenteditable="true" spellcheck="false">6/30</span><button class="pin-btn" onclick="togglePin(this)" title="상단 고정">📌</button><button class="task-del" onclick="delTask(this)">✕</button></div></div><button class="add-task-btn" onclick="addTask('jun-w4-tasks','jun')">+ 할 일 추가</button><div class="note-section"><div class="note-label">메모</div><textarea class="note-edit" data-save="jun-w4-note" placeholder="이 세 개만 됐어도 2분기는 충분히 잘 한 거야." oninput="saveAll()"></textarea></div></div></div>
+    </div>
+    <button class="add-week-btn" onclick="addWeek('jun')">+ 주차 추가</button>
+    <div class="month-note-section"><div class="month-note-title">6월 전체 메모 / 회고</div><textarea class="month-note-edit" data-save="jun-month-note" placeholder="이 달 전체에 대한 생각, 회고, 계획 변경 사항..." oninput="saveAll()"></textarea></div>
+        </div>
+
+      </div><!-- /q2-months -->
+    </div><!-- /qpanel-q2 -->
+  </div><!-- /qblock-q2 -->
+
+  <!-- ── Q3 ── -->
+  <div class="quarter-block" id="qblock-q3">
+    <button class="quarter-btn" onclick="toggleQuarter('q3',this)">
+      <div class="quarter-dot" style="background:#10b981"></div>
+      <span class="quarter-label">Q3</span>
+      <span class="quarter-title" contenteditable="true" spellcheck="false" data-save="q3-title">3분기 큰 목표를 입력하세요</span>
+      <span class="quarter-date">7월 – 9월</span>
+      <div class="quarter-progress-wrap">
+        <span class="quarter-progress-num" id="q3-qnum">0/0</span>
+        <div class="quarter-progress-track"><div class="quarter-progress-fill" id="q3-qfill" style="width:0%;background:#10b981"></div></div>
+      </div>
+      <span class="quarter-chevron">▾</span>
+    </button>
+    <div class="quarter-panel" id="qpanel-q3">
+      <div class="month-nav">
+        <button class="mnav-btn active" onclick="showMonth('q3','jul',this)">7월</button>
+        <button class="mnav-btn" onclick="showMonth('q3','aug',this)">8월</button>
+        <button class="mnav-btn" onclick="showMonth('q3','sep',this)">9월</button>
+      </div>
+      <div class="quarter-months" id="q3-months">
+        <div class="month-view active" id="q3-m-jul">
+          <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q3-jul-heading">7월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q3-jul-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q3-jul-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q3-jul-fill"></div></div></div></div>
+          <div id="q3-jul-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q3-jul')">+ 주차 추가</button>
+          <div class="month-note-section"><div class="month-note-title">7월 메모 / 회고</div><textarea class="month-note-edit" data-save="q3-jul-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea></div>
+        </div>
+        <div class="month-view" id="q3-m-aug">
+          <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q3-aug-heading">8월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q3-aug-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q3-aug-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q3-aug-fill"></div></div></div></div>
+          <div id="q3-aug-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q3-aug')">+ 주차 추가</button>
+          <div class="month-note-section"><div class="month-note-title">8월 메모 / 회고</div><textarea class="month-note-edit" data-save="q3-aug-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea></div>
+        </div>
+        <div class="month-view" id="q3-m-sep">
+          <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q3-sep-heading">9월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q3-sep-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q3-sep-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q3-sep-fill"></div></div></div></div>
+          <div id="q3-sep-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q3-sep')">+ 주차 추가</button>
+          <div class="month-note-section"><div class="month-note-title">9월 메모 / 회고</div><textarea class="month-note-edit" data-save="q3-sep-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q4 ── -->
+  <div class="quarter-block" id="qblock-q4">
+    <button class="quarter-btn" onclick="toggleQuarter('q4',this)">
+      <div class="quarter-dot" style="background:#f59e0b"></div>
+      <span class="quarter-label">Q4</span>
+      <span class="quarter-title" contenteditable="true" spellcheck="false" data-save="q4-title">4분기 큰 목표를 입력하세요</span>
+      <span class="quarter-date">10월 – 12월</span>
+      <div class="quarter-progress-wrap">
+        <span class="quarter-progress-num" id="q4-qnum">0/0</span>
+        <div class="quarter-progress-track"><div class="quarter-progress-fill" id="q4-qfill" style="width:0%;background:#f59e0b"></div></div>
+      </div>
+      <span class="quarter-chevron">▾</span>
+    </button>
+    <div class="quarter-panel" id="qpanel-q4">
+      <div class="month-nav">
+        <button class="mnav-btn active" onclick="showMonth('q4','oct',this)">10월</button>
+        <button class="mnav-btn" onclick="showMonth('q4','nov',this)">11월</button>
+        <button class="mnav-btn" onclick="showMonth('q4','dec',this)">12월</button>
+      </div>
+      <div class="quarter-months" id="q4-months">
+        <div class="month-view active" id="q4-m-oct">
+          <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q4-oct-heading">10월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q4-oct-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q4-oct-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q4-oct-fill"></div></div></div></div>
+          <div id="q4-oct-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q4-oct')">+ 주차 추가</button>
+          <div class="month-note-section"><div class="month-note-title">10월 메모 / 회고</div><textarea class="month-note-edit" data-save="q4-oct-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea></div>
+        </div>
+        <div class="month-view" id="q4-m-nov">
+          <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q4-nov-heading">11월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q4-nov-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q4-nov-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q4-nov-fill"></div></div></div></div>
+          <div id="q4-nov-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q4-nov')">+ 주차 추가</button>
+          <div class="month-note-section"><div class="month-note-title">11월 메모 / 회고</div><textarea class="month-note-edit" data-save="q4-nov-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea></div>
+        </div>
+        <div class="month-view" id="q4-m-dec">
+          <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q4-dec-heading">12월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q4-dec-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q4-dec-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q4-dec-fill"></div></div></div></div>
+          <div id="q4-dec-weeks"></div>
+          <button class="add-week-btn" onclick="addWeek('q4-dec')">+ 주차 추가</button>
+          <div class="month-note-section"><div class="month-note-title">12월 메모 / 회고</div><textarea class="month-note-edit" data-save="q4-dec-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /year-2026 -->
+
+<div id="extraYearPanels"></div>
+
+</div><!-- /main-content -->
+
+<div class="save-status" id="saveStatus">저장됨</div>
+
+<script>
+// ══════════════════════════════
+// i18n — 한/영 언어 전환
+// ══════════════════════════════
+const I18N = {
+  ko: {
+    siteTitle: '나의 인생 로드맵',
+    vbtn1: '🌏 인생', vbtn2: '✨ 2026',
+    vbtn1Title: '내 인생 시각화', vbtn2Title: '2026년 말 이룬 나',
+    goalLife: '인생 목표', goal5y: '5년 후 (2030)', goal10y: '10년 후 (2035)', goalYear: '2026년 목표',
+    goalLifePH: '나의 인생 목표를 입력하세요...', goal5yPH: '2030년엔 어떤 사람이 되어있을까...', goal10yPH: '2035년엔 어떤 삶을 살고 있을까...', goalYearPH: '올해 이루고 싶은 것...',
+    catTitle: '📊 연간 카테고리 진척', catAdd: '+ 카테고리', catCollapse: '접기', catExpand: '펼치기',
+    catEmptyHint: '+ 카테고리를 추가하고 할 일 태그와 연결하세요',
+    yearAddTitle: '연도 추가', yearAddPrompt: '추가할 연도를 입력하세요 (예: 2027)',
+    yearAddAlert: '2020~2100 사이의 연도를 입력해주세요', yearAddDupAlert: '이미 있는 연도예요',
+    yearDelConfirm: y => `${y}년 로드맵을 삭제할까요? 입력한 내용이 모두 사라져요.`,
+    qDates: { q1:'1월 – 3월', q2:'4월 – 6월', q3:'7월 – 9월', q4:'10월 – 12월' },
+    monthNames: { jan:'1월',feb:'2월',mar:'3월',apr:'4월',may:'5월',jun:'6월',jul:'7월',aug:'8월',sep:'9월',oct:'10월',nov:'11월',dec:'12월' },
+    monthDesc: '이 달의 방향을 입력하세요', monthNotePH: '이 달에 대한 생각, 회고...',
+    monthNoteTitle: m => `${m} 메모 / 회고`,
+    weekNotePH: '이 주에 대한 메모...',
+    weekTitlePH: n => `${n}주차`, weekDatePH: '날짜', weekFocusPH: '주제',
+    addTask: '+ 할 일 추가', addWeek: '+ 주차 추가',
+    vOverlay1Title: '🌏 내 인생 시각화', vOverlay2Title: '✨ 2026년 말, 모든 걸 이룬 나',
+    vUpload: '↑ 사진 업로드', vEdit: '✏ 편집', vClose: '닫기', vEmptyHint: '클릭해서 이미지 업로드',
+    cropTitle: '이미지 편집', cropCancel: '취소', cropApply: '✓ 적용',
+    cropBrightness: '밝기', cropContrast: '대비', cropScale: '크기', cropRatio: '비율',
+    cropFree: '자유', cropWide: '와이드', saveStatus: '저장됨',
+  },
+  en: {
+    siteTitle: 'My Life Roadmap',
+    vbtn1: '🌏 Life', vbtn2: '✨ 2026',
+    vbtn1Title: 'My life vision', vbtn2Title: 'Me at end of 2026',
+    goalLife: 'Life Goal', goal5y: 'In 5 Years (2030)', goal10y: 'In 10 Years (2035)', goalYear: '2026 Goal',
+    goalLifePH: 'What is your life goal?', goal5yPH: 'Who will you be in 2030?', goal10yPH: 'What life will you be living in 2035?', goalYearPH: 'What do you want to achieve this year?',
+    catTitle: '📊 Annual Category Progress', catAdd: '+ Category', catCollapse: 'Collapse', catExpand: 'Expand',
+    catEmptyHint: 'Add a category and link it to task tags',
+    yearAddTitle: 'Add Year', yearAddPrompt: 'Enter a year (e.g. 2027)',
+    yearAddAlert: 'Please enter a year between 2020 and 2100', yearAddDupAlert: 'This year already exists',
+    yearDelConfirm: y => `Delete the ${y} roadmap? All data will be lost.`,
+    qDates: { q1:'Jan – Mar', q2:'Apr – Jun', q3:'Jul – Sep', q4:'Oct – Dec' },
+    monthNames: { jan:'Jan',feb:'Feb',mar:'Mar',apr:'Apr',may:'May',jun:'Jun',jul:'Jul',aug:'Aug',sep:'Sep',oct:'Oct',nov:'Nov',dec:'Dec' },
+    monthDesc: "Enter this month's direction", monthNotePH: 'Thoughts, reflections on this month...',
+    monthNoteTitle: m => `${m} Notes / Reflection`,
+    weekNotePH: 'Notes for this week...',
+    weekTitlePH: n => `Week ${n}`, weekDatePH: 'Date', weekFocusPH: 'Focus',
+    addTask: '+ Add Task', addWeek: '+ Add Week',
+    vOverlay1Title: '🌏 My Life Vision', vOverlay2Title: '✨ Me at the End of 2026',
+    vUpload: '↑ Upload', vEdit: '✏ Edit', vClose: 'Close', vEmptyHint: 'Click to upload image',
+    cropTitle: 'Edit Image', cropCancel: 'Cancel', cropApply: '✓ Apply',
+    cropBrightness: 'Brightness', cropContrast: 'Contrast', cropScale: 'Scale', cropRatio: 'Ratio',
+    cropFree: 'Free', cropWide: 'Wide', saveStatus: 'Saved',
+  }
+};
+
+let currentLang = 'ko';
+
+function setLang(lang) {
+  currentLang = lang;
+  try { localStorage.setItem('lifemap_lang', lang); } catch(e) {}
+  const t = I18N[lang];
+  const ko = lang === 'ko';
+
+  document.getElementById('langKor').classList.toggle('active', ko);
+  document.getElementById('langEng').classList.toggle('active', !ko);
+
+  // 비전 버튼
+  const vb1 = document.getElementById('vbtn1'), vb2 = document.getElementById('vbtn2');
+  if (vb1) { vb1.textContent = t.vbtn1; vb1.title = t.vbtn1Title; }
+  if (vb2) { vb2.textContent = t.vbtn2; vb2.title = t.vbtn2Title; }
+
+  // 목표 라벨
+  const goalLabelKeys = ['goalLife','goal5y','goal10y','goalYear'];
+  document.querySelectorAll('.goal-label').forEach((el,i) => { if (goalLabelKeys[i]) el.textContent = t[goalLabelKeys[i]]; });
+
+  // 목표 placeholder
+  const goalPHKeys = ['goalLifePH','goal5yPH','goal10yPH','goalYearPH'];
+  document.querySelectorAll('.goal-text[data-save]').forEach((el,i) => {
+    if (goalPHKeys[i]) el.setAttribute('data-placeholder', t[goalPHKeys[i]]);
+  });
+
+  // 카테고리
+  const ctEl = document.querySelector('.cat-dashboard-title'); if (ctEl) ctEl.textContent = t.catTitle;
+  const caEl = document.querySelector('.cat-add-btn'); if (caEl) caEl.textContent = t.catAdd;
+  const dashBtn = document.getElementById('dashToggleBtn');
+  if (dashBtn) { const isCol = document.getElementById('catBars')?.style.display==='none'; dashBtn.textContent = isCol ? t.catExpand : t.catCollapse; }
+  const catHint = document.getElementById('catEmptyHint'); if (catHint) catHint.textContent = t.catEmptyHint;
+
+  // 연도 추가 버튼
+  const yab = document.getElementById('yearAddBtn'); if (yab) yab.title = t.yearAddTitle;
+
+  // 분기 날짜
+  document.querySelectorAll('.quarter-date').forEach(el => {
+    const match = el.closest('.quarter-btn')?.getAttribute('onclick')?.match(/'([^']+)'/);
+    if (!match) return;
+    const qid = match[1];
+    const q = ['q1','q2','q3','q4'].find(q => qid.endsWith(q));
+    if (q && t.qDates[q]) el.textContent = t.qDates[q];
+  });
+
+  // 비전 오버레이
+  const vo1 = document.querySelector('#vision-overlay-1 .vision-overlay-title'); if (vo1) vo1.textContent = t.vOverlay1Title;
+  const vo2 = document.querySelector('#vision-overlay-2 .vision-overlay-title'); if (vo2) vo2.textContent = t.vOverlay2Title;
+  document.querySelectorAll('.vision-overlay-close').forEach(el => el.textContent = t.vClose);
+  document.querySelectorAll('.vision-empty span:last-child').forEach(el => el.textContent = t.vEmptyHint);
+  document.querySelectorAll('.vision-overlay-btn').forEach(btn => {
+    if (btn.textContent.includes('업로드')||btn.textContent.includes('Upload')) btn.textContent = t.vUpload;
+    if (btn.textContent.includes('편집')||btn.textContent.includes('Edit')) btn.textContent = t.vEdit;
+  });
+
+  // 크롭
+  const ctitle = document.querySelector('.crop-title'); if (ctitle) ctitle.textContent = t.cropTitle;
+  const ccancel = document.querySelector('.crop-cancel'); if (ccancel) ccancel.textContent = t.cropCancel;
+  const capply = document.querySelector('.crop-apply'); if (capply) capply.textContent = t.cropApply;
+  const clabels = document.querySelectorAll('.crop-ctrl-label');
+  ['cropBrightness','cropContrast','cropScale','cropRatio'].forEach((k,i) => { if (clabels[i]) clabels[i].textContent = t[k]; });
+  const abts = document.querySelectorAll('.crop-aspect-btn');
+  if (abts[0]) abts[0].textContent = t.cropFree;
+  if (abts[1]) abts[1].textContent = t.cropWide;
+
+  // 저장 상태
+  const ss = document.getElementById('saveStatus'); if (ss) ss.textContent = t.saveStatus;
+
+  // ── 2026 고정 패널 정적 텍스트 전체 번역 ──
+
+  // 분기 날짜 (quarter-date) — 더 넓게 잡기
+  document.querySelectorAll('.quarter-date').forEach(el => {
+    const btn = el.closest('.quarter-btn');
+    if (!btn) return;
+    const onclick = btn.getAttribute('onclick') || '';
+    const match = onclick.match(/'([^']+)'/);
+    if (!match) return;
+    const qid = match[1]; // 'q1', 'q2', '2027-q1' 등
+    const q = ['q1','q2','q3','q4'].find(q => qid === q || qid.endsWith('-'+q));
+    if (q) el.textContent = t.qDates[q];
+  });
+
+  // 분기 제목 placeholder
+  document.querySelectorAll('.quarter-title[data-save]').forEach(el => {
+    const save = el.dataset.save; // 'q1-title', '2027-q1-title'
+    const parts = save.replace('-title','').split('-');
+    const q = parts[parts.length-1]; // 'q1'~'q4'
+    const num = q.replace('q','');
+    const isDefault = !el.innerText.trim()
+      || /분기.*입력/.test(el.innerText)
+      || /Enter Q/.test(el.innerText);
+    if (isDefault) el.innerText = ko ? `${num}분기 큰 목표를 입력하세요` : `Enter Q${num} goal`;
+  });
+
+  // 월 탭 버튼
+  document.querySelectorAll('.mnav-btn').forEach(btn => {
+    const m = btn.getAttribute('onclick')?.match(/'([a-z]{3})'\s*,\s*this/)?.[1];
+    if (m && t.monthNames[m]) btn.textContent = t.monthNames[m];
+  });
+
+  // month-desc placeholder (비어있거나 기본값일 때만)
+  document.querySelectorAll('.month-desc[data-save]').forEach(el => {
+    const cur = el.innerText.trim();
+    if (!cur || cur === I18N['ko'].monthDesc || cur === I18N['en'].monthDesc) {
+      el.innerText = t.monthDesc;
+    }
+  });
+
+  // month-heading (기본값 월 이름인 경우)
+  document.querySelectorAll('.month-heading[data-save]').forEach(el => {
+    const save = el.dataset.save; // e.g. 'q1-jan-heading', 'apr-heading'
+    const parts = save.replace('-heading','').split('-');
+    const mKey = parts.find(p => t.monthNames[p] || I18N['ko'].monthNames[p]);
+    if (!mKey) return;
+    const koName = I18N['ko'].monthNames[mKey];
+    const enName = I18N['en'].monthNames[mKey];
+    const cur = el.innerText.trim();
+    if (cur === koName || cur === enName) el.innerText = t.monthNames[mKey];
+  });
+
+  // month-note-title
+  document.querySelectorAll('.month-note-title').forEach(el => {
+    const ta = el.nextElementSibling;
+    const save = ta?.dataset?.save || '';
+    const parts = save.replace('-note','').split('-');
+    const mKey = parts.find(p => I18N['ko'].monthNames[p]);
+    if (mKey) el.textContent = t.monthNoteTitle(t.monthNames[mKey]);
+  });
+
+  // month-note placeholder
+  document.querySelectorAll('.month-note-edit').forEach(el => el.placeholder = t.monthNotePH);
+
+  // week note placeholder
+  document.querySelectorAll('.note-edit').forEach(el => el.placeholder = t.weekNotePH);
+
+  // 할일추가 / 주차추가 버튼
+  document.querySelectorAll('.add-task-btn').forEach(el => el.textContent = t.addTask);
+  document.querySelectorAll('.add-week-btn').forEach(el => el.textContent = t.addWeek);
+
+  saveAll();
+}
+
+function initLang() {
+  try { currentLang = localStorage.getItem('lifemap_lang') || 'ko'; } catch(e) {}
+  setLang(currentLang);
+}
+
+// ── YEAR SYSTEM ──
+const MAX_EXTRA_YEARS = 4;
+let extraYears = []; // e.g. [2027, 2028]
+
+function switchYear(year, btn) {
+  document.querySelectorAll('.year-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('year-' + year)?.classList.add('active');
+  if (btn) btn.classList.add('active');
+  saveAll();
+}
+
+function promptAddYear() {
+  const t = I18N[currentLang];
+  if (extraYears.length >= MAX_EXTRA_YEARS) return;
+  const val = prompt(t.yearAddPrompt);
+  if (!val) return;
+  const year = parseInt(val.trim());
+  if (isNaN(year) || year < 2020 || year > 2100) { alert(t.yearAddAlert); return; }
+  if (year === 2026 || extraYears.includes(year)) { alert(t.yearAddDupAlert); return; }
+  addYear(year);
+  saveAll();
+}
+
+function addYear(year) {
+  extraYears.push(year);
+  extraYears.sort((a,b) => a - b);
+
+  // 버튼 재렌더 (애니메이션 포함)
+  renderExtraYearBtnsWithAnim(year);
+
+  // 패널 생성
+  if (!document.getElementById('year-' + year)) {
+    const panel = document.createElement('div');
+    panel.className = 'year-panel';
+    panel.id = 'year-' + year;
+    panel.innerHTML = buildYearPanelHTML(year);
+    document.getElementById('extraYearPanels').appendChild(panel);
+    // 새로 추가된 주차 이벤트 바인딩
+    panel.querySelectorAll('.task-item').forEach(item => initDrag(item));
+  }
+
+  // + 버튼 숨기기 (최대치)
+  document.getElementById('yearAddBtn').classList.toggle('hidden', extraYears.length >= MAX_EXTRA_YEARS);
+
+  // 추가한 연도로 바로 이동
+  const btn = document.getElementById('ybtn-' + year);
+  switchYear(year, btn);
+}
+
+function removeYear(year, e) {
+  e.stopPropagation();
+  const t = I18N[currentLang];
+  if (!confirm(t.yearDelConfirm(year))) return;
+  extraYears = extraYears.filter(y => y !== year);
+  document.getElementById('year-' + year)?.remove();
+  renderExtraYearBtns();
+  document.getElementById('yearAddBtn').classList.remove('hidden');
+  switchYear('2026', document.getElementById('ybtn-2026'));
+  saveAll();
+}
+
+function renderExtraYearBtns() {
+  const container = document.getElementById('extraYearBtns');
+  container.innerHTML = extraYears.map(y =>
+    `<button class="year-btn" id="ybtn-${y}" onclick="switchYear('${y}',this)">
+      ${y}<span class="year-btn-del" onclick="removeYear(${y},event)" title="${y}년 삭제">✕</span>
+    </button>`
+  ).join('');
+}
+
+function renderExtraYearBtnsWithAnim(newYear) {
+  renderExtraYearBtns();
+  // 새로 추가된 버튼에만 물방울 애니메이션
+  const newBtn = document.getElementById('ybtn-' + newYear);
+  if (newBtn) {
+    newBtn.classList.add('drop-in');
+    newBtn.addEventListener('animationend', () => newBtn.classList.remove('drop-in'), { once: true });
+  }
+}
+
+function buildYearPanelHTML(year) {
+  const months = {
+    q1: ['jan','feb','mar'], q2: ['apr','may','jun'],
+    q3: ['jul','aug','sep'], q4: ['oct','nov','dec']
+  };
+  const monthNames = {
+    jan:'1월',feb:'2월',mar:'3월',apr:'4월',may:'5월',jun:'6월',
+    jul:'7월',aug:'8월',sep:'9월',oct:'10월',nov:'11월',dec:'12월'
+  };
+  const qDates = { q1:'1월 – 3월', q2:'4월 – 6월', q3:'7월 – 9월', q4:'10월 – 12월' };
+  const qColors = { q1:'#94a3b8', q2:'#6366f1', q3:'#10b981', q4:'#f59e0b' };
+
+  let html = '';
+  ['q1','q2','q3','q4'].forEach(q => {
+    const qid = `${year}-${q}`;
+    html += `
+    <div class="quarter-block" id="qblock-${qid}">
+      <button class="quarter-btn" onclick="toggleQuarter('${qid}',this)">
+        <div class="quarter-dot" style="background:${qColors[q]}"></div>
+        <span class="quarter-label">${q.toUpperCase()}</span>
+        <span class="quarter-title" contenteditable="true" spellcheck="false" data-save="${qid}-title">${year}년 ${q.toUpperCase()} 목표를 입력하세요</span>
+        <span class="quarter-date">${qDates[q]}</span>
+        <div class="quarter-progress-wrap">
+          <span class="quarter-progress-num" id="${qid}-qnum">0/0</span>
+          <div class="quarter-progress-track"><div class="quarter-progress-fill" id="${qid}-qfill" style="width:0%;background:${qColors[q]}"></div></div>
+        </div>
+        <span class="quarter-chevron">▾</span>
+      </button>
+      <div class="quarter-panel" id="qpanel-${qid}">
+        <div class="month-nav">
+          ${months[q].map((m,i) => `<button class="mnav-btn${i===0?' active':''}" onclick="showMonth('${qid}','${m}',this)">${monthNames[m]}</button>`).join('')}
+        </div>
+        <div class="quarter-months" id="${qid}-months">
+          ${months[q].map((m, i) => `
+          <div class="month-view${i===0?' active':''}" id="${qid}-m-${m}">
+            <div class="month-intro">
+              <div>
+                <div class="month-heading" contenteditable="true" spellcheck="false" data-save="${qid}-${m}-heading">${monthNames[m]}</div>
+                <div class="month-desc" contenteditable="true" spellcheck="false" data-save="${qid}-${m}-desc">이 달의 방향을 입력하세요</div>
+              </div>
+              <div class="progress-area">
+                <div class="progress-num" id="${qid}-${m}-num">0<span>/0</span></div>
+                <div class="progress-track"><div class="progress-fill" id="${qid}-${m}-fill"></div></div>
+              </div>
+            </div>
+            <div id="${qid}-${m}-weeks"></div>
+            <button class="add-week-btn" onclick="addWeek('${qid}-${m}')">+ 주차 추가</button>
+            <div class="month-note-section">
+              <div class="month-note-title">${monthNames[m]} 메모 / 회고</div>
+              <textarea class="month-note-edit" data-save="${qid}-${m}-note" placeholder="이 달에 대한 생각, 회고..." oninput="saveAll()"></textarea>
+            </div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  });
+  return html;
+}
+
+// save/load에 extraYears 포함
+const _origCollectData = collectData;
+function collectData() {
+  const data = _origCollectData();
+  data['__extraYears'] = extraYears;
+  // 현재 활성 연도 저장
+  const activeBtn = document.querySelector('.year-btn.active');
+  data['__activeYear'] = activeBtn?.id?.replace('ybtn-', '') || '2026';
+  return data;
+}
+
+const _origLoadData = loadData;
+function loadData() {
+  _origLoadData();
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data['__extraYears'] && Array.isArray(data['__extraYears'])) {
+      data['__extraYears'].forEach(y => {
+        if (!extraYears.includes(y)) addYear(y);
+      });
+    }
+    const activeYear = data['__activeYear'] || '2026';
+    const btn = document.getElementById('ybtn-' + activeYear);
+    if (btn) switchYear(activeYear, btn);
+  } catch(e) {}
+}
+
+// ── 실시간 날짜 · 시간 · 달 위상 ──
+const WEEKDAYS_KO = ['일','월','화','수','목','금','토'];
+const WEEKDAYS_EN = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS_KR = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+const MOON_NAMES = {
+  ko: { '🌑':'삭','🌒':'초승달','🌓':'상현달','🌔':'보름 전','🌕':'보름달','🌖':'보름 후','🌗':'하현달','🌘':'그믐달' },
+  en: { '🌑':'New','🌒':'Waxing Crescent','🌓':'First Quarter','🌔':'Waxing Gibbous','🌕':'Full Moon','🌖':'Waning Gibbous','🌗':'Last Quarter','🌘':'Waning Crescent' }
+};
+
+function getMoonPhase(date) {
+  const known = new Date(2000, 0, 6);
+  const diff = (date - known) / (1000 * 60 * 60 * 24);
+  const cycle = 29.53058867;
+  const p = (((diff % cycle) + cycle) % cycle) / cycle;
+  if (p < 0.0625) return '🌑';
+  else if (p < 0.1875) return '🌒';
+  else if (p < 0.3125) return '🌓';
+  else if (p < 0.4375) return '🌔';
+  else if (p < 0.5625) return '🌕';
+  else if (p < 0.6875) return '🌖';
+  else if (p < 0.8125) return '🌗';
+  else if (p < 0.9375) return '🌘';
+  else return '🌑';
+}
+
+function updateClock() {
+  const now = new Date();
+  const emoji = getMoonPhase(now);
+  const lang = currentLang || 'ko';
+
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  const ss = String(now.getSeconds()).padStart(2,'0');
+  const y = now.getFullYear(), d = now.getDate();
+
+  const moonEl = document.getElementById('moon-display');
+  const timeEl = document.getElementById('time-display');
+  const dateEl = document.getElementById('date-display');
+
+  if (moonEl) { moonEl.textContent = emoji; moonEl.title = MOON_NAMES[lang][emoji]; }
+  if (timeEl) timeEl.textContent = `${hh}:${mm}:${ss}`;
+  if (dateEl) {
+    if (lang === 'en') {
+      const mo = MONTHS_EN[now.getMonth()];
+      const wd = WEEKDAYS_EN[now.getDay()];
+      dateEl.textContent = `${wd}, ${mo} ${d}, ${y}`;
+    } else {
+      const mo = MONTHS_KR[now.getMonth()];
+      const wd = WEEKDAYS_KO[now.getDay()];
+      dateEl.textContent = `${y}년 ${mo} ${d}일 (${wd})`;
+    }
+  }
+}
+
+// IP 기반 타임존 자동 반영 (IP API 실패해도 로컬 시간 사용)
+async function initDateTime() {
+  try {
+    const res = await fetch('https://worldtimeapi.org/api/ip', { signal: AbortSignal.timeout(3000) });
+    if (res.ok) {
+      const data = await res.json();
+      // worldtimeapi가 타임존 정보 줌 — 브라우저 Date()는 이미 로컬 타임존 쓰므로
+      // 타임존 이름만 표시에 활용
+      const tz = data.timezone || '';
+      if (tz) {
+        const tzShort = tz.split('/').pop().replace(/_/g,' ');
+        document.getElementById('date-display').title = tz;
+      }
+    }
+  } catch (e) { /* 실패해도 로컬 시간으로 계속 */ }
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+const SAVE_KEY = 'lifemap_template_v2';
+let saveTimer = null;
+
+// ── 크롭 에디터 공통 변수 ──
+let cropSrcImg = null;
+let cropAspect = 0;
+let cropOffX = 0, cropOffY = 0;
+
+// ── 비전 오버레이 ──
+const VISION_KEYS = { 1: 'lifemap_vision_1', 2: 'lifemap_vision_2' };
+let activeCropTarget = null; // 1 or 2 — 어느 패널에서 크롭 열었는지
+
+function toggleVision(n) {
+  const overlay = document.getElementById('vision-overlay-' + n);
+  const btn = document.getElementById('vbtn' + n);
+  // 다른 오버레이 닫기
+  [1, 2].filter(i => i !== n).forEach(i => {
+    document.getElementById('vision-overlay-' + i)?.classList.remove('show');
+    document.getElementById('vbtn' + i)?.classList.remove('active');
+  });
+  const isOpen = overlay.classList.toggle('show');
+  btn.classList.toggle('active', isOpen);
+}
+
+function uploadVisionImg(n, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    setVisionImg(n, e.target.result);
+    visionSave(n, e.target.result);
+    // 원본 보관 후 크롭 에디터 열기
+    loadCropSrc(e.target.result, false);
+    activeCropTarget = n;
+    openCropModal();
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function setVisionImg(n, src) {
+  const img = document.getElementById('vision-img-' + n);
+  const empty = document.querySelector('#vision-body-' + n + ' .vision-empty');
+  img.src = src; img.style.display = 'block';
+  if (empty) empty.style.display = 'none';
+}
+
+function removeVisionImg(n) {
+  const img = document.getElementById('vision-img-' + n);
+  const empty = document.querySelector('#vision-body-' + n + ' .vision-empty');
+  img.src = ''; img.style.display = 'none';
+  if (empty) empty.style.display = 'flex';
+  try { localStorage.removeItem(VISION_KEYS[n]); } catch(e) {}
+}
+
+function visionSave(n, src) {
+  try { localStorage.setItem(VISION_KEYS[n], src); }
+  catch(e) { console.warn('이미지 저장 실패 (5MB 이하 권장)'); }
+}
+
+function visionLoad() {
+  [1, 2].forEach(n => {
+    try {
+      const s = localStorage.getItem(VISION_KEYS[n]);
+      if (s) setVisionImg(n, s);
+    } catch(e) {}
+  });
+}
+
+function openVisionCrop(n) {
+  if (!document.getElementById('vision-img-' + n).src) return;
+  activeCropTarget = n;
+  // 현재 보이는 이미지를 원본으로 로드
+  const src = document.getElementById('vision-img-' + n).src;
+  loadCropSrc(src, false);
+  setTimeout(() => openCropModal(), 100);
+}
+
+// applyCrop 오버라이드 — 비전 패널에 적용
+const _origApplyCrop = window.applyCrop;
+function applyCrop() {
+  if (!cropSrcImg) return;
+  const canvas = document.getElementById('crop-canvas');
+  const out = document.createElement('canvas');
+  out.width = canvas.width * 2; out.height = canvas.height * 2;
+  const ctx = out.getContext('2d');
+  ctx.scale(2, 2);
+  const scale = parseInt(document.getElementById('ctrl-scale').value) / 100;
+  const brightness = parseInt(document.getElementById('ctrl-brightness').value);
+  const contrast = parseInt(document.getElementById('ctrl-contrast').value);
+  const imgW = cropSrcImg.naturalWidth * scale;
+  const imgH = cropSrcImg.naturalHeight * scale;
+  const x = (canvas.width - imgW) / 2 + cropOffX;
+  const y = (canvas.height - imgH) / 2 + cropOffY;
+  ctx.filter = `brightness(${100 + brightness}%) contrast(${100 + contrast}%)`;
+  ctx.drawImage(cropSrcImg, x, y, imgW, imgH);
+  const result = out.toDataURL('image/jpeg', 0.92);
+
+  if (activeCropTarget) {
+    setVisionImg(activeCropTarget, result);
+    visionSave(activeCropTarget, result);
+  }
+  closeCropModal();
+}
+
+// 드래그앤드롭 — 오버레이 body에도 적용
+function setupVisionDrop(n) {
+  const body = document.getElementById('vision-body-' + n);
+  body.addEventListener('dragover', e => e.preventDefault());
+  body.addEventListener('drop', e => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      setVisionImg(n, ev.target.result);
+      visionSave(n, ev.target.result);
+      loadCropSrc(ev.target.result, false);
+      activeCropTarget = n;
+      openCropModal();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// imgLoad / imgSave / imgRemove — 더 이상 별도 배너 없음 (호환용 빈 함수)
+function imgLoad() { visionLoad(); }
+function imgSave() {}
+function imgRemove() {}
+function imgSet() {}
+function imgDragOver(e) { e.preventDefault(); }
+function imgDragLeave() {}
+function imgDrop() {}
+
+// ── CROP EDITOR ──
+// 원본은 절대 덮어쓰지 않음 - cropSrcImg은 업로드 원본만
+function openCropModal() {
+  if (!cropSrcImg) return;
+  // 편집 열 때마다 컨트롤 리셋
+  document.getElementById('ctrl-scale').value = 100;
+  document.getElementById('ctrl-brightness').value = 0;
+  document.getElementById('ctrl-contrast').value = 0;
+  cropOffX = 0; cropOffY = 0;
+  document.getElementById('crop-modal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  // wrap 크기 확정 후 그리기
+  setTimeout(() => drawCrop(), 50);
+}
+
+function closeCropModal() {
+  document.getElementById('crop-modal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function setAspect(val, btn) {
+  cropAspect = val;
+  document.querySelectorAll('.crop-aspect-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  drawCrop();
+}
+
+function drawCrop() {
+  if (!cropSrcImg) return;
+  const canvas = document.getElementById('crop-canvas');
+  const wrap = document.getElementById('cropWrap');
+  const wrapW = wrap.clientWidth || 800;
+  const wrapH = wrap.clientHeight || 360;
+
+  const scale = parseInt(document.getElementById('ctrl-scale').value) / 100;
+  const brightness = parseInt(document.getElementById('ctrl-brightness').value);
+  const contrast = parseInt(document.getElementById('ctrl-contrast').value);
+
+  document.getElementById('val-scale').textContent = Math.round(scale * 100) + '%';
+  document.getElementById('val-brightness').textContent = (brightness >= 0 ? '+' : '') + brightness;
+  document.getElementById('val-contrast').textContent = (contrast >= 0 ? '+' : '') + contrast;
+
+  // 캔버스 출력 크기 = 배너 실제 크기 기준
+  const aspects = [null, 1, 4/3, 16/9];
+  const aspect = aspects[cropAspect];
+  let outW = Math.min(wrapW - 4, 860);
+  let outH;
+  if (aspect) {
+    outH = outW / aspect;
+    if (outH > wrapH - 4) { outH = wrapH - 4; outW = outH * aspect; }
+  } else {
+    outH = Math.min(wrapH - 4, 220);
+  }
+
+  canvas.width = Math.round(outW);
+  canvas.height = Math.round(outH);
+  canvas.style.width = Math.round(outW) + 'px';
+  canvas.style.height = Math.round(outH) + 'px';
+
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // 이미지 그리기 (원본 기준으로 scale + offset)
+  const imgW = cropSrcImg.naturalWidth * scale;
+  const imgH = cropSrcImg.naturalHeight * scale;
+  const x = (canvas.width - imgW) / 2 + cropOffX;
+  const y = (canvas.height - imgH) / 2 + cropOffY;
+
+  ctx.filter = `brightness(${100 + brightness}%) contrast(${100 + contrast}%)`;
+  ctx.drawImage(cropSrcImg, x, y, imgW, imgH);
+  ctx.filter = 'none';
+
+  // 크롭 테두리
+  ctx.strokeStyle = 'rgba(99,102,241,0.9)';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([6, 4]);
+  ctx.strokeRect(0.75, 0.75, canvas.width - 1.5, canvas.height - 1.5);
+  ctx.setLineDash([]);
+
+  // 3등분 격자
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+  ctx.lineWidth = 0.5;
+  for (let i = 1; i <= 2; i++) {
+    ctx.beginPath(); ctx.moveTo(canvas.width * i/3, 0); ctx.lineTo(canvas.width * i/3, canvas.height); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, canvas.height * i/3); ctx.lineTo(canvas.width, canvas.height * i/3); ctx.stroke();
+  }
+}
+
+function applyCrop() {
+  if (!cropSrcImg) return;
+  const canvas = document.getElementById('crop-canvas');
+
+  // 2× 해상도로 export
+  const out = document.createElement('canvas');
+  out.width = canvas.width * 2;
+  out.height = canvas.height * 2;
+  const ctx = out.getContext('2d');
+  ctx.scale(2, 2);
+
+  const scale = parseInt(document.getElementById('ctrl-scale').value) / 100;
+  const brightness = parseInt(document.getElementById('ctrl-brightness').value);
+  const contrast = parseInt(document.getElementById('ctrl-contrast').value);
+  const imgW = cropSrcImg.naturalWidth * scale;
+  const imgH = cropSrcImg.naturalHeight * scale;
+  const x = (canvas.width - imgW) / 2 + cropOffX;
+  const y = (canvas.height - imgH) / 2 + cropOffY;
+
+  ctx.filter = `brightness(${100 + brightness}%) contrast(${100 + contrast}%)`;
+  ctx.drawImage(cropSrcImg, x, y, imgW, imgH);
+
+  const result = out.toDataURL('image/jpeg', 0.92);
+  imgSet(result);
+  imgSave(result);
+  closeCropModal();
+}
+
+// 드래그로 이미지 패닝
+function setupCropDrag() {
+  const wrap = document.getElementById('cropWrap');
+  // 기존 리스너 제거를 위해 플래그 사용
+  if (wrap._cropDragInit) return;
+  wrap._cropDragInit = true;
+
+  let dragging = false, sx = 0, sy = 0;
+
+  wrap.addEventListener('mousedown', e => {
+    if (e.target.tagName === 'BUTTON') return;
+    dragging = true;
+    sx = e.clientX - cropOffX;
+    sy = e.clientY - cropOffY;
+    wrap.style.cursor = 'grabbing';
+  });
+  wrap.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    cropOffX = e.clientX - sx;
+    cropOffY = e.clientY - sy;
+    drawCrop();
+  });
+  wrap.addEventListener('mouseup', () => { dragging = false; wrap.style.cursor = 'grab'; });
+  wrap.addEventListener('mouseleave', () => { dragging = false; wrap.style.cursor = 'grab'; });
+  wrap.addEventListener('touchstart', e => {
+    const t = e.touches[0];
+    dragging = true; sx = t.clientX - cropOffX; sy = t.clientY - cropOffY;
+  }, { passive: true });
+  wrap.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    cropOffX = t.clientX - sx; cropOffY = t.clientY - sy;
+    drawCrop();
+  }, { passive: false });
+  wrap.addEventListener('touchend', () => { dragging = false; });
+  wrap.style.cursor = 'grab';
+
+  window.addEventListener('resize', () => {
+    if (document.getElementById('crop-modal').classList.contains('show')) drawCrop();
+  });
+}
+
+document.addEventListener('click', e => {
+  if (e.target.id === 'crop-modal') closeCropModal();
+});
+// ── QUARTER TOGGLE ──
+function toggleQuarter(qid, btn) {
+  const panel = document.getElementById('qpanel-' + qid);
+  const isOpen = panel.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+}
+
+// ── MONTH SWITCH ──
+function showMonth(qid, mid, btn) {
+  const months = document.getElementById(qid + '-months');
+  if (!months) return;
+  months.querySelectorAll('.month-view').forEach(v => v.classList.remove('active'));
+  const panel = document.getElementById(qid + '-m-' + mid);
+  if (panel) panel.classList.add('active');
+  const nav = months.closest('.quarter-panel')?.querySelector('.month-nav');
+  nav?.querySelectorAll('.mnav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── WEEK TOGGLE ──
+function toggleWeek(bodyId) {
+  const body = document.getElementById(bodyId);
+  if (!body) return;
+  const collapsed = body.classList.toggle('collapsed');
+  const tog = body.closest('.week-block')?.querySelector('.week-toggle');
+  if (tog) tog.classList.toggle('collapsed', collapsed);
+}
+
+// ── SYNC DONE ──
+function syncDone(cb) {
+  const item = cb.closest('.task-item');
+  const txt = item?.querySelector('.task-text-edit');
+  if (txt) txt.classList.toggle('done', cb.checked);
+  updateProgressForItem(item);
+  updateCategoryProgress();
+  saveAll();
+}
+
+function updateProgressForItem(item) {
+  // find the month id from the progress elements
+  const weekBlock = item?.closest('.week-block');
+  if (!weekBlock) return;
+  const list = weekBlock.querySelector('.task-list');
+  if (list) updateWeekCount(list);
+  // find quarter panel and update quarter progress
+  const panel = item?.closest('.quarter-panel');
+  if (panel) {
+    const qid = panel.id.replace('qpanel-', '');
+    updateQuarterProgress(qid);
+  }
+  // also update month progress
+  const monthView = item?.closest('.month-view');
+  if (monthView) {
+    const mid = monthView.id.split('-').pop(); // apr, may, jun, etc.
+    // find progress elements – could be apr-num, may-num, q3-jul-num, etc.
+    const numEl = monthView.querySelector('.progress-num');
+    const fillEl = monthView.querySelector('.progress-fill');
+    if (numEl && fillEl) {
+      const all = monthView.querySelectorAll('.task-cb').length;
+      const done = monthView.querySelectorAll('.task-cb:checked').length;
+      numEl.innerHTML = done + '<span>/' + all + '</span>';
+      fillEl.style.width = (all ? done/all*100 : 0) + '%';
+    }
+  }
+}
+
+// ── PIN ──
+function togglePin(btn) {
+  const item = btn.closest('.task-item');
+  const list = item.closest('.task-list');
+  const isPinned = item.classList.toggle('pinned-task');
+  btn.classList.toggle('pinned', isPinned);
+  btn.title = isPinned ? '핀 해제' : '상단 고정';
+  if (isPinned) list.insertBefore(item, list.firstChild);
+  else {
+    const lastPinned = [...list.querySelectorAll('.task-item.pinned-task')].pop();
+    if (lastPinned) lastPinned.after(item);
+  }
+  updateProgressForItem(item);
+  saveAll();
+}
+
+// ── DRAG ──
+let dragSrc = null;
+function initDrag(item) {
+  item.setAttribute('draggable', 'true');
+  item.addEventListener('dragstart', e => { dragSrc = item; item.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+  item.addEventListener('dragend', () => {
+    item.classList.remove('dragging');
+    document.querySelectorAll('.task-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+    updateProgressForItem(item); saveAll(); dragSrc = null;
+  });
+  item.addEventListener('dragover', e => {
+    e.preventDefault();
+    if (!dragSrc || dragSrc === item || dragSrc.closest('.task-list') !== item.closest('.task-list')) return;
+    document.querySelectorAll('.task-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+    item.classList.add('drag-over');
+  });
+  item.addEventListener('drop', e => {
+    e.preventDefault();
+    if (!dragSrc || dragSrc === item || dragSrc.closest('.task-list') !== item.closest('.task-list')) return;
+    item.classList.remove('drag-over');
+    const list = item.parentNode;
+    const items = [...list.children];
+    if (items.indexOf(dragSrc) < items.indexOf(item)) item.after(dragSrc);
+    else item.before(dragSrc);
+    [...list.querySelectorAll('.task-item.pinned-task')].forEach(p => list.insertBefore(p, list.firstChild));
+    saveAll();
+  });
+}
+
+// ── CREATE TASK ITEM ──
+function createTaskItem(monthId, opts = {}) {
+  const { checked=false, text='할 일을 입력하세요', due='날짜', tagCls='tag task-tag', tagLabel='태그 없음', tagColor='', pinned=false } = opts;
+  const item = document.createElement('div');
+  item.className = 'task-item' + (pinned ? ' pinned-task' : '');
+  const tagStyle = tagColor ? `style="background:${tagColor};color:#fff"` : `style="background:var(--border);color:var(--text3)"`;
+  item.innerHTML = `
+    <span class="drag-handle" title="드래그로 순서 변경">⠿</span>
+    <input type="checkbox" class="task-cb" ${checked?'checked':''} onchange="syncDone(this)">
+    <div class="task-text-wrap">
+      <span class="${tagCls}" ${tagStyle} onclick="openTagPicker(this)">${tagLabel}</span>
+      <span class="task-text-edit${checked?' done':''}" contenteditable="true" spellcheck="false">${text}</span>
+    </div>
+    <span class="task-due" contenteditable="true" spellcheck="false">${due}</span>
+    <button class="pin-btn${pinned?' pinned':''}" onclick="togglePin(this)" title="${pinned?'핀 해제':'상단 고정'}">📌</button>
+    <button class="task-del" onclick="delTask(this)">✕</button>`;
+  initDrag(item);
+  return item;
+}
+
+// ── ADD TASK ──
+function addTask(listId, monthId) {
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const item = createTaskItem(monthId);
+  list.appendChild(item);
+  item.style.opacity = '0';
+  requestAnimationFrame(() => { item.style.transition = 'opacity 0.2s'; item.style.opacity = '1'; });
+  item.querySelector('.task-text-edit').focus();
+  updateWeekCount(list);
+  saveAll();
+}
+
+// ── DEL TASK ──
+function delTask(btn) {
+  const item = btn.closest('.task-item');
+  const list = item.closest('.task-list');
+  item.style.opacity = '0'; item.style.transition = 'opacity 0.2s';
+  setTimeout(() => { item.remove(); if(list) updateWeekCount(list); updateProgressForItem({closest:()=>list?.closest('.quarter-panel')}); saveAll(); }, 200);
+}
+
+// ── ADD WEEK ──
+let weekCounter = 200;
+function addWeek(monthId) {
+  const container = document.getElementById(monthId + '-weeks');
+  if (!container) return;
+  const n = container.querySelectorAll('.week-block').length + 1;
+  const id = monthId + '-w' + (weekCounter++);
+  const t = I18N[currentLang || 'ko'];
+  const div = document.createElement('div');
+  div.className = 'week-block'; div.id = id;
+  div.innerHTML = `
+    <div class="week-header" onclick="toggleWeek('${id}-body')">
+      <span class="week-num">W${n}</span>
+      <span class="week-title-edit" contenteditable="true" spellcheck="false" data-save="${id}-title">${t.weekTitlePH ? t.weekTitlePH(n) : n+'주차'}</span>
+      <span class="week-dates" contenteditable="true" spellcheck="false">${t.weekDatePH || '날짜'}</span>
+      <span class="week-focus-badge" contenteditable="true" spellcheck="false">${t.weekFocusPH || '주제'}</span>
+      <span class="week-task-count" id="${id}-count">0/0</span>
+      <span class="week-toggle">▾</span>
+    </div>
+    <div class="week-body" id="${id}-body">
+      <div class="task-list" id="${id}-tasks"></div>
+      <button class="add-task-btn" onclick="addTask('${id}-tasks','${monthId}')">${t.addTask}</button>
+      <div class="note-section"><div class="note-label">${currentLang==='en'?'Notes':'메모'}</div><textarea class="note-edit" data-save="${id}-note" placeholder="${t.weekNotePH}" oninput="saveAll()"></textarea></div>
+    </div>`;
+  container.appendChild(div);
+  div.style.opacity = '0';
+  requestAnimationFrame(() => { div.style.transition = 'opacity 0.3s'; div.style.opacity = '1'; });
+  div.querySelector('.week-title-edit').focus();
+  saveAll();
+}
+
+// ── WEEK COUNT ──
+function updateWeekCount(list) {
+  const block = list?.closest('.week-block');
+  const countEl = block?.querySelector('.week-task-count');
+  if (!countEl) return;
+  const all = list.querySelectorAll('.task-cb').length;
+  const done = list.querySelectorAll('.task-cb:checked').length;
+  countEl.textContent = done + '/' + all;
+  countEl.classList.toggle('all-done', all > 0 && done === all);
+}
+
+// ── QUARTER PROGRESS ──
+function updateQuarterProgress(qid) {
+  const panel = document.getElementById('qpanel-' + qid);
+  if (!panel) return;
+  const all = panel.querySelectorAll('.task-cb').length;
+  const done = panel.querySelectorAll('.task-cb:checked').length;
+  const pct = all ? done/all*100 : 0;
+  const numEl = document.getElementById(qid + '-qnum');
+  const fillEl = document.getElementById(qid + '-qfill');
+  if (numEl) numEl.textContent = done + '/' + all;
+  if (fillEl) fillEl.style.width = pct + '%';
+}
+
+function updateAllProgress() {
+  // per month
+  document.querySelectorAll('.month-view').forEach(mv => {
+    const numEl = mv.querySelector('.progress-num');
+    const fillEl = mv.querySelector('.progress-fill');
+    if (!numEl || !fillEl) return;
+    const all = mv.querySelectorAll('.task-cb').length;
+    const done = mv.querySelectorAll('.task-cb:checked').length;
+    numEl.innerHTML = done + '<span>/' + all + '</span>';
+    fillEl.style.width = (all ? done/all*100 : 0) + '%';
+  });
+  // per week
+  document.querySelectorAll('.task-list').forEach(list => updateWeekCount(list));
+  // per quarter
+  ['q1','q2','q3','q4'].forEach(updateQuarterProgress);
+  // category dashboard
+  updateCategoryProgress();
+}
+
+// ── CATEGORY SYSTEM ──
+const CAT_COLORS = [
+  '#6366f1','#ec4899','#f97316','#ef4444','#10b981',
+  '#0ea5e9','#a855f7','#14b8a6','#f59e0b','#84cc16',
+  '#06b6d4','#e11d48','#7c3aed','#059669','#d97706',
+  '#2563eb','#db2777','#65a30d','#0891b2','#dc2626'
+];
+
+// categories: [{id, name, color}]
+let categories = [];
+let catCounter = 0;
+
+function defaultCategories() {
+  return [];
+}
+
+function getCatById(id) { return categories.find(c => c.id === id); }
+
+function addCategory(name, color) {
+  const id = 'cat-' + (catCounter++);
+  const cat = {
+    id,
+    name: name || '새 카테고리',
+    color: color || CAT_COLORS[categories.length % CAT_COLORS.length]
+  };
+  categories.push(cat);
+  renderCategoryBar(cat);
+  updateCatEmptyHint();
+  rebuildTagOptions();
+  saveAll();
+  // focus the new name
+  setTimeout(() => {
+    document.getElementById('cat-name-' + id)?.focus();
+  }, 50);
+}
+
+function removeCategory(id) {
+  categories = categories.filter(c => c.id !== id);
+  document.getElementById('cat-row-' + id)?.remove();
+  updateCatEmptyHint();
+  rebuildTagOptions();
+  saveAll();
+}
+
+function renderCategoryBar(cat) {
+  const bars = document.getElementById('catBars');
+  const row = document.createElement('div');
+  row.className = 'cat-row';
+  row.id = 'cat-row-' + cat.id;
+  row.innerHTML = `
+    <div class="cat-label-wrap">
+      <div class="cat-color-dot" id="cat-dot-${cat.id}" style="background:${cat.color}" onclick="openColorPicker('${cat.id}',this)" title="색상 변경"></div>
+      <span class="cat-name" id="cat-name-${cat.id}" contenteditable="true" spellcheck="false"
+        onblur="renameCat('${cat.id}',this)" onkeydown="if(event.key==='Enter'){this.blur()}">${cat.name}</span>
+    </div>
+    <div class="cat-bar-track">
+      <div class="cat-bar-fill" id="cat-fill-${cat.id}" style="background:${cat.color};width:0%"></div>
+    </div>
+    <span class="cat-pct" id="cat-pct-${cat.id}">0%</span>
+    <span class="cat-count" id="cat-count-${cat.id}">0/0</span>
+    <button class="cat-del-btn" onclick="removeCategory('${cat.id}')" title="삭제">✕</button>
+  `;
+  bars.appendChild(row);
+}
+
+function renameCat(id, el) {
+  const cat = getCatById(id);
+  if (cat) { cat.name = el.innerText.trim() || cat.name; }
+  rebuildTagOptions();
+  saveAll();
+}
+
+// Color picker
+let activeCatColorId = null;
+function openColorPicker(catId, dotEl) {
+  document.getElementById('cat-color-picker-popup')?.remove();
+  activeCatColorId = catId;
+  const cat = getCatById(catId);
+  const popup = document.createElement('div');
+  popup.id = 'cat-color-picker-popup';
+  popup.className = 'cat-color-picker';
+  CAT_COLORS.forEach(c => {
+    const sw = document.createElement('div');
+    sw.className = 'cat-color-swatch' + (cat.color === c ? ' selected' : '');
+    sw.style.background = c;
+    sw.onclick = () => {
+      cat.color = c;
+      document.getElementById('cat-dot-' + catId).style.background = c;
+      document.getElementById('cat-fill-' + catId).style.background = c;
+      document.getElementById('cat-color-picker-popup')?.remove();
+      rebuildTagOptions();
+      updateCategoryProgress();
+      saveAll();
+    };
+    popup.appendChild(sw);
+  });
+  document.body.appendChild(popup);
+  const rect = dotEl.getBoundingClientRect();
+  popup.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+  popup.style.left = (rect.left + window.scrollX) + 'px';
+  setTimeout(() => document.addEventListener('click', outsideColorClick, {once:true}), 0);
+}
+function outsideColorClick(e) {
+  if (!e.target.closest('#cat-color-picker-popup')) {
+    document.getElementById('cat-color-picker-popup')?.remove();
+  }
+}
+
+function updateCatEmptyHint() {
+  const hint = document.getElementById('catEmptyHint');
+  if (hint) hint.style.display = categories.length === 0 ? 'block' : 'none';
+}
+
+function toggleDashboard() {
+  const bars = document.getElementById('catBars');
+  const btn = document.getElementById('dashToggleBtn');
+  const hidden = bars.style.display === 'none';
+  bars.style.display = hidden ? '' : 'none';
+  btn.textContent = hidden ? '접기' : '펼치기';
+}
+
+// ── TAG OPTIONS — dynamically driven by categories ──
+let TAG_OPTIONS = [];
+
+function rebuildTagOptions() {
+  TAG_OPTIONS = categories.map(c => ({
+    cls: 'cat-dyn-' + c.id,
+    label: c.name,
+    color: c.color
+  }));
+  // inject dynamic CSS for each cat
+  let styleEl = document.getElementById('cat-dyn-styles');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'cat-dyn-styles';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = categories.map(c =>
+    `.cat-dyn-${c.id} { background: ${c.color}; color: #fff; }`
+  ).join('\n');
+}
+
+// ── CATEGORY PROGRESS ──
+function updateCategoryProgress() {
+  if (categories.length === 0) return;
+  // collect all task-items
+  const allItems = document.querySelectorAll('.task-item');
+  const stats = {}; // catId -> {done, total}
+  categories.forEach(c => { stats[c.id] = {done:0, total:0}; });
+
+  allItems.forEach(item => {
+    const tagEl = item.querySelector('.tag');
+    if (!tagEl) return;
+    // match by className
+    const cls = [...tagEl.classList].find(cl => cl.startsWith('cat-dyn-'));
+    if (!cls) return;
+    const catId = cls.replace('cat-dyn-', '');
+    if (!stats[catId]) return;
+    stats[catId].total++;
+    if (item.querySelector('.task-cb')?.checked) stats[catId].done++;
+  });
+
+  categories.forEach(c => {
+    const s = stats[c.id];
+    const pct = s.total ? Math.round(s.done / s.total * 100) : 0;
+    const fillEl = document.getElementById('cat-fill-' + c.id);
+    const pctEl = document.getElementById('cat-pct-' + c.id);
+    const cntEl = document.getElementById('cat-count-' + c.id);
+    if (fillEl) fillEl.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (cntEl) cntEl.textContent = s.done + '/' + s.total;
+  });
+}
+
+// ── TAG PICKER (dynamic) ──
+let activeTagEl = null;
+function openTagPicker(tagEl) {
+  closeTagPicker(); activeTagEl = tagEl;
+  const picker = document.createElement('div'); picker.id = 'tag-picker';
+  if (TAG_OPTIONS.length === 0) {
+    picker.innerHTML = `<div style="padding:10px 12px;font-size:0.75rem;color:var(--text3);white-space:nowrap">
+      카테고리를 먼저 추가하세요</div>`;
+  } else {
+    picker.innerHTML = TAG_OPTIONS.map(t =>
+      `<div class="tp-option" onclick="selectTag('${t.cls}','${t.label}')">
+        <span class="tag ${t.cls}" style="background:${t.color};color:#fff">${t.label}</span>
+      </div>`
+    ).join('');
+    picker.style.gridTemplateColumns = TAG_OPTIONS.length <= 3 ? '1fr' : TAG_OPTIONS.length <= 6 ? '1fr 1fr' : '1fr 1fr 1fr';
+  }
+  document.body.appendChild(picker);
+  const rect = tagEl.getBoundingClientRect();
+  const pickerW = 240;
+  let left = rect.left + window.scrollX;
+  // 화면 밖으로 나가면 안으로 당기기
+  if (left + pickerW > window.innerWidth - 8) {
+    left = window.innerWidth - pickerW - 8;
+  }
+  picker.style.top = (rect.bottom + window.scrollY + 4) + 'px';
+  picker.style.left = Math.max(8, left) + 'px';
+  setTimeout(() => document.addEventListener('click', outsideTagClick, {once:true}), 0);
+}
+function selectTag(cls, label) {
+  if (!activeTagEl) return;
+  // find color from categories
+  const cat = categories.find(c => 'cat-dyn-' + c.id === cls);
+  activeTagEl.className = 'tag ' + cls + ' task-tag';
+  if (cat) activeTagEl.style.cssText = `background:${cat.color};color:#fff`;
+  activeTagEl.textContent = label; closeTagPicker();
+  updateCategoryProgress(); saveAll();
+}
+function closeTagPicker() { document.getElementById('tag-picker')?.remove(); activeTagEl = null; }
+function outsideTagClick(e) { if (!e.target.closest('#tag-picker') && !e.target.classList.contains('task-tag')) closeTagPicker(); }
+
+// ── SAVE / LOAD ──
+function collectData() {
+  const data = {};
+  document.querySelectorAll('[data-save]').forEach(el => {
+    const key = el.dataset.save;
+    data[key] = (el.tagName === 'TEXTAREA') ? el.value : (el.innerText || '');
+  });
+  // tasks
+  const taskData = {};
+  document.querySelectorAll('.task-list[id]').forEach(list => {
+    taskData[list.id] = [];
+    list.querySelectorAll('.task-item').forEach(item => {
+      const tag = item.querySelector('.tag');
+      taskData[list.id].push({
+        checked: item.querySelector('.task-cb')?.checked || false,
+        text: item.querySelector('.task-text-edit')?.innerText || '',
+        due: item.querySelector('.task-due')?.innerText || '',
+        tag: tag?.innerText || '',
+        tagClass: tag?.className || 'tag task-tag',
+        tagColor: tag?.style.background || '',
+        pinned: item.classList.contains('pinned-task')
+      });
+    });
+  });
+  data['__tasks'] = taskData;
+  // categories
+  data['__categories'] = categories;
+  data['__catCounter'] = catCounter;
+  // dynamic weeks HTML per weeks-container
+  const weekBlocks = {};
+  document.querySelectorAll('[id$="-weeks"]').forEach(c => { weekBlocks[c.id] = c.innerHTML; });
+  data['__weekBlocks'] = weekBlocks;
+  // quarter open states
+  const qStates = {};
+  ['q1','q2','q3','q4'].forEach(q => { qStates[q] = document.getElementById('qpanel-'+q)?.classList.contains('open') || false; });
+  data['__qStates'] = qStates;
+  return data;
+}
+
+function saveAll() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify(collectData())); showSaveStatus(); }
+    catch(e) { console.warn('Save failed', e); }
+  }, 600);
+}
+
+function showSaveStatus() {
+  const el = document.getElementById('saveStatus');
+  el.style.opacity = '1'; clearTimeout(el._t);
+  el._t = setTimeout(() => { el.style.opacity = '0'; }, 2000);
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    // restore categories
+    if (data['__categories'] && Array.isArray(data['__categories'])) {
+      categories = [];
+      catCounter = data['__catCounter'] || 0;
+      const bars = document.getElementById('catBars');
+      // clear existing bars (keep empty hint)
+      bars.querySelectorAll('.cat-row').forEach(r => r.remove());
+      data['__categories'].forEach(c => {
+        categories.push(c);
+        renderCategoryBar(c);
+      });
+      rebuildTagOptions();
+      updateCatEmptyHint();
+    }
+    // restore week blocks first
+    if (data['__weekBlocks']) {
+      Object.entries(data['__weekBlocks']).forEach(([id, html]) => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = html;
+      });
+    }
+    // restore text fields
+    document.querySelectorAll('[data-save]').forEach(el => {
+      const v = data[el.dataset.save];
+      if (v === undefined) return;
+      if (el.tagName === 'TEXTAREA') el.value = v;
+      else el.innerText = v;
+    });
+    // restore tasks
+    if (data['__tasks']) {
+      Object.entries(data['__tasks']).forEach(([listId, tasks]) => {
+        const list = document.getElementById(listId);
+        if (!list) return;
+        list.innerHTML = '';
+        tasks.forEach(t => {
+          const item = createTaskItem(listId.replace(/-tasks$/, ''), {
+            checked: t.checked, text: t.text, due: t.due,
+            tagCls: t.tagClass || 'tag tag-store task-tag',
+            tagLabel: t.tag || '스토어', pinned: t.pinned || false
+          });
+          list.appendChild(item);
+        });
+      });
+    }
+    // restore quarter open states
+    if (data['__qStates']) {
+      Object.entries(data['__qStates']).forEach(([q, isOpen]) => {
+        const panel = document.getElementById('qpanel-' + q);
+        const btn = panel?.previousElementSibling;
+        if (panel && isOpen) { panel.classList.add('open'); btn?.classList.add('open'); }
+        else if (panel) { panel.classList.remove('open'); btn?.classList.remove('open'); }
+      });
+    }
+  } catch(e) { console.warn('Load failed', e); }
+}
+
+// click row to toggle checkbox
+document.addEventListener('click', e => {
+  const item = e.target.closest('.task-item');
+  if (!item) return;
+  if (e.target.classList.contains('task-cb') || e.target.isContentEditable ||
+      e.target.tagName === 'BUTTON' || e.target.classList.contains('task-tag') ||
+      e.target.classList.contains('drag-handle')) return;
+  const cb = item.querySelector('.task-cb');
+  cb.checked = !cb.checked; syncDone(cb);
+});
+
+// auto-save on edit
+document.addEventListener('input', e => {
+  if (e.target.isContentEditable || e.target.tagName === 'TEXTAREA') saveAll();
+});
+
+// Init
+window.addEventListener('DOMContentLoaded', () => {
+  initDateTime();
+  imgLoad();
+  loadData();
+  setupCropDrag();
+  setupVisionDrop(1);
+  setupVisionDrop(2);
+  initLang();
+  // sticky 헤더 높이 측정 → CSS 변수로
+  const updateStickyH = () => {
+    const h = document.querySelector('.sticky-top')?.offsetHeight || 0;
+    document.documentElement.style.setProperty('--sticky-h', h + 'px');
+    // year-nav top도 같이 업데이트
+    const yn = document.querySelector('.year-nav');
+    if (yn) yn.style.top = h + 'px';
+  };
+  updateStickyH();
+  new ResizeObserver(updateStickyH).observe(document.querySelector('.sticky-top'));
+  // upgrade hardcoded task items (add drag handles)
+  document.querySelectorAll('.task-item').forEach(item => {
+    if (!item.querySelector('.drag-handle')) {
+      const h = document.createElement('span');
+      h.className = 'drag-handle'; h.title = '드래그로 순서 변경'; h.textContent = '⠿';
+      item.insertBefore(h, item.firstChild);
+    }
+    initDrag(item);
+  });
+  updateAllProgress();
+});
+</script>
+<!-- 비전 오버레이 패널 1 — 인생 시각화 -->
+<div class="vision-overlay" id="vision-overlay-1">
+  <div class="vision-overlay-inner">
+    <div class="vision-overlay-header">
+      <span class="vision-overlay-title">🌏 내 인생 시각화</span>
+      <div class="vision-overlay-actions">
+        <button class="vision-overlay-btn" onclick="document.getElementById('img-input-1').click()">↑ 사진 업로드</button>
+        <button class="vision-overlay-btn" onclick="openVisionCrop(1)">✏ 편집</button>
+        <button class="vision-overlay-btn" onclick="removeVisionImg(1)">✕</button>
+        <button class="vision-overlay-close" onclick="toggleVision(1)">닫기</button>
+      </div>
+    </div>
+    <div class="vision-overlay-body" id="vision-body-1">
+      <div class="vision-empty" onclick="document.getElementById('img-input-1').click()">
+        <span style="font-size:2rem;opacity:0.3">🖼</span>
+        <span>클릭해서 이미지 업로드</span>
+      </div>
+      <img id="vision-img-1" style="display:none;width:100%;max-height:80vh;object-fit:contain" alt="">
+    </div>
+
+  </div>
+</div>
+
+<!-- 비전 오버레이 패널 2 — 2026 말 이룬 나 -->
+<div class="vision-overlay" id="vision-overlay-2">
+  <div class="vision-overlay-inner">
+    <div class="vision-overlay-header">
+      <span class="vision-overlay-title">✨ 2026년 말, 모든 걸 이룬 나</span>
+      <div class="vision-overlay-actions">
+        <button class="vision-overlay-btn" onclick="document.getElementById('img-input-2').click()">↑ 사진 업로드</button>
+        <button class="vision-overlay-btn" onclick="openVisionCrop(2)">✏ 편집</button>
+        <button class="vision-overlay-btn" onclick="removeVisionImg(2)">✕</button>
+        <button class="vision-overlay-close" onclick="toggleVision(2)">닫기</button>
+      </div>
+    </div>
+    <div class="vision-overlay-body" id="vision-body-2">
+      <div class="vision-empty" onclick="document.getElementById('img-input-2').click()">
+        <span style="font-size:2rem;opacity:0.3">🖼</span>
+        <span>클릭해서 이미지 업로드</span>
+      </div>
+      <img id="vision-img-2" style="display:none;width:100%;max-height:80vh;object-fit:contain" alt="">
+    </div>
+
+  </div>
+</div>
+
+<!-- 크롭 에디터 모달 -->
+<div id="crop-modal">
+  <div class="crop-box">
+    <div class="crop-header">
+      <span class="crop-title">이미지 편집</span>
+      <div class="crop-header-actions">
+        <button class="crop-header-btn crop-cancel" onclick="closeCropModal()">취소</button>
+        <button class="crop-header-btn crop-apply" onclick="applyCrop()">✓ 적용</button>
+      </div>
+    </div>
+    <div class="crop-canvas-wrap" id="cropWrap">
+      <canvas id="crop-canvas"></canvas>
+    </div>
+    <div class="crop-controls">
+      <div class="crop-ctrl-group">
+        <span class="crop-ctrl-label">밝기</span>
+        <input type="range" id="ctrl-brightness" min="-100" max="100" value="0" oninput="drawCrop()">
+        <span class="crop-ctrl-val" id="val-brightness">0</span>
+      </div>
+      <div class="crop-ctrl-group">
+        <span class="crop-ctrl-label">대비</span>
+        <input type="range" id="ctrl-contrast" min="-100" max="100" value="0" oninput="drawCrop()">
+        <span class="crop-ctrl-val" id="val-contrast">0</span>
+      </div>
+      <div class="crop-ctrl-group">
+        <span class="crop-ctrl-label">크기</span>
+        <input type="range" id="ctrl-scale" min="10" max="300" value="100" oninput="drawCrop()">
+        <span class="crop-ctrl-val" id="val-scale">100%</span>
+      </div>
+      <div class="crop-ctrl-group" style="flex:none">
+        <span class="crop-ctrl-label">비율</span>
+        <div class="crop-aspect-btns">
+          <button class="crop-aspect-btn active" onclick="setAspect(0,this)">자유</button>
+          <button class="crop-aspect-btn" onclick="setAspect(3,this)">와이드</button>
+          <button class="crop-aspect-btn" onclick="setAspect(1,this)">1:1</button>
+          <button class="crop-aspect-btn" onclick="setAspect(2,this)">4:3</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<input type="file" id="img-input-1" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(1,this)">
+<input type="file" id="img-input-2" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(2,this)">
+<script>
+(function() {
+  window.saveAll = function() {};
+  window.visionSave = function() {};
+  document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+      document.querySelectorAll('.task-list').forEach(l => l.innerHTML = '');
+      var clears = {
+        'apr-heading':'4월','apr-desc':'','may-heading':'5월','may-desc':'',
+        'jun-heading':'6월','jun-desc':'','q2-title':'2분기 목표를 입력하세요',
+        'q1-title':'1분기 목표를 입력하세요','q3-title':'3분기 목표를 입력하세요',
+        'q4-title':'4분기 목표를 입력하세요','goal-life':'','goal-30-35':'',
+        'goal-35-40':'','goal-2026':''
+      };
+      Object.entries(clears).forEach(([k,v]) => {
+        var el = document.querySelector('[data-save="'+k+'"]');
+        if (el) el.innerText = v;
+      });
+      var st = document.getElementById('siteTitle');
+      if (st) st.innerText = '나의 인생 로드맵';
+      ['apr-w1','apr-w2','apr-w3','apr-w4','may-w1','may-w2','may-w3','may-w4',
+       'jun-w1','jun-w2','jun-w3','jun-w4'].forEach((id,i) => {
+        var el = document.querySelector('[data-save="'+id+'-title"]');
+        if (el) el.innerText = (i%4+1)+'주차';
+      });
+      document.querySelectorAll('.week-dates').forEach(el => el.textContent='');
+      document.querySelectorAll('.week-focus-badge[contenteditable]').forEach(el => el.textContent='주제');
+      document.querySelectorAll('textarea[data-save]').forEach(el => el.value='');
+      [1,2].forEach(n => {
+        var img = document.getElementById('vision-img-'+n);
+        var empty = document.querySelector('#vision-body-'+n+' .vision-empty');
+        if (img) { img.src=''; img.style.display='none'; }
+        if (empty) empty.style.display='flex';
+      });
+      updateAllProgress();
+    }, 50);
+  });
+})();
+</script>
+</body>
+</html>
