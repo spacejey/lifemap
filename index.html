@@ -1049,7 +1049,17 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
         </div>
         <div id="date-display" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.62rem;font-weight:500;color:var(--text3);letter-spacing:0.04em;margin-top:1px;white-space:nowrap"></div>
       </div>
+      <!-- 헤더 전체 접기 버튼 -->
+      <button id="stickyCollapseBtn" onclick="toggleStickyMain()" title="헤더 접기/펼치기" style="
+        margin-left:0.5rem;flex-shrink:0;width:28px;height:28px;
+        border-radius:99px;border:1.5px solid var(--border2);
+        background:var(--surface2);color:var(--text3);cursor:pointer;
+        font-size:0.7rem;transition:all 0.18s;display:flex;align-items:center;justify-content:center;
+      ">▴</button>
     </div>
+
+    <!-- 접히는 영역: 목표 + 카테고리 -->
+    <div id="stickyMain" style="overflow:hidden;transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1),opacity 0.25s;max-height:400px;opacity:1;">
 
     <!-- 인생 목표 -->
     <div class="goals-section">
@@ -1085,6 +1095,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
       </div>
     </div>
 
+  </div><!-- /stickyMain -->
   </div>
 </div>
 <!-- ══════════════════════════════════════
@@ -1913,26 +1924,49 @@ let cropOffX = 0, cropOffY = 0;
 const VISION_KEYS = { 1: 'lifemap_vision_1', 2: 'lifemap_vision_2' };
 let activeCropTarget = null; // 1 or 2 — 어느 패널에서 크롭 열었는지
 
-// ── 헤더 접기/펼치기 ──
+// ── 헤더 전체 접기/펼치기 ──
+let stickyCollapsed = false;
+function toggleStickyMain() {
+  stickyCollapsed = !stickyCollapsed;
+  const main = document.getElementById('stickyMain');
+  const btn = document.getElementById('stickyCollapseBtn');
+  if (stickyCollapsed) {
+    main.style.maxHeight = '0';
+    main.style.opacity = '0';
+    btn.textContent = '▾';
+    btn.title = currentLang === 'en' ? 'Expand header' : '헤더 펼치기';
+  } else {
+    main.style.maxHeight = '400px';
+    main.style.opacity = '1';
+    btn.textContent = '▴';
+    btn.title = currentLang === 'en' ? 'Collapse header' : '헤더 접기';
+  }
+  setTimeout(updateStickyHeight, 370);
+  saveAll();
+}
+
+function updateStickyHeight() {
+  const h = document.querySelector('.sticky-top')?.offsetHeight || 0;
+  document.documentElement.style.setProperty('--sticky-h', h + 'px');
+  const yn = document.querySelector('.year-nav');
+  if (yn) yn.style.top = h + 'px';
+  const cb = document.querySelector('.header-collapse-bar');
+  if (cb) cb.style.top = h + 'px';
+}
+
+// ── 헤더 접기/펼치기 (카테고리+연도 영역) ──
 let headerCollapsed = false;
 function toggleHeaderExtra() {
   headerCollapsed = !headerCollapsed;
   const extra = document.getElementById('headerExtra');
   const icon = document.getElementById('headerCollapseIcon');
   const label = document.getElementById('headerCollapseLabel');
-  const t = I18N[currentLang || 'ko'];
   extra.classList.toggle('collapsed', headerCollapsed);
   icon.style.transform = headerCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
-  label.textContent = headerCollapsed ? (currentLang==='en'?'Expand':'펼치기') : (currentLang==='en'?'Collapse':'접기');
-  // sticky-h 업데이트
-  setTimeout(() => {
-    const h = document.querySelector('.sticky-top')?.offsetHeight || 0;
-    document.documentElement.style.setProperty('--sticky-h', h + 'px');
-    const yn = document.querySelector('.year-nav');
-    if (yn) yn.style.top = h + 'px';
-    const cb = document.querySelector('.header-collapse-bar');
-    if (cb) cb.style.top = h + 'px';
-  }, 360);
+  label.textContent = headerCollapsed
+    ? (currentLang==='en' ? 'Expand' : '펼치기')
+    : (currentLang==='en' ? 'Collapse' : '접기');
+  setTimeout(updateStickyHeight, 360);
   saveAll();
 }
 
@@ -1947,16 +1981,35 @@ function toggleVision(n) {
   btn.classList.toggle('active', isOpen);
 }
 
+// 이미지 압축 후 저장 (localStorage 5MB 제한 대응)
+function compressImage(src, maxW, maxH, quality, callback) {
+  const img = new Image();
+  img.onload = () => {
+    let w = img.width, h = img.height;
+    const ratio = Math.min(maxW / w, maxH / h, 1);
+    w = Math.round(w * ratio); h = Math.round(h * ratio);
+    const cv = document.createElement('canvas');
+    cv.width = w; cv.height = h;
+    cv.getContext('2d').drawImage(img, 0, 0, w, h);
+    callback(cv.toDataURL('image/jpeg', quality));
+  };
+  img.src = src;
+}
+
 function uploadVisionImg(n, input) {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     const src = e.target.result;
+    // 원본 표시는 바로, 저장은 압축 후
     setVisionImg(n, src);
-    visionSave(n, src);
     activeCropTarget = n;
-    loadCropSrc(src, true); // true = 로드 후 크롭 에디터 자동 열기
+    loadCropSrc(src, true);
+    // 압축 저장 (최대 1920px, 품질 0.82)
+    compressImage(src, 1920, 1920, 0.82, compressed => {
+      visionSave(n, compressed);
+    });
   };
   reader.readAsDataURL(file);
   input.value = '';
@@ -1978,8 +2031,19 @@ function removeVisionImg(n) {
 }
 
 function visionSave(n, src) {
-  try { localStorage.setItem(VISION_KEYS[n], src); }
-  catch(e) { console.warn('이미지 저장 실패 (5MB 이하 권장)'); }
+  try {
+    localStorage.setItem(VISION_KEYS[n], src);
+  } catch(e) {
+    // 저장 실패 시 기존 이미지 지우고 재시도
+    try {
+      localStorage.removeItem(VISION_KEYS[n]);
+      localStorage.setItem(VISION_KEYS[n], src);
+    } catch(e2) {
+      showToast(currentLang === 'en'
+        ? '⚠ Image too large to save (try a smaller file)'
+        : '⚠ 이미지가 너무 커서 저장 실패 (더 작은 파일 사용)');
+    }
+  }
 }
 
 function visionLoad() {
@@ -2020,7 +2084,9 @@ function applyCrop() {
 
   if (activeCropTarget) {
     setVisionImg(activeCropTarget, result);
-    visionSave(activeCropTarget, result);
+    compressImage(result, 1920, 1920, 0.82, compressed => {
+      visionSave(activeCropTarget, compressed);
+    });
   }
   closeCropModal();
 }
@@ -2052,11 +2118,13 @@ function setupVisionDrop(n) {
     if (!file || !file.type.startsWith('image/')) return;
     const reader = new FileReader();
     reader.onload = ev => {
-      setVisionImg(n, ev.target.result);
-      visionSave(n, ev.target.result);
-      loadCropSrc(ev.target.result, false);
+      const src = ev.target.result;
+      setVisionImg(n, src);
       activeCropTarget = n;
-      openCropModal();
+      loadCropSrc(src, true);
+      compressImage(src, 1920, 1920, 0.82, compressed => {
+        visionSave(n, compressed);
+      });
     };
     reader.readAsDataURL(file);
   });
@@ -2970,14 +3038,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   imgLoad();
   initLang();
 
-  const updateStickyH = () => {
-    const h = document.querySelector('.sticky-top')?.offsetHeight || 0;
-    document.documentElement.style.setProperty('--sticky-h', h + 'px');
-    const yn = document.querySelector('.year-nav');
-    if (yn) yn.style.top = h + 'px';
-    const cb = document.querySelector('.header-collapse-bar');
-    if (cb) cb.style.top = h + 'px';
-  };
+  const updateStickyH = () => updateStickyHeight();
   updateStickyH();
   new ResizeObserver(updateStickyH).observe(document.querySelector('.sticky-top'));
 
@@ -3087,7 +3148,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
     var shareUid = new URLSearchParams(window.location.search).get('share');
-    if (shareUid) return; // 공유 모드면 초기화 안 함
+    if (shareUid) return;
     var existing = null;
     try { existing = localStorage.getItem('lifemap_template_v2'); } catch(e) {}
     if (existing) return;
