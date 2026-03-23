@@ -427,9 +427,11 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 #img-banner {
   position: relative; width: 100%;
   overflow: hidden;
+  margin-left: calc(-50vw + 50%);
+  width: 100vw;
 }
 #img-banner-img {
-  width: 100%; max-height: 220px;
+  width: 100%; height: 220px;
   object-fit: cover; display: none;
 }
 .img-banner-drop {
@@ -737,6 +739,27 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 }
 .lang-btn.active { background: var(--accent); color: #fff; }
 .lang-btn:not(.active):hover { background: var(--accent-bg); color: var(--accent); }
+
+/* ── HEADER COLLAPSE BAR ── */
+.header-collapse-bar {
+  display: flex; justify-content: center;
+  background: var(--surface); border-top: 1px solid var(--border);
+  position: sticky; top: var(--sticky-h, 0px); z-index: 91;
+}
+.header-collapse-btn {
+  display: flex; align-items: center; gap: 5px;
+  padding: 3px 20px; border: none; background: none;
+  cursor: pointer; color: var(--text4); transition: color 0.15s;
+}
+.header-collapse-btn:hover { color: var(--accent); }
+#headerCollapseIcon { font-size: 0.6rem; transition: transform 0.3s; display: inline-block; }
+#headerExtra {
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s;
+  max-height: 200px; opacity: 1;
+}
+#headerExtra.collapsed { max-height: 0; opacity: 0; pointer-events: none; }
+
 .vision-toggle-btn {
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.68rem; font-weight: 700;
@@ -1009,12 +1032,12 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
         <button class="lang-btn active" id="langKor" onclick="setLang('ko')">KOR</button>
         <button class="lang-btn" id="langEng" onclick="setLang('en')">ENG</button>
       </div>
-      <div id="datetime-badge" style="margin-left:auto;flex-shrink:0;text-align:right;line-height:1.3">
+      <div id="datetime-badge" style="margin-left:auto;flex-shrink:0;text-align:right;line-height:1.3;min-width:130px">
         <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
           <span id="moon-display" style="font-size:1.1rem;line-height:1"></span>
-          <span id="time-display" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:0.02em"></span>
+          <span id="time-display" style="font-family:'Plus Jakarta Sans',monospace;font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:0.02em;display:inline-block;min-width:62px;text-align:right"></span>
         </div>
-        <div id="date-display" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.62rem;font-weight:500;color:var(--text3);letter-spacing:0.04em;margin-top:1px"></div>
+        <div id="date-display" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.62rem;font-weight:500;color:var(--text3);letter-spacing:0.04em;margin-top:1px;white-space:nowrap"></div>
       </div>
     </div>
 
@@ -1057,11 +1080,19 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 <!-- ══════════════════════════════════════
      YEAR NAV
 ══════════════════════════════════════ -->
+<div class="header-collapse-bar" id="headerCollapseBar">
+  <button class="header-collapse-btn" id="headerCollapseBtn" onclick="toggleHeaderExtra()">
+    <span id="headerCollapseIcon">▴</span>
+    <span id="headerCollapseLabel" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.62rem;font-weight:700;letter-spacing:0.06em;color:var(--text4)">접기</span>
+  </button>
+</div>
+<div id="headerExtra">
 <div class="year-nav" id="yearNav">
   <button class="year-btn active" id="ybtn-2026" onclick="switchYear('2026', this)">2026</button>
   <div id="extraYearBtns"></div>
   <button class="year-add-btn" id="yearAddBtn" onclick="promptAddYear()" title="연도 추가">＋</button>
 </div>
+</div><!-- /headerExtra -->
 
 <!-- ══════════════════════════════════════
      MAIN — 분기별 토글
@@ -1872,10 +1903,32 @@ let cropOffX = 0, cropOffY = 0;
 const VISION_KEYS = { 1: 'lifemap_vision_1', 2: 'lifemap_vision_2' };
 let activeCropTarget = null; // 1 or 2 — 어느 패널에서 크롭 열었는지
 
+// ── 헤더 접기/펼치기 ──
+let headerCollapsed = false;
+function toggleHeaderExtra() {
+  headerCollapsed = !headerCollapsed;
+  const extra = document.getElementById('headerExtra');
+  const icon = document.getElementById('headerCollapseIcon');
+  const label = document.getElementById('headerCollapseLabel');
+  const t = I18N[currentLang || 'ko'];
+  extra.classList.toggle('collapsed', headerCollapsed);
+  icon.style.transform = headerCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+  label.textContent = headerCollapsed ? (currentLang==='en'?'Expand':'펼치기') : (currentLang==='en'?'Collapse':'접기');
+  // sticky-h 업데이트
+  setTimeout(() => {
+    const h = document.querySelector('.sticky-top')?.offsetHeight || 0;
+    document.documentElement.style.setProperty('--sticky-h', h + 'px');
+    const yn = document.querySelector('.year-nav');
+    if (yn) yn.style.top = h + 'px';
+    const cb = document.querySelector('.header-collapse-bar');
+    if (cb) cb.style.top = h + 'px';
+  }, 360);
+  saveAll();
+}
+
 function toggleVision(n) {
   const overlay = document.getElementById('vision-overlay-' + n);
   const btn = document.getElementById('vbtn' + n);
-  // 다른 오버레이 닫기
   [1, 2].filter(i => i !== n).forEach(i => {
     document.getElementById('vision-overlay-' + i)?.classList.remove('show');
     document.getElementById('vbtn' + i)?.classList.remove('active');
@@ -2769,8 +2822,8 @@ window.addEventListener('DOMContentLoaded', () => {
         <button class="vision-overlay-close" onclick="toggleVision(1)">닫기</button>
       </div>
     </div>
-    <div class="vision-overlay-body" id="vision-body-1">
-      <div class="vision-empty" onclick="document.getElementById('img-input-1').click()">
+    <div class="vision-overlay-body" id="vision-body-1" onclick="toggleVision(1)" style="cursor:pointer" title="클릭하면 닫힘">
+      <div class="vision-empty" onclick="event.stopPropagation();document.getElementById('img-input-1').click()">
         <span style="font-size:2rem;opacity:0.3">🖼</span>
         <span>클릭해서 이미지 업로드</span>
       </div>
@@ -2792,7 +2845,7 @@ window.addEventListener('DOMContentLoaded', () => {
         <button class="vision-overlay-close" onclick="toggleVision(2)">닫기</button>
       </div>
     </div>
-    <div class="vision-overlay-body" id="vision-body-2">
+    <div class="vision-overlay-body" id="vision-body-2" onclick="toggleVision(2)" style="cursor:pointer" title="클릭하면 닫힘">
       <div class="vision-empty" onclick="document.getElementById('img-input-2').click()">
         <span style="font-size:2rem;opacity:0.3">🖼</span>
         <span>클릭해서 이미지 업로드</span>
@@ -2849,43 +2902,47 @@ window.addEventListener('DOMContentLoaded', () => {
 <input type="file" id="img-input-1" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(1,this)">
 <input type="file" id="img-input-2" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(2,this)">
 <script>
-(function() {
-  window.saveAll = function() {};
-  window.visionSave = function() {};
-  document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(function() {
-      document.querySelectorAll('.task-list').forEach(l => l.innerHTML = '');
-      var clears = {
-        'apr-heading':'4월','apr-desc':'','may-heading':'5월','may-desc':'',
-        'jun-heading':'6월','jun-desc':'','q2-title':'2분기 목표를 입력하세요',
-        'q1-title':'1분기 목표를 입력하세요','q3-title':'3분기 목표를 입력하세요',
-        'q4-title':'4분기 목표를 입력하세요','goal-life':'','goal-30-35':'',
-        'goal-35-40':'','goal-2026':''
-      };
-      Object.entries(clears).forEach(([k,v]) => {
-        var el = document.querySelector('[data-save="'+k+'"]');
-        if (el) el.innerText = v;
-      });
-      var st = document.getElementById('siteTitle');
-      if (st) st.innerText = '나의 인생 로드맵';
-      ['apr-w1','apr-w2','apr-w3','apr-w4','may-w1','may-w2','may-w3','may-w4',
-       'jun-w1','jun-w2','jun-w3','jun-w4'].forEach((id,i) => {
-        var el = document.querySelector('[data-save="'+id+'-title"]');
-        if (el) el.innerText = (i%4+1)+'주차';
-      });
-      document.querySelectorAll('.week-dates').forEach(el => el.textContent='');
-      document.querySelectorAll('.week-focus-badge[contenteditable]').forEach(el => el.textContent='주제');
-      document.querySelectorAll('textarea[data-save]').forEach(el => el.value='');
-      [1,2].forEach(n => {
-        var img = document.getElementById('vision-img-'+n);
-        var empty = document.querySelector('#vision-body-'+n+' .vision-empty');
-        if (img) { img.src=''; img.style.display='none'; }
-        if (empty) empty.style.display='flex';
-      });
-      updateAllProgress();
-    }, 50);
-  });
-})();
+// 첫 방문(저장 데이터 없을 때)만 기본값으로 초기화
+// saveAll / loadData 는 원본 그대로 — 저장/불러오기 정상 작동
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var existing = null;
+    try { existing = localStorage.getItem('lifemap_template_v2'); } catch(e) {}
+    if (existing) return; // 저장된 데이터 있으면 loadData()가 이미 복원함
+
+    // 첫 방문: Q2 하드코딩 데이터만 비우기
+    document.querySelectorAll('.task-list').forEach(l => l.innerHTML = '');
+    var clears = {
+      'apr-heading':'4월','apr-desc':'','may-heading':'5월','may-desc':'',
+      'jun-heading':'6월','jun-desc':'','q2-title':'2분기 목표를 입력하세요',
+      'q1-title':'1분기 목표를 입력하세요','q3-title':'3분기 목표를 입력하세요',
+      'q4-title':'4분기 목표를 입력하세요',
+      'goal-life':'','goal-30-35':'','goal-35-40':'','goal-2026':''
+    };
+    Object.entries(clears).forEach(function([k,v]) {
+      var el = document.querySelector('[data-save="'+k+'"]');
+      if (el) el.innerText = v;
+    });
+    var st = document.getElementById('siteTitle');
+    if (st) st.innerText = '나의 인생 로드맵';
+    ['apr-w1','apr-w2','apr-w3','apr-w4',
+     'may-w1','may-w2','may-w3','may-w4',
+     'jun-w1','jun-w2','jun-w3','jun-w4'].forEach(function(id,i) {
+      var el = document.querySelector('[data-save="'+id+'-title"]');
+      if (el) el.innerText = (i%4+1)+'주차';
+    });
+    document.querySelectorAll('.week-dates').forEach(function(el){ el.textContent=''; });
+    document.querySelectorAll('.week-focus-badge[contenteditable]').forEach(function(el){ el.textContent='주제'; });
+    document.querySelectorAll('textarea[data-save]').forEach(function(el){ el.value=''; });
+    [1,2].forEach(function(n) {
+      var img = document.getElementById('vision-img-'+n);
+      var empty = document.querySelector('#vision-body-'+n+' .vision-empty');
+      if (img) { img.src=''; img.style.display='none'; }
+      if (empty) empty.style.display='flex';
+    });
+    updateAllProgress();
+  }, 80);
+});
 </script>
 </body>
 </html>
