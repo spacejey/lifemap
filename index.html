@@ -1032,6 +1032,16 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
         <button class="lang-btn active" id="langKor" onclick="setLang('ko')">KOR</button>
         <button class="lang-btn" id="langEng" onclick="setLang('en')">ENG</button>
       </div>
+      <!-- 공유 버튼 -->
+      <button onclick="copyShareLink()" title="내 로드맵 공유" style="
+        margin-left:0.5rem;flex-shrink:0;
+        font-family:'Plus Jakarta Sans',sans-serif;font-size:0.65rem;font-weight:700;
+        padding:3px 10px;border-radius:99px;border:1.5px solid var(--border2);
+        background:var(--surface2);color:var(--text3);cursor:pointer;
+        transition:all 0.18s;white-space:nowrap;
+      " onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)';this.style.background='var(--accent-bg)'"
+         onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text3)';this.style.background='var(--surface2)'"
+      >🔗 공유</button>
       <div id="datetime-badge" style="margin-left:auto;flex-shrink:0;text-align:right;line-height:1.3;min-width:130px">
         <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
           <span id="moon-display" style="font-size:1.1rem;line-height:1"></span>
@@ -2712,16 +2722,135 @@ function collectData() {
   return data;
 }
 
+// ══════════════════════════════════════
+// SUPABASE 연동
+// ══════════════════════════════════════
+const SUPABASE_URL = 'https://dqptxzzcyraookwwhvcx.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_ql2ON61ZQjC32PWrexxKuw_S-jaGGJB';
+const SB_HEADERS = {
+  'Content-Type': 'application/json',
+  'apikey': SUPABASE_KEY,
+  'Authorization': 'Bearer ' + SUPABASE_KEY
+};
+
+// 고유 user_id — 첫 방문 시 생성, 이후 localStorage에 유지
+function getUserId() {
+  let uid = localStorage.getItem('lifemap_uid');
+  if (!uid) {
+    uid = 'user_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+    localStorage.setItem('lifemap_uid', uid);
+  }
+  return uid;
+}
+
+// URL에 ?share=uid 가 있으면 읽기 전용 공유 모드
+function getShareUid() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('share') || null;
+}
+
+// Supabase에 저장
+async function sbSave(data) {
+  const uid = getUserId();
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/lifemap_data`, {
+      method: 'POST',
+      headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates' },
+      body: JSON.stringify({
+        user_id: uid,
+        data: data,
+        updated_at: new Date().toISOString()
+      })
+    });
+    return res.ok;
+  } catch(e) { return false; }
+}
+
+// Supabase에서 불러오기
+async function sbLoad(uid) {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/lifemap_data?user_id=eq.${uid}&select=data`,
+      { headers: SB_HEADERS }
+    );
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return rows[0]?.data || null;
+  } catch(e) { return null; }
+}
+
+// 공유 링크 생성
+function copyShareLink() {
+  const uid = getUserId();
+  const url = `${location.origin}${location.pathname}?share=${uid}`;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast(currentLang === 'en' ? '🔗 Link copied!' : '🔗 공유 링크 복사됨!');
+  }).catch(() => {
+    prompt('아래 링크를 복사하세요:', url);
+  });
+}
+
+// 토스트 메시지
+function showToast(msg) {
+  let el = document.getElementById('sb-toast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'sb-toast';
+    el.style.cssText = `
+      position:fixed;bottom:4rem;left:50%;transform:translateX(-50%);
+      background:#1e2340;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;
+      font-size:0.78rem;font-weight:600;padding:8px 20px;border-radius:99px;
+      box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:9999;
+      opacity:0;transition:opacity 0.2s;pointer-events:none;white-space:nowrap;
+    `;
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(el._t);
+  el._t = setTimeout(() => { el.style.opacity = '0'; }, 2500);
+}
+
+// 읽기 전용 모드 배너
+function showReadOnlyBanner() {
+  const bar = document.createElement('div');
+  bar.style.cssText = `
+    position:fixed;bottom:0;left:0;right:0;z-index:500;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    color:#fff;text-align:center;padding:10px 1rem;
+    font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+  `;
+  bar.innerHTML = `
+    <span>👀 ${currentLang==='en'?'Viewing shared roadmap (read-only)':'공유된 로드맵 보는 중 (읽기 전용)'}</span>
+    <button onclick="window.location.href=window.location.pathname" style="
+      background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);
+      color:#fff;padding:3px 14px;border-radius:99px;cursor:pointer;
+      font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:700;
+    ">${currentLang==='en'?'My Roadmap →':'내 로드맵으로 →'}</button>
+  `;
+  document.body.appendChild(bar);
+  // 편집 막기
+  document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','false'));
+  document.querySelectorAll('button:not([onclick*="lang"]):not([onclick*="toggleQuarter"]):not([onclick*="showMonth"]):not([onclick*="toggleWeek"]):not([onclick*="switchYear"]):not([onclick*="toggleDashboard"]):not([onclick*="toggleHeaderExtra"]):not([onclick*="toggleVision"])').forEach(btn => btn.disabled = true);
+}
+
 function saveAll() {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify(collectData())); showSaveStatus(); }
-    catch(e) { console.warn('Save failed', e); }
+  saveTimer = setTimeout(async () => {
+    try {
+      const data = collectData();
+      localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+      const ok = await sbSave(data);
+      showSaveStatus(ok);
+    } catch(e) { console.warn('Save failed', e); }
   }, 600);
 }
 
-function showSaveStatus() {
+function showSaveStatus(cloud = false) {
   const el = document.getElementById('saveStatus');
+  const t = I18N[currentLang || 'ko'];
+  el.textContent = cloud ? (currentLang==='en'?'☁ Saved':'☁ 저장됨') : (t.saveStatus||'저장됨');
   el.style.opacity = '1'; clearTimeout(el._t);
   el._t = setTimeout(() => { el.style.opacity = '0'; }, 2000);
 }
@@ -2804,25 +2933,54 @@ document.addEventListener('input', e => {
 });
 
 // Init
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
   initDateTime();
-  imgLoad();
-  loadData();
   setupCropDrag();
   setupVisionDrop(1);
   setupVisionDrop(2);
+
+  const shareUid = getShareUid();
+
+  if (shareUid) {
+    // 공유 모드 — Supabase에서 불러오기
+    const data = await sbLoad(shareUid);
+    if (data) {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+      loadData();
+      setTimeout(() => showReadOnlyBanner(), 200);
+    } else {
+      showToast(currentLang==='en'?'⚠ Shared data not found':'⚠ 공유 데이터를 찾을 수 없어요');
+      loadData();
+    }
+  } else {
+    // 내 모드 — 로컬 우선, Supabase 백업 불러오기
+    const localRaw = localStorage.getItem(SAVE_KEY);
+    if (!localRaw) {
+      // 로컬에 없으면 Supabase에서 복원 시도
+      const uid = getUserId();
+      const cloudData = await sbLoad(uid);
+      if (cloudData) {
+        localStorage.setItem(SAVE_KEY, JSON.stringify(cloudData));
+        showToast(currentLang==='en'?'☁ Restored from cloud':'☁ 클라우드에서 복원됨');
+      }
+    }
+    loadData();
+  }
+
+  imgLoad();
   initLang();
-  // sticky 헤더 높이 측정 → CSS 변수로
+
   const updateStickyH = () => {
     const h = document.querySelector('.sticky-top')?.offsetHeight || 0;
     document.documentElement.style.setProperty('--sticky-h', h + 'px');
-    // year-nav top도 같이 업데이트
     const yn = document.querySelector('.year-nav');
     if (yn) yn.style.top = h + 'px';
+    const cb = document.querySelector('.header-collapse-bar');
+    if (cb) cb.style.top = h + 'px';
   };
   updateStickyH();
   new ResizeObserver(updateStickyH).observe(document.querySelector('.sticky-top'));
-  // upgrade hardcoded task items (add drag handles)
+
   document.querySelectorAll('.task-item').forEach(item => {
     if (!item.querySelector('.drag-handle')) {
       const h = document.createElement('span');
@@ -2928,6 +3086,8 @@ window.addEventListener('DOMContentLoaded', () => {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   setTimeout(function() {
+    var shareUid = new URLSearchParams(window.location.search).get('share');
+    if (shareUid) return; // 공유 모드면 초기화 안 함
     var existing = null;
     try { existing = localStorage.getItem('lifemap_template_v2'); } catch(e) {}
     if (existing) return;
