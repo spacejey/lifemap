@@ -3351,7 +3351,7 @@ async function sbLoad(uid) {
   try {
     const res = await fetch(
       `${SUPABASE_URL}/rest/v1/lifemap_data?user_id=eq.${uid}&select=data`,
-      { headers: SB_HEADERS }
+      { headers: getAuthHeaders() }
     );
     if (!res.ok) return null;
     const rows = await res.json();
