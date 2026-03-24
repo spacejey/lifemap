@@ -3275,9 +3275,16 @@ async function enterApp() {
     const cloudData = await sbLoad(currentUser.id);
     if (cloudData) {
       localStorage.setItem(SAVE_KEY, JSON.stringify(cloudData));
-      showToast('☁ 데이터를 불러왔어요');
+      loadData();
+      setTimeout(() => {
+        updateAllProgress();
+        updateCategoryProgress();
+        imgLoad();
+        showToast('☁ 데이터를 불러왔어요');
+      }, 100);
+    } else {
+      loadData();
     }
-    loadData();
   }
 
   imgLoad();
@@ -3351,10 +3358,11 @@ async function sbLoad(uid) {
       `${SUPABASE_URL}/rest/v1/lifemap_data?user_id=eq.${uid}&select=data`,
       { headers: getAuthHeaders() }
     );
-    if (!res.ok) return null;
+    if (!res.ok) { console.warn('sbLoad failed:', res.status, await res.text()); return null; }
     const rows = await res.json();
+    console.log('sbLoad uid:', uid, '| rows:', rows.length, '| hasData:', !!rows[0]?.data);
     return rows[0]?.data || null;
-  } catch(e) { return null; }
+  } catch(e) { console.warn('sbLoad error:', e); return null; }
 }
 
 // 공유 링크 생성
@@ -3390,6 +3398,7 @@ function showReadOnlyBanner() {
 }
 
 function saveAll() {
+  if (!currentUser) return; // 로그인 전엔 저장 안 함
   clearTimeout(saveTimer);
   saveTimer = setTimeout(async () => {
     try {
