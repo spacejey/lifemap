@@ -3344,10 +3344,23 @@ async function sbSave(data) {
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/lifemap_data`, {
       method: 'POST',
-      headers: { ...getAuthHeaders(), 'Prefer': 'resolution=merge-duplicates' },
+      headers: { 
+        ...getAuthHeaders(), 
+        'Prefer': 'resolution=merge-duplicates,return=minimal',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ user_id: uid, data: data, updated_at: new Date().toISOString() })
     });
-    return res.ok;
+    if (!res.ok) {
+      // POST 실패 시 PATCH로 업데이트 시도
+      const res2 = await fetch(`${SUPABASE_URL}/rest/v1/lifemap_data?user_id=eq.${uid}`, {
+        method: 'PATCH',
+        headers: { ...getAuthHeaders(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: data, updated_at: new Date().toISOString() })
+      });
+      return res2.ok;
+    }
+    return true;
   } catch(e) { return false; }
 }
 
