@@ -550,9 +550,9 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
   display: none; position: absolute; top: calc(100% + 8px); right: 0;
   background: #fff; border: 1.5px solid var(--border); border-radius: 12px;
   padding: 6px; box-shadow: 0 8px 24px rgba(99,102,241,0.12);
-  min-width: 160px; z-index: 9999;
+  min-width: 180px; z-index: 9999;
 }
-#user-badge:hover #user-menu, #user-menu:hover { display: block; }
+#user-badge.open #user-menu { display: block; }
 .user-menu-item {
   padding: 0.5rem 0.75rem; border-radius: 8px; cursor: pointer;
   font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem; color: var(--text2);
@@ -1251,26 +1251,11 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
     <div class="site-title-row">
       <span class="site-logo">🌍</span>
       <span class="site-title-main" contenteditable="true" id="siteTitle" spellcheck="false" data-save="siteTitle">나의 인생 로드맵</span>
-      <!-- 비전 토글 버튼 -->
-      <div style="display:flex;gap:5px;margin-left:0.75rem;flex-shrink:0">
-        <button class="vision-toggle-btn" id="vbtn1" onclick="toggleVision(1)" title="내 인생 시각화">🌏 인생</button>
-        <button class="vision-toggle-btn" id="vbtn2" onclick="toggleVision(2)" title="2026 말 이룬 나">✨ 2026</button>
-      </div>
       <!-- 언어 토글 -->
-      <div class="lang-toggle" style="margin-left:0.5rem">
+      <div class="lang-toggle" style="margin-left:0.75rem">
         <button class="lang-btn active" id="langKor" onclick="setLang('ko')">KOR</button>
         <button class="lang-btn" id="langEng" onclick="setLang('en')">ENG</button>
       </div>
-      <!-- 공유 버튼 -->
-      <button onclick="copyShareLink()" title="내 로드맵 공유" style="
-        margin-left:0.5rem;flex-shrink:0;
-        font-family:'Plus Jakarta Sans',sans-serif;font-size:0.65rem;font-weight:700;
-        padding:3px 10px;border-radius:99px;border:1.5px solid var(--border2);
-        background:var(--surface2);color:var(--text3);cursor:pointer;
-        transition:all 0.18s;white-space:nowrap;
-      " onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)';this.style.background='var(--accent-bg)'"
-         onmouseout="this.style.borderColor='var(--border2)';this.style.color='var(--text3)';this.style.background='var(--surface2)'"
-      >🔗 공유</button>
       <div id="datetime-badge" style="margin-left:auto;flex-shrink:0;text-align:right;line-height:1.3;min-width:130px">
         <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end">
           <span id="moon-display" style="font-size:1.1rem;line-height:1"></span>
@@ -1283,7 +1268,10 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
         <span class="badge-dot"></span>
         <span id="user-badge-email">로그인됨</span>
         <div id="user-menu">
-          <div class="user-menu-item" onclick="event.stopPropagation();copyShareLink()">🔗 공유 링크 복사</div>
+          <div class="user-menu-item" onclick="event.stopPropagation();toggleVision(1);document.getElementById('user-badge').classList.remove('open')">🌏 내 인생 시각화</div>
+          <div class="user-menu-item" onclick="event.stopPropagation();toggleVision(2);document.getElementById('user-badge').classList.remove('open')">✨ 2026년 말 이룬 나</div>
+          <div style="height:1px;background:var(--border);margin:4px 0"></div>
+          <div class="user-menu-item" onclick="event.stopPropagation();copyShareLink();document.getElementById('user-badge').classList.remove('open')">🔗 공유 링크 복사</div>
           <div class="user-menu-item danger" onclick="event.stopPropagation();logOut()">로그아웃</div>
         </div>
       </div>
@@ -3258,6 +3246,12 @@ function logOut() {
   localStorage.removeItem(SAVE_KEY);
   location.reload();
 }
+
+// 유저 배지 외부 클릭 시 닫기
+document.addEventListener('click', e => {
+  const badge = document.getElementById('user-badge');
+  if (badge && !badge.contains(e.target)) badge.classList.remove('open');
+});
 
 async function enterApp() {
   // 앱 진입
