@@ -429,107 +429,153 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
   background: linear-gradient(135deg, #eef2ff 0%, #f0f4ff 50%, #e8ecff 100%);
   display: flex; align-items: center; justify-content: center;
   font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
 }
-#login-screen.hidden { display: none; }
-.login-card {
-  background: #fff;
-  border-radius: 24px;
-  padding: 2.5rem 2.25rem 2rem;
-  width: min(400px, 92vw);
-  box-shadow: 0 8px 40px rgba(99,102,241,0.13), 0 2px 8px rgba(99,102,241,0.08);
-  border: 1.5px solid var(--border);
-  display: flex; flex-direction: column; gap: 0;
+
+/* 배경 떠다니는 원 */
+.login-bg-circle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%);
+  animation: floatCircle 6s ease-in-out infinite;
 }
-.login-logo {
-  font-size: 2rem; text-align: center; margin-bottom: 0.3rem; line-height: 1;
+@keyframes floatCircle {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
 }
-.login-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 1.25rem; font-weight: 800;
-  color: var(--text); text-align: center;
-  letter-spacing: -0.02em; margin-bottom: 0.25rem;
+
+/* 슬라이드 래퍼 */
+.ob-wrap {
+  width: min(480px, 94vw);
+  position: relative;
 }
-.login-sub {
+
+/* 개별 슬라이드 */
+.ob-slide {
+  display: none;
+  flex-direction: column; align-items: center;
+  text-align: center; padding: 1rem;
+  animation: obIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.ob-slide.active { display: flex; }
+@keyframes obIn {
+  from { opacity: 0; transform: translateY(32px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes obOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(-24px) scale(0.97); }
+}
+.ob-slide.leaving {
+  display: flex; animation: obOut 0.25s ease forwards;
+}
+
+.ob-emoji {
+  font-size: 3.5rem; line-height: 1; margin-bottom: 1rem;
+  animation: emojiPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes emojiPop {
+  from { transform: scale(0.4) rotate(-10deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.ob-question {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 1.45rem; font-weight: 800;
+  color: var(--text); line-height: 1.4;
+  margin-bottom: 0.5rem; letter-spacing: -0.02em;
+}
+.ob-hint {
   font-size: 0.78rem; color: var(--text3);
-  text-align: center; margin-bottom: 1.75rem; line-height: 1.5;
+  margin-bottom: 1.75rem; line-height: 1.5;
 }
-.login-tabs {
-  display: flex; gap: 0; margin-bottom: 1.5rem;
-  background: var(--surface2); border-radius: 10px; padding: 3px;
+
+.ob-input {
+  width: 100%; padding: 0.9rem 1.1rem;
+  border: 2px solid var(--border); border-radius: 14px;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 1.05rem;
+  color: var(--text); background: #fff;
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  text-align: center; letter-spacing: 0.01em;
 }
-.login-tab {
-  flex: 1; padding: 0.45rem; border-radius: 8px;
+.ob-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99,102,241,0.1);
+}
+.ob-input::placeholder { color: var(--text4); }
+
+.ob-error {
+  font-size: 0.75rem; color: #dc2626;
+  margin-top: 0.6rem; min-height: 1.2em;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.78rem; font-weight: 700;
+}
+
+.ob-next-btn {
+  margin-top: 1.25rem;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 12px;
+  padding: 0.8rem 2.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+  display: flex; align-items: center; gap: 8px;
+}
+.ob-next-btn:hover { opacity: 0.88; }
+.ob-next-btn:active { transform: scale(0.97); }
+.ob-next-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.ob-enter-hint {
+  font-size: 0.68rem; color: var(--text4);
+  margin-top: 0.6rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* 진행 도트 */
+.ob-dots {
+  display: flex; gap: 7px; justify-content: center;
+  margin-bottom: 2rem;
+}
+.ob-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--border2); transition: all 0.3s;
+}
+.ob-dot.active { background: var(--accent); transform: scale(1.3); }
+.ob-dot.done { background: #a5b4fc; }
+
+/* 뒤로가기 */
+.ob-back {
+  position: absolute; top: 0; left: 0;
+  font-size: 0.75rem; color: var(--text3);
+  cursor: pointer; padding: 4px 8px; border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600;
+  transition: color 0.15s; display: none;
+}
+.ob-back:hover { color: var(--accent); }
+.ob-back.visible { display: block; }
+
+/* 로그인 탭 */
+.ob-mode-toggle {
+  display: flex; gap: 0; margin-bottom: 2rem;
+  background: rgba(255,255,255,0.7); border-radius: 12px; padding: 3px;
+  backdrop-filter: blur(8px);
+}
+.ob-mode-btn {
+  flex: 1; padding: 0.5rem; border-radius: 9px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 700;
   border: none; background: none; cursor: pointer;
   color: var(--text3); transition: all 0.15s;
 }
-.login-tab.active {
+.ob-mode-btn.active {
   background: #fff; color: var(--accent);
-  box-shadow: 0 1px 4px rgba(99,102,241,0.12);
+  box-shadow: 0 2px 8px rgba(99,102,241,0.15);
 }
-.login-field { margin-bottom: 0.85rem; }
-.login-label {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
-  color: var(--text3); text-transform: uppercase; display: block;
-  margin-bottom: 0.35rem;
-}
-.login-input {
-  width: 100%; padding: 0.65rem 0.9rem;
-  border: 1.5px solid var(--border); border-radius: 10px;
-  font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem;
-  color: var(--text); background: var(--surface2);
-  outline: none; transition: border-color 0.2s, background 0.2s;
-}
-.login-input:focus {
-  border-color: var(--accent); background: #fff;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.08);
-}
-.login-btn {
-  width: 100%; padding: 0.75rem;
-  background: var(--accent); color: #fff;
-  border: none; border-radius: 10px; cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.9rem; font-weight: 700;
-  transition: opacity 0.15s, transform 0.1s;
-  margin-top: 0.4rem; letter-spacing: 0.01em;
-}
-.login-btn:hover { opacity: 0.88; }
-.login-btn:active { transform: scale(0.98); }
-.login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.login-error {
-  font-size: 0.75rem; color: #dc2626;
-  background: #fef2f2; border: 1px solid #fecaca;
-  border-radius: 8px; padding: 0.5rem 0.75rem;
-  margin-bottom: 0.75rem; display: none; text-align: center;
-}
-.login-error.show { display: block; }
-.login-divider {
-  text-align: center; font-size: 0.7rem; color: var(--text4);
-  margin: 1rem 0 0.25rem; font-family: 'Plus Jakarta Sans', sans-serif;
-}
+
 .login-spinner {
   width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4);
   border-top-color: #fff; border-radius: 50%;
   animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle;
-  margin-right: 6px;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
-
-/* Google 로그인 버튼 */
-.google-btn {
-  width: 100%; padding: 0.7rem;
-  background: #fff; color: #3c4043;
-  border: 1.5px solid #dadce0; border-radius: 10px; cursor: pointer;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.88rem; font-weight: 600;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  transition: background 0.15s, box-shadow 0.15s;
-  letter-spacing: 0.01em;
-}
-.google-btn:hover { background: #f8f9fa; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
-.google-btn:active { background: #f1f3f4; }
 
 /* ── USER BADGE (logged-in indicator) ── */
 #user-badge {
@@ -1191,32 +1237,66 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 
 <!-- ── 로그인 화면 ── -->
 <div id="login-screen" style="display:none">
-  <div class="login-card">
-    <div class="login-logo">🌍</div>
-    <div class="login-title">나의 인생 로드맵</div>
-    <div class="login-sub">로그인하면 어느 기기에서든<br>내 로드맵을 불러올 수 있어요</div>
+  <!-- 배경 원 -->
+  <div class="login-bg-circle" style="width:500px;height:500px;top:-100px;right:-150px;animation-delay:0s"></div>
+  <div class="login-bg-circle" style="width:350px;height:350px;bottom:-80px;left:-100px;animation-delay:2s"></div>
+  <div class="login-bg-circle" style="width:200px;height:200px;top:40%;left:10%;animation-delay:4s"></div>
 
-    <div class="login-tabs">
-      <button class="login-tab active" id="tab-login" onclick="switchTab('login')">로그인</button>
-      <button class="login-tab" id="tab-signup" onclick="switchTab('signup')">회원가입</button>
+  <div class="ob-wrap">
+    <span class="ob-back" id="ob-back" onclick="obBack()">← 뒤로</span>
+    <div class="ob-dots" id="ob-dots"></div>
+
+    <!-- 슬라이드 0: 시작 (로그인 / 회원가입 선택) -->
+    <div class="ob-slide active" id="ob-slide-0">
+      <div class="ob-emoji">🌍</div>
+      <div class="ob-question">나의 인생 로드맵</div>
+      <div class="ob-hint">목표를 기록하고, 어디서든 불러올 수 있어요</div>
+      <div class="ob-mode-toggle">
+        <button class="ob-mode-btn active" id="ob-btn-login" onclick="obSetMode('login')">로그인</button>
+        <button class="ob-mode-btn" id="ob-btn-signup" onclick="obSetMode('signup')">회원가입</button>
+      </div>
+      <button class="ob-next-btn" onclick="obNext()">시작하기 →</button>
     </div>
 
-    <div id="login-error" class="login-error"></div>
-
-    <div class="login-field">
-      <label class="login-label" for="login-username">아이디</label>
-      <input class="login-input" type="text" id="login-username" placeholder="영문/숫자 4자 이상" autocomplete="username" onkeydown="if(event.key==='Enter')doAuth()">
-    </div>
-    <div class="login-field">
-      <label class="login-label" for="login-password">비밀번호</label>
-      <input class="login-input" type="password" id="login-password" placeholder="6자 이상" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAuth()">
-    </div>
-    <div class="login-field" id="signup-nick-field" style="display:none">
-      <label class="login-label" for="login-nick">닉네임</label>
-      <input class="login-input" type="text" id="login-nick" placeholder="어떻게 불릴까요?" onkeydown="if(event.key==='Enter')doAuth()">
+    <!-- 슬라이드 1: 아이디 -->
+    <div class="ob-slide" id="ob-slide-1">
+      <div class="ob-emoji" id="ob-emoji-1">😊</div>
+      <div class="ob-question" id="ob-q-1">반가워요! 아이디가 뭐예요?</div>
+      <div class="ob-hint" id="ob-hint-1">등록된 아이디를 입력해 주세요</div>
+      <input class="ob-input" id="ob-username" type="text" placeholder="my_id" autocomplete="username" onkeydown="if(event.key==='Enter')obNext()">
+      <div class="ob-error" id="ob-err-1"></div>
+      <button class="ob-next-btn" onclick="obNext()">다음 →</button>
+      <div class="ob-enter-hint">엔터를 눌러도 돼요</div>
     </div>
 
-    <button class="login-btn" id="auth-btn" onclick="doAuth()">로그인</button>
+    <!-- 슬라이드 2: 비밀번호 -->
+    <div class="ob-slide" id="ob-slide-2">
+      <div class="ob-emoji" id="ob-emoji-2">🔐</div>
+      <div class="ob-question" id="ob-q-2">비밀번호도 알려주세요!</div>
+      <div class="ob-hint" id="ob-hint-2">본인만 아는 비밀번호를 입력해 주세요</div>
+      <input class="ob-input" id="ob-password" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')obNext()">
+      <div class="ob-error" id="ob-err-2"></div>
+      <button class="ob-next-btn" onclick="obNext()">다음 →</button>
+      <div class="ob-enter-hint">엔터를 눌러도 돼요</div>
+    </div>
+
+    <!-- 슬라이드 3: 닉네임 (회원가입 전용) -->
+    <div class="ob-slide" id="ob-slide-3">
+      <div class="ob-emoji">✨</div>
+      <div class="ob-question">뭐라고 부를까요?</div>
+      <div class="ob-hint">로드맵 상단에 표시될 이름이에요</div>
+      <input class="ob-input" id="ob-nick" type="text" placeholder="내 닉네임" onkeydown="if(event.key==='Enter')obNext()">
+      <div class="ob-error" id="ob-err-3"></div>
+      <button class="ob-next-btn" id="ob-submit-btn" onclick="obNext()">완료! 🎉</button>
+      <div class="ob-enter-hint">엔터를 눌러도 돼요</div>
+    </div>
+
+    <!-- 슬라이드 4: 로딩 -->
+    <div class="ob-slide" id="ob-slide-4">
+      <div class="ob-emoji" id="ob-loading-emoji">⏳</div>
+      <div class="ob-question" id="ob-loading-msg">로그인 중...</div>
+      <div class="ob-hint">잠깐만요!</div>
+    </div>
   </div>
 </div>
 
@@ -3073,44 +3153,134 @@ function getAuthHeaders() {
   };
 }
 
-// ── LOGIN SCREEN UI ──
+// ── ONBOARDING FLOW ──
 let loginMode = 'login';
+let obStep = 0;
+const OB_STEPS_LOGIN  = [0, 1, 2];       // 로그인: 시작 → 아이디 → 비번
+const OB_STEPS_SIGNUP = [0, 1, 2, 3];    // 회원가입: 시작 → 아이디 → 비번 → 닉네임
 
-function switchTab(mode) {
+function obSteps() { return loginMode === 'login' ? OB_STEPS_LOGIN : OB_STEPS_SIGNUP; }
+
+function obSetMode(mode) {
   loginMode = mode;
-  document.getElementById('tab-login').classList.toggle('active', mode === 'login');
-  document.getElementById('tab-signup').classList.toggle('active', mode === 'signup');
-  document.getElementById('auth-btn').textContent = mode === 'login' ? '로그인' : '회원가입';
-  document.getElementById('signup-nick-field').style.display = mode === 'signup' ? 'block' : 'none';
-  document.getElementById('login-error').classList.remove('show');
-  document.getElementById('login-password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+  document.getElementById('ob-btn-login').classList.toggle('active', mode === 'login');
+  document.getElementById('ob-btn-signup').classList.toggle('active', mode === 'signup');
+
+  if (mode === 'login') {
+    document.getElementById('ob-emoji-1').textContent = '😊';
+    document.getElementById('ob-q-1').textContent = '반가워요! 아이디가 뭐예요?';
+    document.getElementById('ob-hint-1').textContent = '등록된 아이디를 입력해 주세요';
+    document.getElementById('ob-emoji-2').textContent = '🔐';
+    document.getElementById('ob-q-2').textContent = '비밀번호도 알려주세요!';
+    document.getElementById('ob-hint-2').textContent = '본인만 아는 비밀번호를 입력해 주세요';
+    document.getElementById('ob-password').autocomplete = 'current-password';
+  } else {
+    document.getElementById('ob-emoji-1').textContent = '👤';
+    document.getElementById('ob-q-1').textContent = '아이디는 뭐로 할까요?';
+    document.getElementById('ob-hint-1').textContent = '영문, 숫자, 밑줄(_)만 사용 가능 · 4자 이상';
+    document.getElementById('ob-emoji-2').textContent = '🔒';
+    document.getElementById('ob-q-2').textContent = '비밀번호도 적어주세요!';
+    document.getElementById('ob-hint-2').textContent = '6자 이상으로 설정해 주세요';
+    document.getElementById('ob-password').autocomplete = 'new-password';
+  }
+  obUpdateDots();
 }
 
-function showLoginError(msg) {
-  const el = document.getElementById('login-error');
-  el.style.color = '#dc2626'; el.style.background = '#fef2f2'; el.style.borderColor = '#fecaca';
-  el.textContent = msg; el.classList.add('show');
+function obUpdateDots() {
+  const steps = obSteps();
+  const dots = document.getElementById('ob-dots');
+  dots.innerHTML = '';
+  if (obStep === 0) { dots.innerHTML = ''; return; }
+  steps.slice(1).forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'ob-dot' + (i + 1 === obStep ? ' active' : (i + 1 < obStep ? ' done' : ''));
+    dots.appendChild(d);
+  });
 }
 
-// 아이디를 가상 이메일로 변환 (Supabase는 이메일 필수)
+function obShowSlide(idx, leaving = -1) {
+  if (leaving >= 0) {
+    const el = document.getElementById('ob-slide-' + leaving);
+    el.classList.add('leaving');
+    setTimeout(() => { el.classList.remove('active', 'leaving'); }, 250);
+  }
+  setTimeout(() => {
+    document.querySelectorAll('.ob-slide').forEach(s => {
+      if (!s.classList.contains('leaving')) s.classList.remove('active');
+    });
+    document.getElementById('ob-slide-' + idx).classList.add('active');
+    // 포커스
+    const inp = document.getElementById('ob-slide-' + idx)?.querySelector('.ob-input');
+    if (inp) setTimeout(() => inp.focus(), 100);
+  }, leaving >= 0 ? 200 : 0);
+}
+
+function obNext() {
+  const steps = obSteps();
+  const currentSlide = steps[obStep];
+
+  // 유효성 검사
+  if (currentSlide === 1) {
+    const val = document.getElementById('ob-username').value.trim();
+    if (!val) { document.getElementById('ob-err-1').textContent = '아이디를 입력해 주세요.'; return; }
+    if (val.length < 4) { document.getElementById('ob-err-1').textContent = '4자 이상 입력해 주세요.'; return; }
+    if (!/^[a-zA-Z0-9_]+$/.test(val)) { document.getElementById('ob-err-1').textContent = '영문, 숫자, 밑줄(_)만 사용 가능해요.'; return; }
+    document.getElementById('ob-err-1').textContent = '';
+  }
+  if (currentSlide === 2) {
+    const val = document.getElementById('ob-password').value;
+    if (!val || val.length < 6) { document.getElementById('ob-err-2').textContent = '6자 이상 입력해 주세요.'; return; }
+    document.getElementById('ob-err-2').textContent = '';
+  }
+  if (currentSlide === 3) {
+    const val = document.getElementById('ob-nick').value.trim();
+    if (!val) { document.getElementById('ob-err-3').textContent = '닉네임을 입력해 주세요.'; return; }
+    document.getElementById('ob-err-3').textContent = '';
+  }
+
+  // 마지막 단계면 제출
+  if (obStep === steps.length - 1) {
+    obSubmit(); return;
+  }
+
+  obStep++;
+  obShowSlide(steps[obStep], currentSlide);
+  document.getElementById('ob-back').classList.toggle('visible', obStep > 0);
+  obUpdateDots();
+}
+
+function obBack() {
+  if (obStep === 0) return;
+  const steps = obSteps();
+  const prev = steps[obStep - 1];
+  const curr = steps[obStep];
+  obStep--;
+  // 뒤로 갈 때는 일반 슬라이드 전환
+  document.getElementById('ob-slide-' + curr).classList.remove('active');
+  document.getElementById('ob-slide-' + prev).classList.add('active');
+  const inp = document.getElementById('ob-slide-' + prev)?.querySelector('.ob-input');
+  if (inp) setTimeout(() => inp.focus(), 100);
+  document.getElementById('ob-back').classList.toggle('visible', obStep > 0);
+  obUpdateDots();
+}
+
 function toFakeEmail(username) {
   return username.toLowerCase().trim() + '@lifemap.app';
 }
 
-async function doAuth() {
-  const username = document.getElementById('login-username').value.trim();
-  const password = document.getElementById('login-password').value;
-  const nick = document.getElementById('login-nick')?.value.trim() || username;
-  const btn = document.getElementById('auth-btn');
+async function obSubmit() {
+  const username = document.getElementById('ob-username').value.trim();
+  const password = document.getElementById('ob-password').value;
+  const nick = document.getElementById('ob-nick')?.value.trim() || username;
 
-  if (!username) { showLoginError('아이디를 입력해 주세요.'); return; }
-  if (username.length < 4) { showLoginError('아이디는 4자 이상이어야 해요.'); return; }
-  if (!/^[a-zA-Z0-9_]+$/.test(username)) { showLoginError('아이디는 영문, 숫자, 밑줄(_)만 사용 가능해요.'); return; }
-  if (!password || password.length < 6) { showLoginError('비밀번호는 6자 이상이어야 해요.'); return; }
-
-  btn.disabled = true;
-  btn.innerHTML = '<span class="login-spinner"></span>' + (loginMode === 'login' ? '로그인 중...' : '가입 중...');
-  document.getElementById('login-error').classList.remove('show');
+  // 로딩 슬라이드
+  const steps = obSteps();
+  document.getElementById('ob-slide-' + steps[obStep]).classList.remove('active');
+  document.getElementById('ob-loading-msg').textContent = loginMode === 'login' ? '로그인 중...' : '계정 만드는 중...';
+  document.getElementById('ob-loading-emoji').textContent = loginMode === 'login' ? '🔑' : '🎉';
+  document.getElementById('ob-slide-4').classList.add('active');
+  document.getElementById('ob-back').classList.remove('visible');
+  document.getElementById('ob-dots').innerHTML = '';
 
   const email = toFakeEmail(username);
 
@@ -3131,9 +3301,13 @@ async function doAuth() {
       if (msg.includes('Invalid login')) msg = '아이디 또는 비밀번호가 올바르지 않아요.';
       else if (msg.includes('already registered') || msg.includes('already exists')) msg = '이미 사용 중인 아이디예요.';
       else if (msg.includes('Password should')) msg = '비밀번호는 6자 이상으로 입력해 주세요.';
-      showLoginError(msg);
-      btn.disabled = false;
-      btn.textContent = loginMode === 'login' ? '로그인' : '회원가입';
+      // 에러 슬라이드로 복귀
+      document.getElementById('ob-slide-4').classList.remove('active');
+      const errStep = msg.includes('아이디') && msg.includes('비밀번호') ? 2 : 1;
+      obStep = errStep; obShowSlide(steps[errStep]);
+      document.getElementById('ob-err-' + errStep).textContent = msg;
+      document.getElementById('ob-back').classList.add('visible');
+      obUpdateDots();
       return;
     }
 
@@ -3149,11 +3323,18 @@ async function doAuth() {
     await enterApp();
 
   } catch(e) {
-    showLoginError('네트워크 오류가 발생했어요. 다시 시도해 주세요.');
-    btn.disabled = false;
-    btn.textContent = loginMode === 'login' ? '로그인' : '회원가입';
+    document.getElementById('ob-slide-4').classList.remove('active');
+    obStep = 1; obShowSlide(steps[1]);
+    document.getElementById('ob-err-1').textContent = '네트워크 오류가 발생했어요. 다시 시도해 주세요.';
+    document.getElementById('ob-back').classList.add('visible');
+    obUpdateDots();
   }
 }
+
+// 기존 함수명 호환용
+function switchTab(mode) { obSetMode(mode); }
+function doAuth() { obNext(); }
+function showLoginError(msg) { document.getElementById('ob-err-1').textContent = msg; }
 
 async function doForgot() {
   const email = document.getElementById('login-email').value.trim();
