@@ -1190,7 +1190,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 <body>
 
 <!-- ── 로그인 화면 ── -->
-<div id="login-screen">
+<div id="login-screen" style="display:none">
   <div class="login-card">
     <div class="login-logo">🌍</div>
     <div class="login-title">나의 인생 로드맵</div>
@@ -3253,9 +3253,7 @@ document.addEventListener('click', e => {
 });
 
 async function enterApp() {
-  // 앱 진입
-  document.getElementById('login-screen').classList.add('hidden');
-  // 유저 배지 표시
+  document.getElementById('login-screen').style.display = 'none';
   const badge = document.getElementById('user-badge');
   badge.style.display = 'flex';
   document.getElementById('user-badge-email').textContent = currentUser.email;
@@ -3495,52 +3493,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   setupVisionDrop(1);
   setupVisionDrop(2);
 
-  // 1) Google OAuth 리다이렉트 콜백 처리 (URL 해시에 토큰이 있는 경우)
-  const oauthOk = await handleOAuthCallback();
-  if (oauthOk) {
-    await enterApp();
-    return;
-  }
-
-  // 2) 저장된 세션 확인
-  const savedSession = localStorage.getItem('lifemap_session');
-  if (savedSession) {
-    try {
-      const session = JSON.parse(savedSession);
-      // 토큰 유효성 확인
-      const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + session.access_token }
-      });
-      if (res.ok) {
-        currentUser = session;
-        await enterApp();
-        return;
-      } else {
-        // 토큰 만료 — refresh 시도
-        if (session.refresh_token) {
-          const rr = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
-            body: JSON.stringify({ refresh_token: session.refresh_token })
-          });
-          if (rr.ok) {
-            const nd = await rr.json();
-            currentUser = { id: nd.user?.id, email: nd.user?.email, access_token: nd.access_token, refresh_token: nd.refresh_token };
-            localStorage.setItem('lifemap_session', JSON.stringify(currentUser));
-            await enterApp();
-            return;
-          }
-        }
-        localStorage.removeItem('lifemap_session');
-      }
-    } catch(e) { localStorage.removeItem('lifemap_session'); }
-  }
-
   // 공유 모드는 로그인 없이 볼 수 있음
   const shareUid = getShareUid();
   if (shareUid) {
-    document.getElementById('login-screen').classList.add('hidden');
-    initDateTime(); setupCropDrag(); setupVisionDrop(1); setupVisionDrop(2);
+    document.getElementById('login-screen').style.display = 'none';
     const data = await sbLoad(shareUid);
     if (data) { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); loadData(); setTimeout(() => showReadOnlyBanner(), 200); }
     else { showToast('⚠ 공유 데이터를 찾을 수 없어요'); loadData(); }
@@ -3560,7 +3516,47 @@ window.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // 로그인 화면 표시 (이미 HTML에 있음, 기본으로 보임)
+  // 1) Google OAuth 리다이렉트 콜백 처리
+  const oauthOk = await handleOAuthCallback();
+  if (oauthOk) {
+    await enterApp();
+    return;
+  }
+
+  // 2) 저장된 세션 확인
+  const savedSession = localStorage.getItem('lifemap_session');
+  if (savedSession) {
+    try {
+      const session = JSON.parse(savedSession);
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + session.access_token }
+      });
+      if (res.ok) {
+        const userData = await res.json();
+        currentUser = { ...session, id: userData.id, email: userData.email };
+        localStorage.setItem('lifemap_session', JSON.stringify(currentUser));
+        await enterApp();
+        return;
+      } else if (session.refresh_token) {
+        const rr = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+          body: JSON.stringify({ refresh_token: session.refresh_token })
+        });
+        if (rr.ok) {
+          const nd = await rr.json();
+          currentUser = { id: nd.user?.id, email: nd.user?.email, access_token: nd.access_token, refresh_token: nd.refresh_token };
+          localStorage.setItem('lifemap_session', JSON.stringify(currentUser));
+          await enterApp();
+          return;
+        }
+      }
+      localStorage.removeItem('lifemap_session');
+    } catch(e) { localStorage.removeItem('lifemap_session'); }
+  }
+
+  // 3) 로그인 화면 표시
+  document.getElementById('login-screen').style.display = 'flex';
 });
 </script>
 <!-- 비전 오버레이 패널 1 — 인생 시각화 -->
