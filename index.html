@@ -22,7 +22,7 @@
   --sticky-h: 0px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 15px; scroll-behavior: smooth; }
+html { font-size: 16px; scroll-behavior: smooth; }
 body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.7; }
 
 /* ── STICKY TOP ── */
@@ -423,6 +423,145 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
 [contenteditable]:focus-visible { outline: none; }
 
+/* ── LOGIN SCREEN ── */
+#login-screen {
+  position: fixed; inset: 0; z-index: 99999;
+  background: linear-gradient(135deg, #eef2ff 0%, #f0f4ff 50%, #e8ecff 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif;
+}
+#login-screen.hidden { display: none; }
+.login-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 2.5rem 2.25rem 2rem;
+  width: min(400px, 92vw);
+  box-shadow: 0 8px 40px rgba(99,102,241,0.13), 0 2px 8px rgba(99,102,241,0.08);
+  border: 1.5px solid var(--border);
+  display: flex; flex-direction: column; gap: 0;
+}
+.login-logo {
+  font-size: 2rem; text-align: center; margin-bottom: 0.3rem; line-height: 1;
+}
+.login-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.25rem; font-weight: 800;
+  color: var(--text); text-align: center;
+  letter-spacing: -0.02em; margin-bottom: 0.25rem;
+}
+.login-sub {
+  font-size: 0.78rem; color: var(--text3);
+  text-align: center; margin-bottom: 1.75rem; line-height: 1.5;
+}
+.login-tabs {
+  display: flex; gap: 0; margin-bottom: 1.5rem;
+  background: var(--surface2); border-radius: 10px; padding: 3px;
+}
+.login-tab {
+  flex: 1; padding: 0.45rem; border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 700;
+  border: none; background: none; cursor: pointer;
+  color: var(--text3); transition: all 0.15s;
+}
+.login-tab.active {
+  background: #fff; color: var(--accent);
+  box-shadow: 0 1px 4px rgba(99,102,241,0.12);
+}
+.login-field { margin-bottom: 0.85rem; }
+.login-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em;
+  color: var(--text3); text-transform: uppercase; display: block;
+  margin-bottom: 0.35rem;
+}
+.login-input {
+  width: 100%; padding: 0.65rem 0.9rem;
+  border: 1.5px solid var(--border); border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 0.9rem;
+  color: var(--text); background: var(--surface2);
+  outline: none; transition: border-color 0.2s, background 0.2s;
+}
+.login-input:focus {
+  border-color: var(--accent); background: #fff;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.08);
+}
+.login-btn {
+  width: 100%; padding: 0.75rem;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 10px; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 700;
+  transition: opacity 0.15s, transform 0.1s;
+  margin-top: 0.4rem; letter-spacing: 0.01em;
+}
+.login-btn:hover { opacity: 0.88; }
+.login-btn:active { transform: scale(0.98); }
+.login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.login-error {
+  font-size: 0.75rem; color: #dc2626;
+  background: #fef2f2; border: 1px solid #fecaca;
+  border-radius: 8px; padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem; display: none; text-align: center;
+}
+.login-error.show { display: block; }
+.login-divider {
+  text-align: center; font-size: 0.7rem; color: var(--text4);
+  margin: 1rem 0 0.25rem; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.login-spinner {
+  width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle;
+  margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Google 로그인 버튼 */
+.google-btn {
+  width: 100%; padding: 0.7rem;
+  background: #fff; color: #3c4043;
+  border: 1.5px solid #dadce0; border-radius: 10px; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.88rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: background 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.01em;
+}
+.google-btn:hover { background: #f8f9fa; box-shadow: 0 1px 6px rgba(0,0,0,0.1); }
+.google-btn:active { background: #f1f3f4; }
+
+/* ── USER BADGE (logged-in indicator) ── */
+#user-badge {
+  display: none;
+  align-items: center; gap: 0.5rem;
+  padding: 0.22rem 0.7rem 0.22rem 0.4rem;
+  background: var(--accent-bg); border: 1.5px solid #c7d2f8;
+  border-radius: 99px; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.68rem; font-weight: 700; color: var(--accent);
+  transition: background 0.15s; position: relative;
+}
+#user-badge:hover { background: #e0e7ff; }
+#user-badge .badge-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #10b981; flex-shrink: 0;
+}
+#user-menu {
+  display: none; position: absolute; top: calc(100% + 8px); right: 0;
+  background: #fff; border: 1.5px solid var(--border); border-radius: 12px;
+  padding: 6px; box-shadow: 0 8px 24px rgba(99,102,241,0.12);
+  min-width: 160px; z-index: 9999;
+}
+#user-badge:hover #user-menu, #user-menu:hover { display: block; }
+.user-menu-item {
+  padding: 0.5rem 0.75rem; border-radius: 8px; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 0.78rem; color: var(--text2);
+  transition: background 0.1s; white-space: nowrap;
+}
+.user-menu-item:hover { background: var(--surface2); }
+.user-menu-item.danger { color: #dc2626; }
+.user-menu-item.danger:hover { background: #fef2f2; }
+
 /* ── IMAGE BANNER ── */
 #img-banner {
   position: relative; width: 100%;
@@ -546,6 +685,35 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 }
 .crop-aspect-btn:hover, .crop-aspect-btn.active {
   background: var(--accent); color: #fff; border-color: var(--accent);
+}
+
+/* ── QUARTER GOAL SECTION ── */
+.qgoal-btn {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.qgoal-section {
+  padding: 1.25rem 0;
+}
+.qgoal-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.72rem; font-weight: 800;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 0.6rem;
+}
+.qgoal-text {
+  font-size: 1.05rem; font-weight: 500;
+  color: var(--text); line-height: 1.7;
+  min-height: 80px; padding: 0.75rem 1rem;
+  background: var(--surface2); border-radius: 10px;
+  border: 1.5px solid var(--border);
+  outline: none; transition: border-color 0.2s;
+  width: 100%;
+}
+.qgoal-text:focus { border-color: var(--accent); background: var(--surface); }
+.qgoal-text:empty::before {
+  content: attr(data-placeholder);
+  color: var(--text4); pointer-events: none;
 }
 
 /* ── CATEGORY DASHBOARD ── */
@@ -857,40 +1025,48 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 @media (max-width: 640px) {
 
   /* 기본 폰트/패딩 */
-  html { font-size: 14px; }
+  html { font-size: 15px; }
   .sticky-inner { padding: 0 0.85rem; }
   .main-content { padding: 0.75rem 0.85rem 5rem; }
 
   /* ── 헤더 축소 ── */
+  /* 타이틀 행 — 두 줄로 분리 */
   .site-title-row {
-    padding: 0.6rem 0 0.5rem;
-    gap: 0.5rem; flex-wrap: nowrap;
+    padding: 0.55rem 0 0.45rem;
+    gap: 0.4rem; flex-wrap: wrap;
+    row-gap: 0.4rem;
   }
-  .site-title-main { font-size: 0.92rem; }
-  .site-logo { font-size: 1.1rem; }
+  .site-logo { font-size: 1.1rem; flex-shrink: 0; }
+  .site-title-main { font-size: 0.95rem; flex: 1; min-width: 0; }
 
-  /* 비전 버튼 작게 */
-  .vision-toggle-btn { font-size: 0.62rem; padding: 3px 8px; }
+  /* 비전+언어+공유 버튼 — 타이틀과 같은 줄 */
+  .vision-toggle-btn { font-size: 0.65rem; padding: 4px 9px; }
 
-  /* 날짜/시간 한 줄 압축 */
-  #datetime-badge { line-height: 1.2; }
-  #time-display { font-size: 0.78rem !important; }
-  #date-display { font-size: 0.58rem !important; }
-  #moon-display { font-size: 0.95rem !important; }
+  /* 날짜/시간 — 두 번째 줄, 전체 너비 */
+  #datetime-badge {
+    width: 100%; min-width: unset !important;
+    text-align: left !important; line-height: 1.3;
+    display: flex; align-items: center; gap: 8px;
+    padding-bottom: 0.15rem;
+  }
+  #datetime-badge > div:first-child { flex-shrink: 0; }
+  #time-display { font-size: 0.85rem !important; min-width: unset !important; }
+  #date-display { font-size: 0.7rem !important; margin-top: 0 !important; }
+  #moon-display { font-size: 1rem !important; }
 
   /* 목표 섹션 */
   .goals-section { padding: 0.45rem 0; }
   .goal-row { padding: 0.15rem 0; gap: 0.4rem; }
   .goal-label {
-    font-size: 0.58rem; min-width: 68px;
+    font-size: 0.72rem; min-width: 68px;
     letter-spacing: 0.04em;
   }
-  .goal-text { font-size: 0.78rem; }
+  .goal-text { font-size: 0.88rem; }
 
   /* 카테고리 대시보드 */
   .cat-dashboard { padding: 0.5rem 0 0.4rem; }
-  .cat-dashboard-title { font-size: 0.58rem; }
-  .cat-add-btn, .cat-toggle-btn { font-size: 0.58rem; padding: 2px 8px; }
+  .cat-dashboard-title { font-size: 0.7rem; }
+  .cat-add-btn, .cat-toggle-btn { font-size: 0.7rem; padding: 3px 10px; }
   .cat-name { font-size: 0.65rem; }
   .cat-pct { font-size: 0.6rem; min-width: 26px; }
   .cat-count { font-size: 0.55rem; min-width: 22px; }
@@ -898,7 +1074,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 
   /* 연도 네비 */
   .year-nav { padding: 0.4rem 0.85rem; gap: 5px; }
-  .year-btn { font-size: 0.75rem; padding: 4px 14px; }
+  .year-btn { font-size: 0.85rem; padding: 5px 16px; }
   .year-add-btn { width: 26px; height: 26px; font-size: 0.9rem; }
 
   /* 분기 버튼 */
@@ -907,7 +1083,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
     gap: 0.5rem; flex-wrap: wrap;
   }
   .quarter-label { font-size: 0.65rem; min-width: 20px; }
-  .quarter-title { font-size: 0.85rem; width: 100%; order: 1; flex-basis: 100%; }
+  .quarter-title { font-size: 0.95rem; width: 100%; order: 1; flex-basis: 100%; }
   .quarter-date { font-size: 0.62rem; }
   .quarter-progress-wrap { margin-left: auto; }
   .quarter-progress-track { width: 48px; }
@@ -916,7 +1092,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 
   /* 월 탭 */
   .month-nav { padding: 0.75rem 0.85rem 0; gap: 5px; }
-  .mnav-btn { font-size: 0.75rem; padding: 0.38rem 0.85rem; }
+  .mnav-btn { font-size: 0.85rem; padding: 0.45rem 1rem; }
   .quarter-months { padding: 0.75rem 0.85rem 0.85rem; }
 
   /* 월 소개 */
@@ -925,8 +1101,8 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
     padding: 0.85rem; border-radius: 10px;
     margin-bottom: 0.85rem;
   }
-  .month-heading { font-size: 1rem; }
-  .month-desc { font-size: 0.75rem; }
+  .month-heading { font-size: 1.1rem; }
+  .month-desc { font-size: 0.85rem; }
   .progress-num { font-size: 1.4rem; }
   .progress-track { width: 90px; margin-left: 0; }
 
@@ -934,7 +1110,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
   .week-block { border-radius: 10px; margin-bottom: 0.65rem; }
   .week-header { padding: 0.65rem 0.85rem; gap: 0.5rem; }
   .week-num { font-size: 0.6rem; padding: 2px 6px; }
-  .week-title-edit { font-size: 0.82rem; }
+  .week-title-edit { font-size: 0.92rem; }
   .week-dates { font-size: 0.6rem; display: none; } /* 모바일에선 날짜 숨김 */
   .week-focus-badge { display:none !important;  font-size: 0.6rem; padding: 2px 7px; }
   .week-task-count { font-size: 0.6rem; padding: 2px 7px; }
@@ -945,7 +1121,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
   .task-item { padding: 0.45rem 0.4rem; gap: 0.5rem; }
   .task-cb { width: 18px; height: 18px; margin-top: 2px; border-radius: 5px; }
   .task-cb:checked::after { left: 2px; top: 5px; width: 11px; height: 6px; }
-  .task-text-edit { font-size: 0.85rem; line-height: 1.5; }
+  .task-text-edit { font-size: 0.95rem; line-height: 1.55; }
   .tag { font-size: 0.6rem; padding: 2px 7px; }
   .task-due {
     font-size: 0.6rem; padding: 2px 7px;
@@ -957,15 +1133,15 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
   .drag-handle { opacity: 0.4; font-size: 1rem; padding: 0 4px; }
 
   /* 할일 추가 버튼 */
-  .add-task-btn { font-size: 0.8rem; padding: 8px 12px; }
-  .add-week-btn { font-size: 0.78rem; padding: 9px 14px; }
+  .add-task-btn { font-size: 0.9rem; padding: 9px 14px; }
+  .add-week-btn { font-size: 0.88rem; padding: 10px 16px; }
 
   /* 메모 */
   .note-label { font-size: 0.6rem; }
-  .note-edit { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
+  .note-edit { font-size: 0.9rem; padding: 0.55rem 0.8rem; }
   .month-note-section { padding: 0.85rem 1rem; border-radius: 10px; }
   .month-note-title { font-size: 0.65rem; }
-  .month-note-edit { font-size: 0.85rem; }
+  .month-note-edit { font-size: 0.95rem; }
 
   /* 태그 피커 */
   #tag-picker {
@@ -1003,7 +1179,7 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 
 /* 아주 작은 화면 (375px 이하 - 아이폰 SE 등) */
 @media (max-width: 375px) {
-  html { font-size: 13px; }
+  html { font-size: 14px; }
   .site-title-main { font-size: 0.85rem; }
   .vision-toggle-btn { padding: 3px 6px; font-size: 0.58rem; }
   .year-btn { font-size: 0.7rem; padding: 4px 11px; }
@@ -1012,6 +1188,58 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
 </style>
 </head>
 <body>
+
+<!-- ── 로그인 화면 ── -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">🌍</div>
+    <div class="login-title">나의 인생 로드맵</div>
+    <div class="login-sub">로그인하면 어느 기기에서든<br>내 로드맵을 불러올 수 있어요</div>
+
+    <div class="login-tabs">
+      <button class="login-tab active" id="tab-login" onclick="switchTab('login')">로그인</button>
+      <button class="login-tab" id="tab-signup" onclick="switchTab('signup')">회원가입</button>
+    </div>
+
+    <div id="login-error" class="login-error"></div>
+
+    <div class="login-field">
+      <label class="login-label" for="login-email">이메일</label>
+      <input class="login-input" type="email" id="login-email" placeholder="example@email.com" autocomplete="email">
+    </div>
+    <div class="login-field">
+      <label class="login-label" for="login-password">비밀번호</label>
+      <input class="login-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAuth()">
+    </div>
+
+    <div class="login-field" id="signup-name-field" style="display:none">
+      <label class="login-label" for="login-name">이름 (선택)</label>
+      <input class="login-input" type="text" id="login-name" placeholder="홍길동">
+    </div>
+
+    <button class="login-btn" id="auth-btn" onclick="doAuth()">로그인</button>
+
+    <div class="login-divider" id="forgot-link" style="margin-top:0.75rem">
+      <span onclick="doForgot()" style="cursor:pointer;color:var(--accent);font-size:0.72rem;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;">비밀번호 찾기</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;margin:1rem 0 0.75rem">
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+      <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.68rem;color:var(--text4);white-space:nowrap">또는</span>
+      <div style="flex:1;height:1px;background:var(--border)"></div>
+    </div>
+
+    <button class="google-btn" id="google-btn" onclick="doGoogleLogin()">
+      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" fill="#34A853"/>
+        <path d="M3.964 10.71c-.18-.54-.282-1.117-.282-1.71s.102-1.17.282-1.71V4.958H.957C.347 6.173 0 7.548 0 9s.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+      </svg>
+      Google로 계속하기
+    </button>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════
      STICKY TOP — 항상 고정
@@ -1049,6 +1277,15 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
           <span id="time-display" style="font-family:'Plus Jakarta Sans',monospace;font-size:0.88rem;font-weight:700;color:var(--text);letter-spacing:0.02em;display:inline-block;min-width:62px;text-align:right"></span>
         </div>
         <div id="date-display" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:0.62rem;font-weight:500;color:var(--text3);letter-spacing:0.04em;margin-top:1px;white-space:nowrap"></div>
+      </div>
+      <!-- 유저 배지 -->
+      <div id="user-badge" onclick="this.classList.toggle('open')">
+        <span class="badge-dot"></span>
+        <span id="user-badge-email">로그인됨</span>
+        <div id="user-menu">
+          <div class="user-menu-item" onclick="event.stopPropagation();copyShareLink()">🔗 공유 링크 복사</div>
+          <div class="user-menu-item danger" onclick="event.stopPropagation();logOut()">로그아웃</div>
+        </div>
       </div>
       <!-- 헤더 전체 접기 버튼 -->
       <button id="stickyCollapseBtn" onclick="toggleStickyMain()" title="헤더 접기/펼치기" style="
@@ -1139,11 +1376,20 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
     </button>
     <div class="quarter-panel" id="qpanel-q1">
       <div class="month-nav">
-        <button class="mnav-btn active" onclick="showMonth('q1','jan',this)">1월</button>
+        <button class="mnav-btn qgoal-btn active" onclick="showMonth('q1','goal',this)">🎯 분기 목표</button>
+        <button class="mnav-btn" onclick="showMonth('q1','jan',this)">1월</button>
         <button class="mnav-btn" onclick="showMonth('q1','feb',this)">2월</button>
         <button class="mnav-btn" onclick="showMonth('q1','mar',this)">3월</button>
       </div>
       <div class="quarter-months" id="q1-months">
+        <div class="month-view active" id="q1-m-goal">
+          <div class="qgoal-section">
+            <div class="qgoal-label" style="color:#94a3b8">🎯 1분기 목표</div>
+            <div class="qgoal-text" contenteditable="true" spellcheck="false" data-save="q1-goal-text" data-placeholder="1분기의 핵심 목표를 적어보세요..."></div>
+            <div class="qgoal-label" style="margin-top:1rem">📝 회고 / 메모</div>
+            <textarea class="month-note-edit" data-save="q1-goal-note" placeholder="분기가 끝난 후 회고를 여기에..." oninput="saveAll()"></textarea>
+          </div>
+        </div>
         <div class="month-view active" id="q1-m-jan">
           <div class="month-intro">
             <div>
@@ -1217,11 +1463,20 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
     </button>
     <div class="quarter-panel open" id="qpanel-q2">
       <div class="month-nav">
-        <button class="mnav-btn active" onclick="showMonth('q2','apr',this)">4월 — 런칭</button>
-        <button class="mnav-btn" onclick="showMonth('q2','may',this)">5월 — 유지</button>
-        <button class="mnav-btn" onclick="showMonth('q2','jun',this)">6월 — 준비</button>
+        <button class="mnav-btn qgoal-btn active" onclick="showMonth('q2','goal',this)">🎯 분기 목표</button>
+        <button class="mnav-btn" onclick="showMonth('q2','apr',this)">4월</button>
+        <button class="mnav-btn" onclick="showMonth('q2','may',this)">5월</button>
+        <button class="mnav-btn" onclick="showMonth('q2','jun',this)">6월</button>
       </div>
       <div class="quarter-months" id="q2-months">
+        <div class="month-view active" id="q2-m-goal">
+          <div class="qgoal-section">
+            <div class="qgoal-label" style="color:#6366f1">🎯 2분기 목표</div>
+            <div class="qgoal-text" contenteditable="true" spellcheck="false" data-save="q2-goal-text" data-placeholder="2분기의 핵심 목표를 적어보세요..."></div>
+            <div class="qgoal-label" style="margin-top:1rem">📝 회고 / 메모</div>
+            <textarea class="month-note-edit" data-save="q2-goal-note" placeholder="분기가 끝난 후 회고를 여기에..." oninput="saveAll()"></textarea>
+          </div>
+        </div>
 
         <!-- Q2 4월 -->
         <div class="month-view active" id="q2-m-apr">
@@ -1392,11 +1647,20 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
     </button>
     <div class="quarter-panel" id="qpanel-q3">
       <div class="month-nav">
-        <button class="mnav-btn active" onclick="showMonth('q3','jul',this)">7월</button>
+        <button class="mnav-btn qgoal-btn active" onclick="showMonth('q3','goal',this)">🎯 분기 목표</button>
+        <button class="mnav-btn" onclick="showMonth('q3','jul',this)">7월</button>
         <button class="mnav-btn" onclick="showMonth('q3','aug',this)">8월</button>
         <button class="mnav-btn" onclick="showMonth('q3','sep',this)">9월</button>
       </div>
       <div class="quarter-months" id="q3-months">
+        <div class="month-view active" id="q3-m-goal">
+          <div class="qgoal-section">
+            <div class="qgoal-label" style="color:#10b981">🎯 3분기 목표</div>
+            <div class="qgoal-text" contenteditable="true" spellcheck="false" data-save="q3-goal-text" data-placeholder="3분기의 핵심 목표를 적어보세요..."></div>
+            <div class="qgoal-label" style="margin-top:1rem">📝 회고 / 메모</div>
+            <textarea class="month-note-edit" data-save="q3-goal-note" placeholder="분기가 끝난 후 회고를 여기에..." oninput="saveAll()"></textarea>
+          </div>
+        </div>
         <div class="month-view active" id="q3-m-jul">
           <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q3-jul-heading">7월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q3-jul-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q3-jul-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q3-jul-fill"></div></div></div></div>
           <div id="q3-jul-weeks"></div>
@@ -1434,11 +1698,20 @@ body { font-family: 'Noto Sans KR', 'Plus Jakarta Sans', sans-serif; background:
     </button>
     <div class="quarter-panel" id="qpanel-q4">
       <div class="month-nav">
-        <button class="mnav-btn active" onclick="showMonth('q4','oct',this)">10월</button>
+        <button class="mnav-btn qgoal-btn active" onclick="showMonth('q4','goal',this)">🎯 분기 목표</button>
+        <button class="mnav-btn" onclick="showMonth('q4','oct',this)">10월</button>
         <button class="mnav-btn" onclick="showMonth('q4','nov',this)">11월</button>
         <button class="mnav-btn" onclick="showMonth('q4','dec',this)">12월</button>
       </div>
       <div class="quarter-months" id="q4-months">
+        <div class="month-view active" id="q4-m-goal">
+          <div class="qgoal-section">
+            <div class="qgoal-label" style="color:#f59e0b">🎯 4분기 목표</div>
+            <div class="qgoal-text" contenteditable="true" spellcheck="false" data-save="q4-goal-text" data-placeholder="4분기의 핵심 목표를 적어보세요..."></div>
+            <div class="qgoal-label" style="margin-top:1rem">📝 회고 / 메모</div>
+            <textarea class="month-note-edit" data-save="q4-goal-note" placeholder="분기가 끝난 후 회고를 여기에..." oninput="saveAll()"></textarea>
+          </div>
+        </div>
         <div class="month-view active" id="q4-m-oct">
           <div class="month-intro"><div><div class="month-heading" contenteditable="true" spellcheck="false" data-save="q4-oct-heading">10월</div><div class="month-desc" contenteditable="true" spellcheck="false" data-save="q4-oct-desc">이 달의 방향을 입력하세요</div></div><div class="progress-area"><div class="progress-num" id="q4-oct-num">0<span>/0</span></div><div class="progress-track"><div class="progress-fill" id="q4-oct-fill"></div></div></div></div>
           <div id="q4-oct-weeks"></div>
@@ -1782,11 +2055,20 @@ function buildYearPanelHTML(year) {
       </button>
       <div class="quarter-panel" id="qpanel-${qid}">
         <div class="month-nav">
-          ${months[q].map((m,i) => `<button class="mnav-btn${i===0?' active':''}" onclick="showMonth('${qid}','${m}',this)">${monthNames[m]}</button>`).join('')}
+          <button class="mnav-btn qgoal-btn active" onclick="showMonth('${qid}','goal',this)">🎯 분기 목표</button>
+          ${months[q].map((m,i) => `<button class="mnav-btn" onclick="showMonth('${qid}','${m}',this)">${monthNames[m]}</button>`).join('')}
         </div>
         <div class="quarter-months" id="${qid}-months">
+          <div class="month-view active" id="${qid}-m-goal">
+            <div class="qgoal-section">
+              <div class="qgoal-label" style="color:${qColors[q]}">🎯 ${year}년 ${q.toUpperCase()} 목표</div>
+              <div class="qgoal-text" contenteditable="true" spellcheck="false" data-save="${qid}-goal-text" data-placeholder="${year}년 ${q.toUpperCase()} 핵심 목표를 적어보세요..."></div>
+              <div class="qgoal-label" style="margin-top:1rem">📝 회고 / 메모</div>
+              <textarea class="month-note-edit" data-save="${qid}-goal-note" placeholder="분기가 끝난 후 회고를 여기에..." oninput="saveAll()"></textarea>
+            </div>
+          </div>
           ${months[q].map((m, i) => `
-          <div class="month-view${i===0?' active':''}" id="${qid}-m-${m}">
+          <div class="month-view" id="${qid}-m-${m}">
             <div class="month-intro">
               <div>
                 <div class="month-heading" contenteditable="true" spellcheck="false" data-save="${qid}-${m}-heading">${monthNames[m]}</div>
@@ -2802,7 +3084,7 @@ function collectData() {
 }
 
 // ══════════════════════════════════════
-// SUPABASE 연동
+// SUPABASE 연동 + 로그인
 // ══════════════════════════════════════
 const SUPABASE_URL = 'https://dqptxzzcyraookwwhvcx.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_ql2ON61ZQjC32PWrexxKuw_S-jaGGJB';
@@ -2812,13 +3094,249 @@ const SB_HEADERS = {
   'Authorization': 'Bearer ' + SUPABASE_KEY
 };
 
-// 고유 user_id — 첫 방문 시 생성, 이후 localStorage에 유지
-function getUserId() {
-  let uid = localStorage.getItem('lifemap_uid');
-  if (!uid) {
-    uid = 'user_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
-    localStorage.setItem('lifemap_uid', uid);
+// ── AUTH STATE ──
+let currentUser = null; // { id, email, access_token, refresh_token }
+
+function getAuthHeaders() {
+  const token = currentUser?.access_token || SUPABASE_KEY;
+  return {
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_KEY,
+    'Authorization': 'Bearer ' + token
+  };
+}
+
+// ── LOGIN SCREEN UI ──
+let loginMode = 'login';
+
+function switchTab(mode) {
+  loginMode = mode;
+  document.getElementById('tab-login').classList.toggle('active', mode === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', mode === 'signup');
+  document.getElementById('auth-btn').textContent = mode === 'login' ? '로그인' : '계정 만들기';
+  document.getElementById('signup-name-field').style.display = mode === 'signup' ? 'block' : 'none';
+  document.getElementById('forgot-link').style.display = mode === 'login' ? 'block' : 'none';
+  document.getElementById('login-error').classList.remove('show');
+  document.getElementById('login-password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg; el.classList.add('show');
+}
+
+async function doAuth() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const btn = document.getElementById('auth-btn');
+  if (!email || !password) { showLoginError('이메일과 비밀번호를 입력해 주세요.'); return; }
+  btn.disabled = true;
+  btn.innerHTML = '<span class="login-spinner"></span>' + (loginMode === 'login' ? '로그인 중...' : '계정 만드는 중...');
+  document.getElementById('login-error').classList.remove('show');
+
+  try {
+    const endpoint = loginMode === 'login'
+      ? `${SUPABASE_URL}/auth/v1/token?grant_type=password`
+      : `${SUPABASE_URL}/auth/v1/signup`;
+    const body = loginMode === 'login'
+      ? { email, password }
+      : { email, password };
+
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json();
+
+    if (!res.ok) {
+      const msg = data.error_description || data.msg || data.message || '오류가 발생했어요.';
+      let kr = msg;
+      if (msg.includes('Invalid login')) kr = '이메일 또는 비밀번호가 올바르지 않아요.';
+      else if (msg.includes('already registered') || msg.includes('already exists')) kr = '이미 가입된 이메일이에요. 로그인해 주세요.';
+      else if (msg.includes('Password should')) kr = '비밀번호는 6자 이상으로 입력해 주세요.';
+      else if (msg.includes('valid email')) kr = '올바른 이메일 주소를 입력해 주세요.';
+      showLoginError(kr);
+      btn.disabled = false;
+      btn.textContent = loginMode === 'login' ? '로그인' : '계정 만들기';
+      return;
+    }
+
+    if (loginMode === 'signup' && !data.access_token) {
+      // 이메일 확인 필요한 경우
+      showLoginError('');
+      document.getElementById('login-error').style.color = '#059669';
+      document.getElementById('login-error').style.background = '#ecfdf5';
+      document.getElementById('login-error').style.borderColor = '#6ee7b7';
+      document.getElementById('login-error').textContent = '✉ 확인 이메일을 보냈어요. 이메일을 확인 후 로그인해 주세요.';
+      document.getElementById('login-error').classList.add('show');
+      btn.disabled = false;
+      btn.textContent = '계정 만들기';
+      return;
+    }
+
+    // 성공
+    currentUser = {
+      id: data.user?.id || data.id,
+      email: data.user?.email || email,
+      access_token: data.access_token,
+      refresh_token: data.refresh_token
+    };
+    localStorage.setItem('lifemap_session', JSON.stringify(currentUser));
+    await enterApp();
+
+  } catch(e) {
+    showLoginError('네트워크 오류가 발생했어요. 다시 시도해 주세요.');
+    btn.disabled = false;
+    btn.textContent = loginMode === 'login' ? '로그인' : '계정 만들기';
   }
+}
+
+async function doForgot() {
+  const email = document.getElementById('login-email').value.trim();
+  if (!email) { showLoginError('비밀번호 재설정을 위해 이메일을 입력해 주세요.'); return; }
+  try {
+    await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+      body: JSON.stringify({ email })
+    });
+    document.getElementById('login-error').style.color = '#059669';
+    document.getElementById('login-error').style.background = '#ecfdf5';
+    document.getElementById('login-error').style.borderColor = '#6ee7b7';
+    document.getElementById('login-error').textContent = '✉ 비밀번호 재설정 링크를 이메일로 보냈어요.';
+    document.getElementById('login-error').classList.add('show');
+  } catch(e) {}
+}
+
+// ── GOOGLE OAuth ──
+function doGoogleLogin() {
+  const btn = document.getElementById('google-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="login-spinner" style="border-color:rgba(0,0,0,0.15);border-top-color:#4285F4"></span> 연결 중...';
+
+  // 현재 URL을 redirect_to로 사용 (해시 기반 토큰 콜백 처리)
+  const redirectTo = location.href.split('#')[0].split('?')[0];
+  const authUrl = `${SUPABASE_URL}/auth/v1/authorize?provider=google&redirect_to=${encodeURIComponent(redirectTo)}`;
+  window.location.href = authUrl;
+}
+
+// OAuth 리다이렉트 콜백 처리 (URL 해시에서 토큰 파싱)
+async function handleOAuthCallback() {
+  const hash = window.location.hash;
+  if (!hash) return false;
+
+  const params = new URLSearchParams(hash.replace('#', ''));
+  const accessToken = params.get('access_token');
+  const refreshToken = params.get('refresh_token');
+  if (!accessToken) return false;
+
+  // 해시 제거 (URL 정리)
+  history.replaceState(null, '', window.location.pathname + window.location.search);
+
+  // 유저 정보 조회
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + accessToken }
+    });
+    if (!res.ok) return false;
+    const user = await res.json();
+    currentUser = {
+      id: user.id,
+      email: user.email,
+      access_token: accessToken,
+      refresh_token: refreshToken
+    };
+    localStorage.setItem('lifemap_session', JSON.stringify(currentUser));
+    return true;
+  } catch(e) { return false; }
+}
+
+function logOut() {
+  currentUser = null;
+  localStorage.removeItem('lifemap_session');
+  localStorage.removeItem(SAVE_KEY);
+  location.reload();
+}
+
+async function enterApp() {
+  // 앱 진입
+  document.getElementById('login-screen').classList.add('hidden');
+  // 유저 배지 표시
+  const badge = document.getElementById('user-badge');
+  badge.style.display = 'flex';
+  document.getElementById('user-badge-email').textContent = currentUser.email;
+
+  // 공유 모드 체크
+  const shareUid = getShareUid();
+  if (shareUid) {
+    const data = await sbLoad(shareUid);
+    if (data) {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+      loadData();
+      setTimeout(() => showReadOnlyBanner(), 200);
+    } else {
+      showToast('⚠ 공유 데이터를 찾을 수 없어요');
+      loadData();
+    }
+  } else {
+    // 클라우드에서 불러오기
+    const cloudData = await sbLoad(currentUser.id);
+    if (cloudData) {
+      localStorage.setItem(SAVE_KEY, JSON.stringify(cloudData));
+      showToast('☁ 클라우드에서 복원됨');
+    } else {
+      const localRaw = localStorage.getItem(SAVE_KEY);
+      if (!localRaw) {
+        // 새 계정: 템플릿 초기화
+        setTimeout(() => initBlankTemplate(), 100);
+      }
+    }
+    loadData();
+  }
+
+  imgLoad();
+  initLang();
+  const updateStickyH = () => updateStickyHeight();
+  updateStickyH();
+  new ResizeObserver(updateStickyH).observe(document.querySelector('.sticky-top'));
+
+  document.querySelectorAll('.task-item').forEach(item => {
+    if (!item.querySelector('.drag-handle')) {
+      const h = document.createElement('span');
+      h.className = 'drag-handle'; h.title = '드래그로 순서 변경'; h.textContent = '⠿';
+      item.insertBefore(h, item.firstChild);
+    }
+    initDrag(item);
+  });
+  updateAllProgress();
+}
+
+function initBlankTemplate() {
+  document.querySelectorAll('.task-list').forEach(l => l.innerHTML = '');
+  const clears = {
+    'apr-heading':'4월','apr-desc':'','may-heading':'5월','may-desc':'',
+    'jun-heading':'6월','jun-desc':'','q2-title':'2분기 목표를 입력하세요',
+    'q1-title':'1분기 목표를 입력하세요','q3-title':'3분기 목표를 입력하세요',
+    'q4-title':'4분기 목표를 입력하세요',
+    'goal-life':'','goal-30-35':'','goal-35-40':'','goal-2026':'',
+    'q1-goal-text':'','q2-goal-text':'','q3-goal-text':'','q4-goal-text':''
+  };
+  Object.entries(clears).forEach(([k,v]) => {
+    const el = document.querySelector('[data-save="'+k+'"]');
+    if (el) { if (el.tagName==='TEXTAREA') el.value=v; else el.innerText=v; }
+  });
+  const st = document.getElementById('siteTitle');
+  if (st) st.innerText = '나의 인생 로드맵';
+  updateAllProgress();
+}
+
+// 고유 user_id — 로그인 후에는 Supabase auth uid 사용
+function getUserId() {
+  if (currentUser?.id) return currentUser.id;
+  // fallback (공유 모드 등)
+  let uid = localStorage.getItem('lifemap_uid');
+  if (!uid) { uid = 'user_' + Math.random().toString(36).slice(2,10) + Date.now().toString(36); localStorage.setItem('lifemap_uid', uid); }
   return uid;
 }
 
@@ -2834,12 +3352,8 @@ async function sbSave(data) {
   try {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/lifemap_data`, {
       method: 'POST',
-      headers: { ...SB_HEADERS, 'Prefer': 'resolution=merge-duplicates' },
-      body: JSON.stringify({
-        user_id: uid,
-        data: data,
-        updated_at: new Date().toISOString()
-      })
+      headers: { ...getAuthHeaders(), 'Prefer': 'resolution=merge-duplicates' },
+      body: JSON.stringify({ user_id: uid, data: data, updated_at: new Date().toISOString() })
     });
     return res.ok;
   } catch(e) { return false; }
@@ -2864,28 +3378,18 @@ function copyShareLink() {
   const url = `${location.origin}${location.pathname}?share=${uid}`;
   navigator.clipboard.writeText(url).then(() => {
     showToast(currentLang === 'en' ? '🔗 Link copied!' : '🔗 공유 링크 복사됨!');
-  }).catch(() => {
-    prompt('아래 링크를 복사하세요:', url);
-  });
+  }).catch(() => { prompt('아래 링크를 복사하세요:', url); });
 }
 
 // 토스트 메시지
 function showToast(msg) {
   let el = document.getElementById('sb-toast');
   if (!el) {
-    el = document.createElement('div');
-    el.id = 'sb-toast';
-    el.style.cssText = `
-      position:fixed;bottom:4rem;left:50%;transform:translateX(-50%);
-      background:#1e2340;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;
-      font-size:0.78rem;font-weight:600;padding:8px 20px;border-radius:99px;
-      box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:9999;
-      opacity:0;transition:opacity 0.2s;pointer-events:none;white-space:nowrap;
-    `;
+    el = document.createElement('div'); el.id = 'sb-toast';
+    el.style.cssText = `position:fixed;bottom:4rem;left:50%;transform:translateX(-50%);background:#1e2340;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;padding:8px 20px;border-radius:99px;box-shadow:0 4px 16px rgba(0,0,0,0.2);z-index:9999;opacity:0;transition:opacity 0.2s;pointer-events:none;white-space:nowrap;`;
     document.body.appendChild(el);
   }
-  el.textContent = msg;
-  el.style.opacity = '1';
+  el.textContent = msg; el.style.opacity = '1';
   clearTimeout(el._t);
   el._t = setTimeout(() => { el.style.opacity = '0'; }, 2500);
 }
@@ -2893,23 +3397,9 @@ function showToast(msg) {
 // 읽기 전용 모드 배너
 function showReadOnlyBanner() {
   const bar = document.createElement('div');
-  bar.style.cssText = `
-    position:fixed;bottom:0;left:0;right:0;z-index:500;
-    background:linear-gradient(135deg,#6366f1,#8b5cf6);
-    color:#fff;text-align:center;padding:10px 1rem;
-    font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;
-    display:flex;align-items:center;justify-content:center;gap:12px;
-  `;
-  bar.innerHTML = `
-    <span>👀 ${currentLang==='en'?'Viewing shared roadmap (read-only)':'공유된 로드맵 보는 중 (읽기 전용)'}</span>
-    <button onclick="window.location.href=window.location.pathname" style="
-      background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);
-      color:#fff;padding:3px 14px;border-radius:99px;cursor:pointer;
-      font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:700;
-    ">${currentLang==='en'?'My Roadmap →':'내 로드맵으로 →'}</button>
-  `;
+  bar.style.cssText = `position:fixed;bottom:0;left:0;right:0;z-index:500;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;text-align:center;padding:10px 1rem;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:12px;`;
+  bar.innerHTML = `<span>👀 ${currentLang==='en'?'Viewing shared roadmap (read-only)':'공유된 로드맵 보는 중 (읽기 전용)'}</span><button onclick="window.location.href=window.location.pathname" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.4);color:#fff;padding:3px 14px;border-radius:99px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:700;">${currentLang==='en'?'My Roadmap →':'내 로드맵으로 →'}</button>`;
   document.body.appendChild(bar);
-  // 편집 막기
   document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','false'));
   document.querySelectorAll('button:not([onclick*="lang"]):not([onclick*="toggleQuarter"]):not([onclick*="showMonth"]):not([onclick*="toggleWeek"]):not([onclick*="switchYear"]):not([onclick*="toggleDashboard"]):not([onclick*="toggleHeaderExtra"]):not([onclick*="toggleVision"])').forEach(btn => btn.disabled = true);
 }
@@ -3018,50 +3508,72 @@ window.addEventListener('DOMContentLoaded', async () => {
   setupVisionDrop(1);
   setupVisionDrop(2);
 
-  const shareUid = getShareUid();
-
-  if (shareUid) {
-    // 공유 모드 — Supabase에서 불러오기
-    const data = await sbLoad(shareUid);
-    if (data) {
-      localStorage.setItem(SAVE_KEY, JSON.stringify(data));
-      loadData();
-      setTimeout(() => showReadOnlyBanner(), 200);
-    } else {
-      showToast(currentLang==='en'?'⚠ Shared data not found':'⚠ 공유 데이터를 찾을 수 없어요');
-      loadData();
-    }
-  } else {
-    // 내 모드 — 로컬 우선, Supabase 백업 불러오기
-    const localRaw = localStorage.getItem(SAVE_KEY);
-    if (!localRaw) {
-      // 로컬에 없으면 Supabase에서 복원 시도
-      const uid = getUserId();
-      const cloudData = await sbLoad(uid);
-      if (cloudData) {
-        localStorage.setItem(SAVE_KEY, JSON.stringify(cloudData));
-        showToast(currentLang==='en'?'☁ Restored from cloud':'☁ 클라우드에서 복원됨');
-      }
-    }
-    loadData();
+  // 1) Google OAuth 리다이렉트 콜백 처리 (URL 해시에 토큰이 있는 경우)
+  const oauthOk = await handleOAuthCallback();
+  if (oauthOk) {
+    await enterApp();
+    return;
   }
 
-  imgLoad();
-  initLang();
+  // 2) 저장된 세션 확인
+  const savedSession = localStorage.getItem('lifemap_session');
+  if (savedSession) {
+    try {
+      const session = JSON.parse(savedSession);
+      // 토큰 유효성 확인
+      const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + session.access_token }
+      });
+      if (res.ok) {
+        currentUser = session;
+        await enterApp();
+        return;
+      } else {
+        // 토큰 만료 — refresh 시도
+        if (session.refresh_token) {
+          const rr = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_KEY },
+            body: JSON.stringify({ refresh_token: session.refresh_token })
+          });
+          if (rr.ok) {
+            const nd = await rr.json();
+            currentUser = { id: nd.user?.id, email: nd.user?.email, access_token: nd.access_token, refresh_token: nd.refresh_token };
+            localStorage.setItem('lifemap_session', JSON.stringify(currentUser));
+            await enterApp();
+            return;
+          }
+        }
+        localStorage.removeItem('lifemap_session');
+      }
+    } catch(e) { localStorage.removeItem('lifemap_session'); }
+  }
 
-  const updateStickyH = () => updateStickyHeight();
-  updateStickyH();
-  new ResizeObserver(updateStickyH).observe(document.querySelector('.sticky-top'));
+  // 공유 모드는 로그인 없이 볼 수 있음
+  const shareUid = getShareUid();
+  if (shareUid) {
+    document.getElementById('login-screen').classList.add('hidden');
+    initDateTime(); setupCropDrag(); setupVisionDrop(1); setupVisionDrop(2);
+    const data = await sbLoad(shareUid);
+    if (data) { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); loadData(); setTimeout(() => showReadOnlyBanner(), 200); }
+    else { showToast('⚠ 공유 데이터를 찾을 수 없어요'); loadData(); }
+    imgLoad(); initLang();
+    const updateStickyH = () => updateStickyHeight();
+    updateStickyH();
+    new ResizeObserver(updateStickyH).observe(document.querySelector('.sticky-top'));
+    document.querySelectorAll('.task-item').forEach(item => {
+      if (!item.querySelector('.drag-handle')) {
+        const h = document.createElement('span');
+        h.className = 'drag-handle'; h.title = '드래그로 순서 변경'; h.textContent = '⠿';
+        item.insertBefore(h, item.firstChild);
+      }
+      initDrag(item);
+    });
+    updateAllProgress();
+    return;
+  }
 
-  document.querySelectorAll('.task-item').forEach(item => {
-    if (!item.querySelector('.drag-handle')) {
-      const h = document.createElement('span');
-      h.className = 'drag-handle'; h.title = '드래그로 순서 변경'; h.textContent = '⠿';
-      item.insertBefore(h, item.firstChild);
-    }
-    initDrag(item);
-  });
-  updateAllProgress();
+  // 로그인 화면 표시 (이미 HTML에 있음, 기본으로 보임)
 });
 </script>
 <!-- 비전 오버레이 패널 1 — 인생 시각화 -->
@@ -3155,39 +3667,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 <input type="file" id="img-input-1" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(1,this)">
 <input type="file" id="img-input-2" accept="image/*" style="position:fixed;left:-9999px;top:-9999px;opacity:0;width:1px;height:1px" onchange="uploadVisionImg(2,this)">
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(function() {
-    var shareUid = new URLSearchParams(window.location.search).get('share');
-    if (shareUid) return;
-    var existing = null;
-    try { existing = localStorage.getItem('lifemap_template_v2'); } catch(e) {}
-    if (existing) return;
-    document.querySelectorAll('.task-list').forEach(l => l.innerHTML = '');
-    var clears = {
-      'apr-heading':'4월','apr-desc':'','may-heading':'5월','may-desc':'',
-      'jun-heading':'6월','jun-desc':'','q2-title':'2분기 목표를 입력하세요',
-      'q1-title':'1분기 목표를 입력하세요','q3-title':'3분기 목표를 입력하세요',
-      'q4-title':'4분기 목표를 입력하세요',
-      'goal-life':'','goal-30-35':'','goal-35-40':'','goal-2026':''
-    };
-    Object.entries(clears).forEach(function([k,v]) {
-      var el = document.querySelector('[data-save="'+k+'"]');
-      if (el) el.innerText = v;
-    });
-    var st = document.getElementById('siteTitle');
-    if (st) st.innerText = '나의 인생 로드맵';
-    ['apr-w1','apr-w2','apr-w3','apr-w4',
-     'may-w1','may-w2','may-w3','may-w4',
-     'jun-w1','jun-w2','jun-w3','jun-w4'].forEach(function(id,i) {
-      var el = document.querySelector('[data-save="'+id+'-title"]');
-      if (el) el.innerText = (i%4+1)+'주차';
-    });
-    document.querySelectorAll('.week-dates').forEach(function(el){ el.textContent=''; });
-    document.querySelectorAll('textarea[data-save]').forEach(function(el){ el.value=''; });
-    updateAllProgress();
-  }, 80);
-});
-</script>
+
 </body>
 </html>
