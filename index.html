@@ -3243,7 +3243,6 @@ async function handleOAuthCallback() {
 function logOut() {
   currentUser = null;
   localStorage.removeItem('lifemap_session');
-  localStorage.removeItem(SAVE_KEY);
   location.reload();
 }
 
@@ -3274,17 +3273,11 @@ async function enterApp() {
       loadData();
     }
   } else {
-    // 클라우드에서 불러오기
+    // 항상 클라우드에서 최신 데이터 불러오기
     const cloudData = await sbLoad(currentUser.id);
     if (cloudData) {
       localStorage.setItem(SAVE_KEY, JSON.stringify(cloudData));
-      showToast('☁ 클라우드에서 복원됨');
-    } else {
-      const localRaw = localStorage.getItem(SAVE_KEY);
-      if (!localRaw) {
-        // 새 계정: 템플릿 초기화
-        setTimeout(() => initBlankTemplate(), 100);
-      }
+      showToast('☁ 데이터를 불러왔어요');
     }
     loadData();
   }
